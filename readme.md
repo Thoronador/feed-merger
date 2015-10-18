@@ -19,3 +19,14 @@ GNU General Public License for more details.
 
 For the full license text, see the LICENSE file in this repository.
 Alternatively, see <http://www.gnu.org/licenses/>.
+
+## Feed format specifications
+
+For future reference:
+
+* Atom 1.0: RFC 4287 <http://www.ietf.org/rfc/rfc4287.txt>
+* RSS 0.91: <http://www.rssboard.org/rss-0-9-1-netscape>
+* RSS 1.0: <http://web.resource.org/rss/1.0/spec>
+* RSS 2.0: <http://www.rssboard.org/rss-specification>
+
+The feed-merger aims to be fully compliant to these standards / specifications.
