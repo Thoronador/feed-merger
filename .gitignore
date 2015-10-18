@@ -1,0 +1,10 @@
+#Code::Blocks files
+*.depend
+*.layout
+
+# object and binary directories
+bin/
+obj/
+
+# build directory
+[Bb]uild/
