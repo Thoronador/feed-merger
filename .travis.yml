@@ -11,10 +11,10 @@ addons:
     - zlib1g-dev
 script:
   - ./ci/cpplint.sh
-#  - mkdir ./build
-#  - cd ./build
-#  - cmake ../
-#  - make -j2
+  - mkdir ./build
+  - cd ./build
+  - cmake ../
+  - make -j2
 #  - ctest -V
 notifications:
   email: false
