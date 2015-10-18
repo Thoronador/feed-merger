@@ -29,10 +29,17 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="StringFunctions.cpp" />
+		<Unit filename="StringFunctions.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="rfc822/Date.cpp" />
+		<Unit filename="rfc822/Date.hpp" />
+		<Unit filename="rss2.0/Guid.cpp" />
+		<Unit filename="rss2.0/Guid.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
