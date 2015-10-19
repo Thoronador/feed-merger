@@ -19,6 +19,7 @@
 */
 
 #include "Date.hpp"
+#include <cstring>
 #include "../StringFunctions.hpp"
 
 bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
@@ -166,9 +167,93 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   else
     second = 0;
 
-  #warning Incomplete! TODO: Implement the rest.
-  /* Implementation hint: Construct a std::tm object (<ctime>), then use
-     std::mktime() to create an std::time_t object.
-  */
-  return false;
+  /* zone        =  "UT"  / "GMT"                ; Universal Time
+                                                 ; North American : UT
+                 /  "EST" / "EDT"                ;  Eastern:  - 5/ - 4
+                 /  "CST" / "CDT"                ;  Central:  - 6/ - 5
+                 /  "MST" / "MDT"                ;  Mountain: - 7/ - 6
+                 /  "PST" / "PDT"                ;  Pacific:  - 8/ - 7
+                 /  1ALPHA                       ; Military: Z = UT;
+                                                 ;  A:-1; (J not used)
+                                                 ;  M:-12; N:+1; Y:+12
+                 / ( ("+" / "-") 4DIGIT )        ; Local differential
+                                                 ;  hours+min. (HHMM) */
+
+  //time offset
+  int offset = 0; //offset in seconds
+  if (parts[4] == "GMT" || parts[4] == "UT" /* not UTC, but UT!*/)
+    offset = 0;
+  else if (parts[4] == "EST") offset = -5 * 60 * 60;
+  else if (parts[4] == "EDT") offset = -4 * 60 * 60;
+  else if (parts[4] == "CST") offset = -6 * 60 * 60;
+  else if (parts[4] == "CDT") offset = -5 * 60 * 60;
+  else if (parts[4] == "MST") offset = -7 * 60 * 60;
+  else if (parts[4] == "MDT") offset = -6 * 60 * 60;
+  else if (parts[4] == "PST") offset = -8 * 60 * 60;
+  else if (parts[4] == "PDT") offset = -7 * 60 * 60;
+  else if (parts[4] == "A") offset = -1 * 60 * 60;
+  else if (parts[4] == "B") offset = -2 * 60 * 60;
+  else if (parts[4] == "C") offset = -3 * 60 * 60;
+  else if (parts[4] == "D") offset = -4 * 60 * 60;
+  else if (parts[4] == "E") offset = -5 * 60 * 60;
+  else if (parts[4] == "F") offset = -6 * 60 * 60;
+  else if (parts[4] == "G") offset = -7 * 60 * 60;
+  else if (parts[4] == "H") offset = -8 * 60 * 60;
+  else if (parts[4] == "I") offset = -9 * 60 * 60;
+  // J not in use
+  else if (parts[4] == "K") offset = -10 * 60 * 60;
+  else if (parts[4] == "L") offset = -11 * 60 * 60;
+  else if (parts[4] == "M") offset = -12 * 60 * 60;
+  else if (parts[4] == "N") offset = +1 * 60 * 60;
+  else if (parts[4] == "O") offset = +2 * 60 * 60;
+  else if (parts[4] == "P") offset = +3 * 60 * 60;
+  else if (parts[4] == "Q") offset = +4 * 60 * 60;
+  else if (parts[4] == "R") offset = +5 * 60 * 60;
+  else if (parts[4] == "S") offset = +6 * 60 * 60;
+  else if (parts[4] == "T") offset = +7 * 60 * 60;
+  else if (parts[4] == "U") offset = +8 * 60 * 60;
+  else if (parts[4] == "V") offset = +9 * 60 * 60;
+  else if (parts[4] == "W") offset = +10 * 60 * 60;
+  else if (parts[4] == "X") offset = +11 * 60 * 60;
+  else if (parts[4] == "Y") offset = +12 * 60 * 60;
+  else if (parts[4].size()==5)
+  {
+    unsigned int offHours = 0;
+    if (!stringToUnsignedInt(parts[4].substr(1,2), offHours))
+      return false;
+    if (offHours>12) return false;
+    unsigned int offMinutes = 0;
+    if (!stringToUnsignedInt(parts[4].substr(3,2), offMinutes))
+      return false;
+    if (offMinutes>59) return false;
+    offset = offHours * 60 * 60 + offMinutes * 60;
+    if (parts[4].at(0) == '-')
+      offset = -offset;
+    else if (parts[4].at(0) != '+')
+      return false;
+  } //else
+  else
+    // invalid timezone / offset specification
+    return false;
+
+
+  //put data into std::tm
+  struct tm timeStructure;
+  std::memset(&timeStructure, 0, sizeof(struct tm));
+
+  timeStructure.tm_year = year - 1900; //years since 1900
+  timeStructure.tm_mon = month - 1; //months since January
+  timeStructure.tm_mday = dayOfMonth;
+  timeStructure.tm_hour = hour;
+  timeStructure.tm_min = minute;
+  timeStructure.tm_sec = second;
+  timeStructure.tm_gmtoff = offset;
+  timeStructure.tm_isdst = -1; //no information on DST
+
+  std::time_t tt = std::mktime(&timeStructure);
+  // Return value -1 means failure of mktime().
+  if (tt == -1)
+    return false;
+  output = tt;
+  return true;
 }
