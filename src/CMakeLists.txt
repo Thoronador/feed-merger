@@ -7,6 +7,7 @@ set(feed_merger_sources
     StringFunctions.cpp
     rfc822/Date.cpp
     rss2.0/Category.cpp
+    rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
     main.cpp)
 
