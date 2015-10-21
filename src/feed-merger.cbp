@@ -38,6 +38,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="rfc822/Date.cpp" />
 		<Unit filename="rfc822/Date.hpp" />
+		<Unit filename="rss2.0/Category.cpp" />
+		<Unit filename="rss2.0/Category.hpp" />
 		<Unit filename="rss2.0/Guid.cpp" />
 		<Unit filename="rss2.0/Guid.hpp" />
 		<Extensions>
