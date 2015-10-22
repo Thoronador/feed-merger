@@ -9,6 +9,7 @@ set(feed_merger_sources
     rss2.0/Category.cpp
     rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
+    rss2.0/Source.cpp
     main.cpp)
 
 if (CMAKE_COMPILER_IS_GNUCC)
