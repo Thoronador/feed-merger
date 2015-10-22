@@ -91,7 +91,7 @@ namespace RSS20
       const std::vector<Item>& items() const;
 
 
-      /** \brief adda a new item to the channel
+      /** \brief add a new item to the channel
        *
        * \param item  the new item, must not be empty
        */
