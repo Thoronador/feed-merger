@@ -52,6 +52,14 @@ namespace RSS20
        *         Returns an empty string, if no domain is set.
        */
       const std::string& domain() const;
+
+
+      /** \brief checks whether this element is empty
+       *
+       * \return Returns true, if this element is empty.
+       * Returns false, if it contains some data.
+       */
+      const bool empty() const;
     private:
       std::string m_category; /**< category name */
       std::string m_domain; /**< category's domain, if any */

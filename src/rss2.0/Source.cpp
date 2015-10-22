@@ -39,4 +39,9 @@ const std::string& Source::url() const
   return m_url;
 }
 
+const bool Source::empty() const
+{
+  return (m_source.empty() || m_url.empty());
+}
+
 } //namespace

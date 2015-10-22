@@ -48,6 +48,14 @@ namespace RSS20
        * \return Returns the value of the url attribute.
        */
       const std::string& url() const;
+
+
+      /** \brief checks whether this element is empty
+       *
+       * \return Returns true, if this element is empty.
+       * Returns false, if it contains some data.
+       */
+      const bool empty() const;
     private:
       std::string m_source; /**< source's name */
       std::string m_url; /**< value of the URL attribute */

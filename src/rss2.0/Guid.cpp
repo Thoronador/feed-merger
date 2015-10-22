@@ -37,4 +37,9 @@ bool GUID::isPermaLink() const
   return m_isPermaLink && !m_guid.empty();
 }
 
+const bool GUID::empty() const
+{
+  return m_guid.empty();
+}
+
 } //namespace

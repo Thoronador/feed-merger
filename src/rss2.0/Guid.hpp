@@ -47,6 +47,13 @@ namespace RSS20
        */
       bool isPermaLink() const;
 
+
+      /** \brief checks whether this element is empty
+       *
+       * \return Returns true, if this element is empty.
+       * Returns false, if it contains some data.
+       */
+      const bool empty() const;
     private:
       std::string m_guid; /**< the GUID's value */
       bool m_isPermaLink; /**< whether the GUID is a permalink or not */

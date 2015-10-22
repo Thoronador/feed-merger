@@ -57,6 +57,14 @@ namespace RSS20
        * \return Returns a the enclosure's MIME type.
        */
       const std::string& type() const;
+
+
+      /** \brief checks whether this element is empty
+       *
+       * \return Returns true, if this element is empty.
+       * Returns false, if it contains some data.
+       */
+      const bool empty() const;
     private:
       std::string m_url; /**< value of the URL attribute */
       uint64_t m_length; /**< length of the media in bytes */

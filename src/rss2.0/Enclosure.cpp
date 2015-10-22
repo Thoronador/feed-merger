@@ -45,4 +45,10 @@ const std::string& Enclosure::type() const
   return m_type;
 }
 
+const bool Enclosure::empty() const
+{
+  //All attributes are required, so all of them have to be there.
+  return (m_url.empty() or (m_length == 0) or m_type.empty());
+}
+
 } //namespace

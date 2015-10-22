@@ -39,4 +39,11 @@ const std::string& Category::domain() const
   return m_domain;
 }
 
+const bool Category::empty() const
+{
+  //Attribute domain is optional, so we do not need to check for it.
+  //However, the category itself is required for a category element.
+  return m_category.empty();
+}
+
 } //namespace
