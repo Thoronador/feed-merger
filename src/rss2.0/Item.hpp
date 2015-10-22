@@ -122,6 +122,14 @@ namespace RSS20
        * \return Returns the value of the source element.
        */
       const Source& source() const;
+
+
+      /** \brief checks whether this item is empty
+       *
+       * \return Returns true, if this item is empty.
+       * Returns false, if it contains some data.
+       */
+      const bool empty() const;
     private:
       std::string m_title; /**< title of the item */
       std::string m_link; /**< link URL */

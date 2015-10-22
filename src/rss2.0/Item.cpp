@@ -91,4 +91,11 @@ const Source& Item::source() const
   return m_source;
 }
 
+const bool Item::empty() const
+{
+  /* All elements of an item are optional, however at least one of title or
+     description must be present. */
+  return (m_title.empty() && m_description.empty());
+}
+
 } //namespace
