@@ -12,6 +12,8 @@ set(feed_merger_sources
     rss2.0/Guid.cpp
     rss2.0/Item.cpp
     rss2.0/Source.cpp
+    xml/XMLDocument.cpp
+    xml/XMLNode.cpp
     main.cpp)
 
 if (CMAKE_COMPILER_IS_GNUCC)
@@ -23,3 +25,13 @@ add_definitions(-Wall -std=c++0x)
 set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 add_executable(feed-merger ${feed_merger_sources})
+
+# find libxml2
+set(LIBXML2_DIR "../cmake/" )
+find_package (LIBXML2)
+if (LIBXML2_FOUND)
+  include_directories(${LIBXML2_INCLUDE_DIRS})
+  target_link_libraries (feed-merger ${LIBXML2_LIBRARIES})
+else ()
+  message ( FATAL_ERROR "libxml2 was not found!" )
+endif (LIBXML2_FOUND)

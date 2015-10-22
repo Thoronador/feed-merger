@@ -32,7 +32,11 @@
 			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="/usr/include/libxml2" />
 		</Compiler>
+		<Linker>
+			<Add library="xml2" />
+		</Linker>
 		<Unit filename="StringFunctions.cpp" />
 		<Unit filename="StringFunctions.hpp" />
 		<Unit filename="main.cpp" />
@@ -50,6 +54,10 @@
 		<Unit filename="rss2.0/Item.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />
 		<Unit filename="rss2.0/Source.hpp" />
+		<Unit filename="xml/XMLDocument.cpp" />
+		<Unit filename="xml/XMLDocument.hpp" />
+		<Unit filename="xml/XMLNode.cpp" />
+		<Unit filename="xml/XMLNode.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
