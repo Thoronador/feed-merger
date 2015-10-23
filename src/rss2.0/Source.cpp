@@ -39,9 +39,14 @@ const std::string& Source::url() const
   return m_url;
 }
 
-const bool Source::empty() const
+bool Source::empty() const
 {
   return (m_source.empty() || m_url.empty());
+}
+
+bool Source::operator==(const Source& other) const
+{
+  return ((m_source == other.m_source) && (m_url == other.m_url));
 }
 
 } //namespace

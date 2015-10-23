@@ -129,7 +129,24 @@ namespace RSS20
        * \return Returns true, if this item is empty.
        * Returns false, if it contains some data.
        */
-      const bool empty() const;
+      bool empty() const;
+
+
+      /** \brief equality operator for Item instances
+       *
+       * \param other   the other Item
+       * \return Returns true, if this instance and other are equal.
+       */
+      bool operator==(const Item& other) const;
+
+
+      /** \brief "less than" comparison (compares publication dates only!)
+       *
+       * \param other  the other Item
+       * \return Returns true, if the the Item's publication date was before
+       * the other Item's publication date.
+       */
+      bool operator<(const Item& other) const;
     private:
       std::string m_title; /**< title of the item */
       std::string m_link; /**< link URL */

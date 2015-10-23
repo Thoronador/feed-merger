@@ -46,4 +46,9 @@ const bool Category::empty() const
   return m_category.empty();
 }
 
+bool Category::operator==(const Category& cat) const
+{
+  return ((m_domain == cat.m_domain) && (m_category == cat.m_category));
+}
+
 } //namespace

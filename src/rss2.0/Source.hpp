@@ -55,7 +55,15 @@ namespace RSS20
        * \return Returns true, if this element is empty.
        * Returns false, if it contains some data.
        */
-      const bool empty() const;
+      bool empty() const;
+
+
+      /** \brief equality operator for Source class
+       *
+       * \param other  another Source instance
+       * \return Returns true, if this instance and other are equal.
+       */
+      bool operator==(const Source& other) const;
     private:
       std::string m_source; /**< source's name */
       std::string m_url; /**< value of the URL attribute */

@@ -51,4 +51,10 @@ const bool Enclosure::empty() const
   return (m_url.empty() or (m_length == 0) or m_type.empty());
 }
 
+bool Enclosure::operator==(const Enclosure& other) const
+{
+  return ((m_url == other.m_url) && (m_length == other.m_length)
+          && (m_type == other.m_type));
+}
+
 } //namespace

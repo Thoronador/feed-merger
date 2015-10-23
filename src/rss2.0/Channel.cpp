@@ -73,4 +73,10 @@ void Channel::addItem(const Item& item)
     m_items.push_back(item);
 }
 
+bool Channel::operator==(const Channel& other) const
+{
+  return ((m_title == other.m_title) && (m_link == other.m_link)
+      && (m_description == other.m_description) && (m_items == other.m_items));
+}
+
 } //namespace

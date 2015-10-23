@@ -53,7 +53,15 @@ namespace RSS20
        * \return Returns true, if this element is empty.
        * Returns false, if it contains some data.
        */
-      const bool empty() const;
+      bool empty() const;
+
+
+      /** \brief equality operator
+       *
+       * \param other  the other instance
+       * \return Returns true, if this instance and other are equal.
+       */
+      bool operator==(const GUID& other) const;
     private:
       std::string m_guid; /**< the GUID's value */
       bool m_isPermaLink; /**< whether the GUID is a permalink or not */

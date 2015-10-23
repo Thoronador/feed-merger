@@ -60,6 +60,14 @@ namespace RSS20
        * Returns false, if it contains some data.
        */
       const bool empty() const;
+
+
+      /** \brief equality operator
+       *
+       * \param cat   the other category instance which will be compared to this instance
+       * \return Returns true, if this category and the other category are equal.
+       */
+      bool operator==(const Category& cat) const;
     private:
       std::string m_category; /**< category name */
       std::string m_domain; /**< category's domain, if any */

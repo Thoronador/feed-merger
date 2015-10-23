@@ -96,6 +96,14 @@ namespace RSS20
        * \param item  the new item, must not be empty
        */
       void addItem(const Item& item);
+
+
+      /** \brief equality operat for RSS 2.0 channel instances
+       *
+       * \param other   the other channel
+       * \return Returns true, if this instance and other are equal.
+       */
+      bool operator==(const Channel& other) const;
     private:
       //required elements; title, link, description
       std::string m_title; /**< title of the channel */

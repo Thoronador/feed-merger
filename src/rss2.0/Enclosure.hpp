@@ -65,6 +65,14 @@ namespace RSS20
        * Returns false, if it contains some data.
        */
       const bool empty() const;
+
+
+      /** \brief equality operator for Enclosure
+       *
+       * \param other  the other instance
+       * \return Returns true, if both instances are equal.
+       */
+      bool operator==(const Enclosure& other) const;
     private:
       std::string m_url; /**< value of the URL attribute */
       uint64_t m_length; /**< length of the media in bytes */

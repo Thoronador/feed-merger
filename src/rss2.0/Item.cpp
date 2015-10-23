@@ -91,11 +91,25 @@ const Source& Item::source() const
   return m_source;
 }
 
-const bool Item::empty() const
+bool Item::empty() const
 {
   /* All elements of an item are optional, however at least one of title or
      description must be present. */
   return (m_title.empty() && m_description.empty());
+}
+
+bool Item::operator==(const Item& other) const
+{
+  return ((m_title == other.m_title) && (m_link == other.m_link)
+       && (m_description == other.m_description) && (m_author == other.m_author)
+       && (m_category == other.m_category) && (m_comments == other.m_comments)
+       && (m_enclosure == other.m_enclosure) && (m_guid == other.m_guid)
+       && (m_pubDate == other.m_pubDate) && (m_source == other.m_source));
+}
+
+bool Item::operator<(const Item& other) const
+{
+  return (std::difftime(other.m_pubDate, m_pubDate) > 0);
 }
 
 } //namespace
