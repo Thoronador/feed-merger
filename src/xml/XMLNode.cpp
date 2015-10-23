@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the Private Message Database.
-    Copyright (C) 2012, 2013, 2014  Thoronador
+    Copyright (C) 2012, 2013, 2014, 2015  Thoronador
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,6 +26,56 @@ XMLNode::XMLNode(const xmlNodePtr node)
 {
   if (NULL==node)
     throw std::invalid_argument("NULL is not allowed as argument in XMLNode::XMLNode()!"); //NULL not allowed
+}
+
+const xmlChar* XMLNode::getName() const
+{
+  return m_Node->name;
+}
+
+std::string XMLNode::getNameAsString() const
+{
+  return reinterpret_cast<const char*>(m_Node->name);
+}
+
+bool XMLNode::hasChild() const
+{
+  return (m_Node->children!=NULL);
+}
+
+bool XMLNode::hasNextSibling() const
+{
+  return (m_Node->next!=NULL);
+}
+
+bool XMLNode::hasPrevSibling() const
+{
+  return (m_Node->prev!=NULL);
+}
+
+bool XMLNode::hasParent() const
+{
+  return (m_Node->parent!=NULL);
+}
+
+bool XMLNode::hasAttribute() const
+{
+  return (m_Node->properties!=NULL);
+}
+
+XMLNode XMLNode::getChild() const
+{
+  return m_Node->children;
+}
+
+XMLNode XMLNode::getNextSibling() const
+{
+  return m_Node->next;
+}
+
+XMLNode XMLNode::getPrevSibling() const
+{
+  return m_Node->prev;
 }
 
 std::string XMLNode::getPlainTextContent() const
@@ -79,4 +129,24 @@ std::string XMLNode::getFirstAttributeValue() const
   if (NULL==m_Node->properties->children) return "";
   //return content of first attr node
   return reinterpret_cast<const char*>(m_Node->properties->children->content);
+}
+
+XMLNode XMLNode::getParent() const
+{
+  return m_Node->parent;
+}
+
+bool XMLNode::isElementNode() const
+{
+  return (m_Node->type==XML_ELEMENT_NODE);
+}
+
+bool XMLNode::isAttributeNode() const
+{
+  return (m_Node->type==XML_ATTRIBUTE_NODE);
+}
+
+bool XMLNode::isTextNode() const
+{
+  return (m_Node->type==XML_TEXT_NODE);
 }
