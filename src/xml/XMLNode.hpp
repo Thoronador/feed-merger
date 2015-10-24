@@ -22,6 +22,8 @@
 #define XMLNODE_HPP
 
 #include <string>
+#include <utility>
+#include <vector>
 #include <libxml/tree.h>
 
 /** \brief This is a C++-style wrapper class for libxml(2)'s xmlNodePtr type.
@@ -91,6 +93,15 @@ class XMLNode
        if there is no attribute for that node or the attribute has no value.
     */
     std::string getFirstAttributeValue() const;
+
+
+    /** \brief returns a vector that contains all attributes of the node, if any
+     *
+     * \return Returns a vector of std::string pairs, where the first element
+     * is the attribute's name and the second one is the attribute's value.
+     * If there are no attributes, an empty vector will be returned.
+     */
+    std::vector<std::pair<std::string, std::string> > getAttributes() const;
 
     /** returns the parent of the node. Throws an exception, if there is no
        parent node.
