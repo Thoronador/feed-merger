@@ -62,11 +62,25 @@ namespace RSS20
       const std::string& title() const;
 
 
+      /** \brief sets the item's title
+       *
+       * \param title  the new item title
+       */
+      void setTitle(const std::string& title);
+
+
       /** \brief gets the item's link
        *
        * \return Returns the value of the link element.
        */
       const std::string& link() const;
+
+
+      /** \brief sets the item link
+       *
+       * \param link  the new item link URL
+       */
+      void setLink(const std::string& link);
 
 
       /** \brief gets the item's description
@@ -76,11 +90,25 @@ namespace RSS20
       const std::string& description() const;
 
 
+      /** \brief sets the item's description
+       *
+       * \param description  the new item description
+       */
+      void setDescription(const std::string& description);
+
+
       /** \brief gets the item's author
        *
        * \return Returns the value of the author element.
        */
       const std::string& author() const;
+
+
+      /** \brief sets the item's author
+       *
+       * \param author  the new item author
+       */
+      void setAuthor(const std::string& author);
 
 
       /** \brief gets the item's category
@@ -89,11 +117,26 @@ namespace RSS20
        */
       const Category& category() const;
 
+
+      /** \brief sets the item's category
+       *
+       * \param category  the new item category
+       */
+      void setCategory(const std::string& category);
+
+
       /** \brief gets the item's comment URL
        *
        * \return Returns the value of the comment element.
        */
       const std::string& comments() const;
+
+
+      /** \brief sets the item's comment URL
+       *
+       * \param comment  the new comment URL
+       */
+      void setComments(const std::string& comment);
 
 
       /** \brief gets the item's enclosure
@@ -103,11 +146,25 @@ namespace RSS20
       const Enclosure& enclosure() const;
 
 
+      /** \brief sets the item's enclosure
+       *
+       * \param enclosure  the new enclosure
+       */
+      void setEnclosure(const std::string& enclosure);
+
+
       /** \brief gets the item's GUID
        *
        * \return Returns the value of the guid element.
        */
       const GUID& guid() const;
+
+
+      /** \brief sets the item's GUID
+       *
+       * \param guid  the new GUID
+       */
+      void setGUID(const std::string& guid);
 
 
       /** \brief gets the item's publication date
@@ -117,11 +174,25 @@ namespace RSS20
       const std::time_t pubDate() const;
 
 
+      /** \brief sets the item's publication date
+       *
+       * \param pubDate  the new publication date
+       */
+      void setPubDate(const std::time_t& pubDate);
+
+
       /** \brief gets the item's source
        *
        * \return Returns the value of the source element.
        */
       const Source& source() const;
+
+
+      /** \brief sets the item's source
+       *
+       * \param source  the new source
+       */
+      void setSource(const std::string& source);
 
 
       /** \brief checks whether this item is empty

@@ -46,9 +46,19 @@ const std::string& Item::title() const
   return m_title;
 }
 
+void Item::setTitle(const std::string& title)
+{
+  m_title = title;
+}
+
 const std::string& Item::link() const
 {
   return m_link;
+}
+
+void Item::setLink(const std::string& link)
+{
+  m_link = link;
 }
 
 const std::string& Item::description() const
@@ -56,9 +66,19 @@ const std::string& Item::description() const
   return m_description;
 }
 
+void Item::setDescription(const std::string& description)
+{
+  m_description = description;
+}
+
 const std::string& Item::author() const
 {
   return m_author;
+}
+
+void Item::setAuthor(const std::string& author)
+{
+  m_author = author;
 }
 
 const Category& Item::category() const
@@ -66,9 +86,19 @@ const Category& Item::category() const
   return m_category;
 }
 
+void Item::setCategory(const std::string& category)
+{
+  m_category = category;
+}
+
 const std::string& Item::comments() const
 {
   return m_comments;
+}
+
+void Item::setComments(const std::string& comment)
+{
+  m_comments = comment;
 }
 
 const Enclosure& Item::enclosure() const
@@ -76,9 +106,19 @@ const Enclosure& Item::enclosure() const
   return m_enclosure;
 }
 
+void Item::setEnclosure(const std::string& enclosure)
+{
+  m_enclosure = enclosure;
+}
+
 const GUID& Item::guid() const
 {
   return m_guid;
+}
+
+void Item::setGUID(const std::string& guid)
+{
+  m_guid = guid;
 }
 
 const std::time_t Item::pubDate() const
@@ -86,9 +126,19 @@ const std::time_t Item::pubDate() const
   return m_pubDate;
 }
 
+void Item::setPubDate(const std::time_t& pubDate)
+{
+  m_pubDate = pubDate;
+}
+
 const Source& Item::source() const
 {
   return m_source;
+}
+
+void Item::setSource(const std::string& source)
+{
+  m_source = source;
 }
 
 bool Item::empty() const
