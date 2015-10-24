@@ -35,7 +35,7 @@ namespace RSS20
        * \param length  length of the enclosure in bytes
        * \param type  media type (MIME type)
        */
-      Enclosure(const std::string& url, const uint64_t length, const std::string& type);
+      Enclosure(const std::string& url = "", const uint64_t length = 0, const std::string& type = "");
 
 
       /** \brief gets the enclosure's URL

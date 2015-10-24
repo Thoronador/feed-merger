@@ -33,7 +33,7 @@ namespace RSS20
        * \param _source text of the source element
        * \param url  the value of the URL attribute
        */
-      Source(const std::string& _source, const std::string& url);
+      Source(const std::string& _source = "", const std::string& url = "");
 
 
       /** \brief gets the source
