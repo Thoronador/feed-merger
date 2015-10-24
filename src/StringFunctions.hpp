@@ -52,4 +52,12 @@ bool stringToInt(const std::string& str, int& value);
  */
 std::vector<std::string> splitAtSeparator(std::string line, const char separator);
 
+
+/** \brief checks whether a string is empty or consists only of whitespace characters
+ *
+ * \param str   the string that shall be checked
+ * \return Returns true, if the string is empty or contains only whitespace characters.
+ */
+bool isEmptyOrWhitespace(const std::string& str);
+
 #endif // STRINGFUNCTIONS_HPP

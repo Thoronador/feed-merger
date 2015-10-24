@@ -19,6 +19,7 @@
 */
 
 #include "StringFunctions.hpp"
+#include <cctype>
 #include <limits>
 
 bool stringToUnsignedInt(const std::string& str, unsigned int& value)
@@ -111,4 +112,19 @@ std::vector<std::string> splitAtSeparator(std::string line, const char separator
     result.push_back(line);
   }
   return std::move(result);
+}
+
+bool isEmptyOrWhitespace(const std::string& str)
+{
+  if (str.empty())
+    return true;
+  std::string::const_iterator iter = str.begin();
+  while (iter != str.end())
+  {
+    const int charAsInt = static_cast<int>(*iter);
+    if ((charAsInt > 127) or (!std::isspace(*iter)))
+      return false;
+    ++iter;
+  } //while
+  return true;
 }
