@@ -116,7 +116,7 @@ const GUID& Item::guid() const
   return m_guid;
 }
 
-void Item::setGUID(const std::string& guid)
+void Item::setGUID(const GUID& guid)
 {
   m_guid = guid;
 }

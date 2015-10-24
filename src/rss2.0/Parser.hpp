@@ -24,6 +24,9 @@
 #ifndef RSS20_PARSER_HPP
 #define RSS20_PARSER_HPP
 
+//forward declaration
+class XMLNode;
+
 namespace RSS20
 {
 
@@ -38,6 +41,15 @@ namespace RSS20
        * Returns false, if the file could not be parsed.
        */
       static bool fromFile(const std::string& fileName, Channel& feed);
+    private:
+      /** \brief parses a feed item from the given XML node
+       *
+       * \param itemNode  the <item> node
+       * \param theItem   variable that will be used to store the parsed result
+       * \return Returns true, if the item node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool itemFromNode(const XMLNode& itemNode, Item& theItem);
   }; //class
 
 } //namespace

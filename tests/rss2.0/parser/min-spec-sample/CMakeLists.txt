@@ -4,6 +4,7 @@ cmake_minimum_required (VERSION 2.8)
 project(rss20-min-spec-sample-test)
 
 set(rss20-min-spec-sample-test_sources
+    ../../../../src/rfc822/Date.cpp
     ../../../../src/rss2.0/Category.cpp
     ../../../../src/rss2.0/Channel.cpp
     ../../../../src/rss2.0/Enclosure.cpp
@@ -11,6 +12,7 @@ set(rss20-min-spec-sample-test_sources
     ../../../../src/rss2.0/Item.cpp
     ../../../../src/rss2.0/Parser.cpp
     ../../../../src/rss2.0/Source.cpp
+    ../../../../src/StringFunctions.cpp
     ../../../../src/xml/XMLDocument.cpp
     ../../../../src/xml/XMLNode.cpp
     main.cpp)

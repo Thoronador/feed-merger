@@ -20,10 +20,165 @@
 
 #include "Parser.hpp"
 #include <iostream>
+#include "../rfc822/Date.hpp"
 #include "../xml/XMLDocument.hpp"
 
 namespace RSS20
 {
+
+bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
+{
+  if (!itemNode.isElementNode() or (itemNode.getNameAsString() != "item"))
+    return false;
+
+  theItem = Item("", "", "", "", Category(), "", Enclosure(), GUID(),
+                 0, Source());
+
+  if (!itemNode.hasChild())
+    return false;
+
+  XMLNode child = itemNode.getChild();
+
+  while (child.hasNextSibling())
+  {
+    child.skipEmptyCommentAndTextSiblings();
+
+    if (!child.isElementNode())
+    {
+      std::cout << "Parser::itemFromNode: Expected element node, but current"
+                << " node is not an element node!" << std::endl;
+      return false;
+    }
+
+    const std::string nodeName = child.getNameAsString();
+
+    if (nodeName == "title")
+    {
+      if (!theItem.title().empty())
+      {
+        std::cout << "Item already has a title!" << std::endl;
+        return false;
+      } //if title was already specified
+      theItem.setTitle(child.getContentBoth());
+    }
+    else if (nodeName == "link")
+    {
+      if (!theItem.link().empty())
+      {
+        std::cout << "Item already has a link!" << std::endl;
+        return false;
+      } //if link was already specified
+      theItem.setLink(child.getContentBoth());
+    }
+    else if (nodeName == "description")
+    {
+      if (!theItem.description().empty())
+      {
+        std::cout << "Item already has a description!" << std::endl;
+        return false;
+      } //if description was already specified
+      theItem.setDescription(child.getContentBoth());
+    }
+    else if (nodeName == "author")
+    {
+      if (!theItem.author().empty())
+      {
+        std::cout << "Item already has a author!" << std::endl;
+        return false;
+      } //if author was already specified
+      theItem.setAuthor(child.getContentBoth());
+    }
+    else if (nodeName == "category")
+    {
+      #warning Not implemented yet!
+      std::cout << "Category parsing is not implemented yet!" << std::endl;
+      return false;
+    }
+    else if (nodeName == "comments")
+    {
+      if (!theItem.comments().empty())
+      {
+        std::cout << "Item already has a comment URL!" << std::endl;
+        return false;
+      } //if comments was already specified
+      theItem.setComments(child.getContentBoth());
+    }
+    else if (nodeName == "enclosure")
+    {
+      #warning Not implemented yet!
+      std::cout << "Enclosure parsing is not implemented yet!" << std::endl;
+      return false;
+    }
+    else if (nodeName == "guid")
+    {
+      if (!theItem.guid().empty())
+      {
+        std::cout << "Item already has a GUID!" << std::endl;
+        return false;
+      } //if GUID was already specified
+      const std::string plainGUID = child.getContentBoth();
+      bool permaLink = false;
+      if (!child.hasAttribute())
+        permaLink = true;
+      else
+      {
+        //The only allowed attribute for <guid> is "isPermaLink".
+        if (child.getFirstAttributeName() != "isPermaLink")
+        {
+          std::cout << "Error: <guid> may not have other attributes than "
+                    << "'isPermaLink', but " << child.getFirstAttributeName()
+                    << " was found!" << std::endl;
+          return false;
+        } //if attribute is not "isPermaLink"
+        const std::string isPermaLink = child.getFirstAttributeValue();
+        if (isPermaLink == "true")
+          permaLink = true;
+        else if (isPermaLink == "false")
+          permaLink == false;
+        else
+        {
+          std::cout << "Error: Value of attribute isPermaLink in <guid> has "
+                    << "to be either \"true\" or \"false\", but it is \""
+                    << isPermaLink << "\" instead." << std::endl;
+          return false;
+        } //else
+      } //if attribute is present
+      //set GUID
+      theItem.setGUID(GUID(plainGUID, permaLink));
+    }
+    else if (nodeName == "pubDate")
+    {
+      if (theItem.pubDate() != 0)
+      {
+        std::cout << "Item already has a publication date!" << std::endl;
+        return false;
+      } //if pubDate was already specified
+      std::time_t thePubDate = 0;
+      if (!rfc822DateTimeToTimeT(child.getContentBoth(), thePubDate))
+      {
+        std::cout << "Could not parse publication date \""
+                  << child.getContentBoth() << "\"!" <<std::endl;
+        return false;
+      }
+      theItem.setPubDate(thePubDate);
+    }
+    else if (nodeName == "source")
+    {
+      #warning Not implemented yet!
+      std::cout << "Source parsing is not implemented yet!" << std::endl;
+      return false;
+    }
+    else
+    {
+      std::cout << "Found unexpected node name within item: \"" << nodeName
+                << "\"!" << std::endl;
+      return false;
+    }
+    child = child.getNextSibling();
+  } //while
+  //We are done here. Item should not be empty by now.
+  return (!theItem.empty());
+}
 
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
 {
@@ -69,11 +224,7 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
   node = node.getChild();
 
   //skip empty comment and text nodes
-  while ((node.isCommentNode() or node.isTextNode())
-         and (node.getContentBoth() == "") and node.hasNextSibling())
-  {
-    node = node.getNextSibling();
-  } //while
+  node.skipEmptyCommentAndTextSiblings();
 
   if (!node.isElementNode() or (node.getNameAsString() != "channel"))
   {
@@ -107,19 +258,41 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
 
     if (nodeName == "title")
     {
-
+      if (!feed.title().empty())
+      {
+        std::cout << "Feed already has a title!" << std::endl;
+        return false;
+      } //if title was already specified
+      feed.setTitle(node.getContentBoth());
     } //if title
     else if (nodeName == "link")
     {
-
+      if (!feed.link().empty())
+      {
+        std::cout << "Feed already has a link!" << std::endl;
+        return false;
+      } //if link was already specified
+      feed.setLink(node.getContentBoth());
     } //if link
     else if (nodeName == "description")
     {
-
+      if (!feed.description().empty())
+      {
+        std::cout << "Feed already has a description!" << std::endl;
+        return false;
+      } //if description was already specified
+      feed.setDescription(node.getContentBoth());
     } //if description
     else if (nodeName == "item")
     {
-
+      Item it = Item("", "", "", "", Category(), "", Enclosure(), GUID(),
+                     0, Source());
+      if (!itemFromNode(node, it))
+      {
+        std::cout << "Could not parse RSS 2.0 item!" << std::endl;
+        return false;
+      }
+      feed.addItem(it);
     } //if item
     else
     {
@@ -127,7 +300,6 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
                 << std::endl;
       return false;
     }
-
     node = node.getNextSibling();
   } //while (outer)
 

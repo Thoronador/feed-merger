@@ -164,7 +164,7 @@ namespace RSS20
        *
        * \param guid  the new GUID
        */
-      void setGUID(const std::string& guid);
+      void setGUID(const GUID& guid);
 
 
       /** \brief gets the item's publication date
