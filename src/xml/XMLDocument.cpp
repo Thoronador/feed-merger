@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the Private Message Database.
-    Copyright (C) 2012, 2014  Thoronador
+    Copyright (C) 2012, 2014, 2015  Thoronador
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,6 +24,11 @@
 XMLDocument::XMLDocument(const std::string& fileName)
 : //parse the XML file
   m_Doc(xmlParseFile(fileName.c_str()))
+{}
+
+XMLDocument::XMLDocument(xmlDocPtr doc)
+: //use existing pointer
+  m_Doc(doc)
 {}
 
 XMLDocument::XMLDocument(const XMLDocument& op)

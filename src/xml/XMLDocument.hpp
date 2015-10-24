@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the Private Message Database.
-    Copyright (C) 2012, 2014  Thoronador
+    Copyright (C) 2012, 2014, 2015  Thoronador
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,6 +35,16 @@ class XMLDocument
      * \param fileName   path to the XML document that shall be wrapped inside this class
      */
     XMLDocument(const std::string& fileName);
+
+
+    /** \brief constructor to create document from an libxml2 document pointer
+     *
+     * \param doc  a valid (non-null) xmlDocPtr
+     * \remarks The created XMLDocument instance takes ownership of the passed
+     * pointer and frees it in its destructor. Therefore, do NOT free that
+     * pointer manually!
+     */
+    XMLDocument(xmlDocPtr doc);
 
 
     /** copy constructor */
