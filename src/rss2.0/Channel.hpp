@@ -37,9 +37,21 @@ namespace RSS20
        * \param link   link URL
        * \param description   channel description
        * \param items         initial items in channel
+       * \param language      channel language
+       * \param copyright     copyright notice for channel elements
+       * \param managingEditor   managing editor's e-mail address
+       * \param webMaster        webmaster's e-mail address
+       * \param pubDate          publication date of the channel
+       * \param lastBuildDate    time when the channel was last changed
+       * \param category         category of the channel
+       * \param generator        program used to generate the channel
        */
       Channel(const std::string& title, const std::string& link,
-              const std::string& description, const std::vector<Item>& items = std::vector<Item>());
+              const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
+              const std::string& language = "", const std::string& copyright = "",
+              const std::string& managingEditor = "", const std::string& webMaster = "",
+              const std::time_t pubDate = 0, const std::time_t lastBuildDate = 0,
+              const Category& category = Category(), const std::string& generator = "");
 
 
       /** \brief gets the channel's title
@@ -98,7 +110,121 @@ namespace RSS20
       void addItem(const Item& item);
 
 
-      /** \brief equality operat for RSS 2.0 channel instances
+      /** \brief gets the channel's language
+       *
+       * \return Returns the language.
+       */
+      const std::string& language() const;
+
+
+      /** \brief sets the channel's language
+       *
+       * \param language  the new channel language
+       */
+      void setLanguage(const std::string& language);
+
+
+      /** \brief gets the channel's copyright note
+       *
+       * \return Returns the copyright note.
+       */
+      const std::string& copyright() const;
+
+
+      /** \brief sets the channel's copyright notice
+       *
+       * \param copyright  the new channel copyright notice
+       */
+      void setCopyright(const std::string& copyright);
+
+
+      /** \brief gets the channel's managing editor's e-mail address
+       *
+       * \return Returns the managing editor's e-mail address.
+       */
+      const std::string& managingEditor() const;
+
+
+      /** \brief sets the channel's managing editor's e-mail address
+       *
+       * \param managingEditor  the new channel's managing editor's e-mail address
+       */
+      void setManagingEditor(const std::string& managingEditor);
+
+
+      /** \brief gets the channel's webmaster's e-mail address
+       *
+       * \return Returns the webmaster's e-mail address.
+       */
+      const std::string& webMaster() const;
+
+
+      /** \brief sets the channel's webmaster's e-mail address
+       *
+       * \param webMaster  the new channel's webmaster's e-mail address
+       */
+      void setWebMaster(const std::string& webMaster);
+
+
+      /** \brief gets the channel's publication date
+       *
+       * \return Returns the publication date.
+       * Returns (time_t)0, if no publication date was set.
+       */
+      std::time_t pubDate() const;
+
+
+      /** \brief sets the channel's publication date
+       *
+       * \param pubDate  the new publication date of the channel
+       */
+      void setPubDate(const std::time_t pubDate);
+
+
+      /** \brief gets the time the content of the channel changed
+       *
+       * \return Returns the time the content of the channel changed.
+       * Returns (time_t)0, if no date was set.
+       */
+      std::time_t lastBuildDate() const;
+
+
+      /** \brief sets the channel's time the content of the channel changed
+       *
+       * \param lastBuildDate  the new time the content of the channel changed
+       */
+      void setLastBuildDate(const std::time_t lastBuildDate);
+
+
+      /** \brief gets the channel's category
+       *
+       * \return Returns the category.
+       */
+      const Category& category() const;
+
+
+      /** \brief sets the channel's category
+       *
+       * \param category  the new channel category
+       */
+      void setCategory(const Category& category);
+
+
+      /** \brief gets the channel's language
+       *
+       * \return Returns the language.
+       */
+      const std::string& generator() const;
+
+
+      /** \brief sets the channel's generator
+       *
+       * \param generator  the new channel generator
+       */
+      void setGenerator(const std::string& generator);
+
+
+      /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
        * \return Returns true, if this instance and other are equal.
@@ -112,7 +238,15 @@ namespace RSS20
       //channel items
       std::vector<Item> m_items; /**< channel items */
       //optional elements
-      #warning TODO: implement optional channel elements!
+      std::string m_language; /**< language the channel is written in */
+      std::string m_copyright; /**< copyright notice for channel */
+      std::string m_managingEditor; /**< e-mail address for person responsible for editorial content */
+      std::string m_webMaster; /**< e-mail address for person responsible for technical issues relating to channel */
+      std::time_t m_pubDate; /**< publication date for content in the channel */
+      std::time_t m_lastBuildDate; /**< last time the content of the channel changed */
+      Category m_category; /**< the channel's category */
+      std::string m_generator; /**< program that was used to generate the channel */
+      #warning TODO: implement missing optional channel elements!
   }; //class
 } //namespace
 
