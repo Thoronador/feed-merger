@@ -247,13 +247,15 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
   //initialize empty channel / feed
   feed = RSS20::Channel("", "", "", std::vector<Item>());
 
-  while (node.hasNextSibling())
+  while (true) //potentially endless loop
   {
     //Skip all non-element nodes (e.g. comment nodes).
-    while (node.hasNextSibling() && !node.isElementNode())
+    node.skipEmptyCommentAndTextSiblings();
+    if (!node.isElementNode())
     {
-      node = node.getNextSibling();
-    } //while (inner)
+      //No more element node means we can break out of the loop
+      break;
+    } //if
 
     const std::string nodeName = node.getNameAsString();
 
@@ -413,11 +415,15 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
     } //if
     else
     {
-      std::cout << "Found unexpected node name: \"" << nodeName << "\"!"
+      std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"
                 << std::endl;
       return false;
     }
-    node = node.getNextSibling();
+    //Move to next sibling or break out of loop, if there are no more siblings.
+    if (node.hasNextSibling())
+      node = node.getNextSibling();
+    else
+      break;
   } //while (outer)
   return true;
 }

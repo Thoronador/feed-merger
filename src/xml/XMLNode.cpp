@@ -20,6 +20,7 @@
 
 #include "XMLNode.hpp"
 #include <stdexcept>
+#include "../StringFunctions.hpp"
 
 XMLNode::XMLNode(const xmlNodePtr node)
 : m_Node(node)
@@ -180,7 +181,7 @@ bool XMLNode::isCommentNode() const
 
 void XMLNode::skipEmptyCommentAndTextSiblings()
 {
-  while ((isCommentNode() or (isTextNode() and getContentBoth().empty()))
+  while ((isCommentNode() or (isTextNode() and isEmptyOrWhitespace(getContentBoth())))
           and hasNextSibling())
   {
     m_Node = m_Node->next;
