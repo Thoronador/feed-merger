@@ -7,3 +7,6 @@ add_subdirectory (min-spec-sample)
 
 # Recurse into subdirectory for tests of parsing of specification sample file.
 add_subdirectory (spec-sample)
+
+# Recurse into subdirectory for tests of parsing of tumblr sample file.
+add_subdirectory (devops-sample)
