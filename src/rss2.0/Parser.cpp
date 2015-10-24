@@ -294,6 +294,90 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
       }
       feed.addItem(it);
     } //if item
+    else if (nodeName == "language")
+    {
+      if (!feed.language().empty())
+      {
+        std::cout << "Feed already has a language!" << std::endl;
+        return false;
+      } //if language was already specified
+      feed.setLanguage(node.getContentBoth());
+    } //if
+    else if (nodeName == "copyright")
+    {
+      if (!feed.copyright().empty())
+      {
+        std::cout << "Feed already has a copyright notice!" << std::endl;
+        return false;
+      } //if copyright notice was already specified
+      feed.setCopyright(node.getContentBoth());
+    } //if
+    else if (nodeName == "managingEditor")
+    {
+      if (!feed.managingEditor().empty())
+      {
+        std::cout << "Feed already has an address for the managing editor!" << std::endl;
+        return false;
+      } //if address was already specified
+      feed.setManagingEditor(node.getContentBoth());
+    } //if
+    else if (nodeName == "webMaster")
+    {
+      if (!feed.webMaster().empty())
+      {
+        std::cout << "Feed already has an address for the webmaster!" << std::endl;
+        return false;
+      } //if address was already specified
+      feed.setWebMaster(node.getContentBoth());
+    } //if
+    else if (nodeName == "pubDate")
+    {
+      if (feed.pubDate() != 0)
+      {
+        std::cout << "Feed already has a publication date!" << std::endl;
+        return false;
+      } //if pubDate was already specified
+      std::time_t thePubDate = 0;
+      if (!rfc822DateTimeToTimeT(node.getContentBoth(), thePubDate))
+      {
+        std::cout << "Could not parse publication date \""
+                  << node.getContentBoth() << "\"!" <<std::endl;
+        return false;
+      }
+      feed.setPubDate(thePubDate);
+    } //if
+    else if (nodeName == "lastBuildDate")
+    {
+      if (feed.lastBuildDate() != 0)
+      {
+        std::cout << "Feed already has a last change date!" << std::endl;
+        return false;
+      } //if lastBuildDate was already specified
+      std::time_t theLastBuildDate = 0;
+      if (!rfc822DateTimeToTimeT(node.getContentBoth(), theLastBuildDate))
+      {
+        std::cout << "Could not parse last change date \""
+                  << node.getContentBoth() << "\"!" <<std::endl;
+        return false;
+      }
+      feed.setLastBuildDate(theLastBuildDate);
+    } //if
+    else if (nodeName == "category")
+    {
+      #warning Not implemented yet!
+      //See implementation for <item> as soon as it is done.
+      std::cout << "Category parsing is not implemented yet!" << std::endl;
+      return false;
+    } //if
+    else if (nodeName == "generator")
+    {
+      if (!feed.generator().empty())
+      {
+        std::cout << "Feed generator was already set!" << std::endl;
+        return false;
+      } //if generator was already specified
+      feed.setGenerator(node.getContentBoth());
+    } //if
     else
     {
       std::cout << "Found unexpected node name: \"" << nodeName << "\"!"
@@ -302,7 +386,7 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
     }
     node = node.getNextSibling();
   } //while (outer)
-
+  return true;
 }
 
 } //namespace
