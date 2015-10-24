@@ -45,13 +45,16 @@ namespace RSS20
        * \param lastBuildDate    time when the channel was last changed
        * \param category         category of the channel
        * \param generator        program used to generate the channel
+       * \param docs             format documentation URL
+       * \param ttl              "time to live" (minutes)
        */
       Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
               const std::string& language = "", const std::string& copyright = "",
               const std::string& managingEditor = "", const std::string& webMaster = "",
               const std::time_t pubDate = 0, const std::time_t lastBuildDate = 0,
-              const Category& category = Category(), const std::string& generator = "");
+              const Category& category = Category(), const std::string& generator = "",
+              const std::string& docs = "", const int ttl = -1);
 
 
       /** \brief gets the channel's title
@@ -224,6 +227,35 @@ namespace RSS20
       void setGenerator(const std::string& generator);
 
 
+      /** \brief gets the format documentation URL
+       *
+       * \return Returns the format documentation URL.
+       */
+      const std::string& docs() const;
+
+
+      /** \brief sets the format documentation URL
+       *
+       * \param title  the new format documentation URL
+       */
+      void setDocs(const std::string& docs);
+
+
+      /** \brief gets the TTL (time to live) in minutes
+       *
+       * \return Returns the TTL in minutes.
+       *         Returns a negative value, if no TTL was set.
+       */
+      int ttl() const;
+
+
+      /** \brief sets the time to live (TTL) in minutes
+       *
+       * \param title  the new time to live (TTL) in minutes
+       */
+      void setTtl(const int ttl);
+
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
@@ -246,6 +278,9 @@ namespace RSS20
       std::time_t m_lastBuildDate; /**< last time the content of the channel changed */
       Category m_category; /**< the channel's category */
       std::string m_generator; /**< program that was used to generate the channel */
+      std::string m_docs; /**< URL for format documentation */
+      // Cloud m_cloud; /**< cloud information for lightweight publish-subscribe protocol */
+      int m_ttl; /**< number of minutes that indicates how long a channel can be cached before refreshing from the source */
       #warning TODO: implement missing optional channel elements!
   }; //class
 } //namespace

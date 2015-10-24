@@ -21,6 +21,7 @@
 #include "Parser.hpp"
 #include <iostream>
 #include "../rfc822/Date.hpp"
+#include "../StringFunctions.hpp"
 #include "../xml/XMLDocument.hpp"
 
 namespace RSS20
@@ -377,6 +378,38 @@ bool Parser::fromFile(const std::string& fileName, Channel& feed)
         return false;
       } //if generator was already specified
       feed.setGenerator(node.getContentBoth());
+    } //if
+    else if (nodeName == "docs")
+    {
+      if (!feed.docs().empty())
+      {
+        std::cout << "Feed documentation URL was already set!" << std::endl;
+        return false;
+      } //if documentation URL was already specified
+      feed.setDocs(node.getContentBoth());
+    } //if
+    else if (nodeName == "ttl")
+    {
+      if (feed.ttl() >= 0)
+      {
+        std::cout << "Feed's TTL was already set!" << std::endl;
+        return false;
+      } //if TTL was already specified
+      const std::string ttlString = node.getContentBoth();
+
+      int ttl = -1;
+      if (!stringToInt(ttlString, ttl))
+      {
+        std::cout << "Error: \"" << ttlString << "\" is not an integer value,"
+                  << " but TTL must be a (non-negative) integer." << std::endl;
+        return false;
+      }
+      if (ttl < 0)
+      {
+        std::cout << "Feed's TTL must not be negative!" << std::endl;
+        return false;
+      }
+      feed.setTtl(ttl);
     } //if
     else
     {

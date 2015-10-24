@@ -28,7 +28,8 @@ Channel::Channel(const std::string& title, const std::string& link,
               const std::string& language, const std::string& copyright,
               const std::string& managingEditor, const std::string& webMaster,
               const std::time_t pubDate, const std::time_t lastBuildDate,
-              const Category& category, const std::string& generator)
+              const Category& category, const std::string& generator,
+              const std::string& docs, const int ttl)
 : m_title(title),
   m_link(link),
   m_description(description),
@@ -40,7 +41,9 @@ Channel::Channel(const std::string& title, const std::string& link,
   m_pubDate(pubDate),
   m_lastBuildDate(lastBuildDate),
   m_category(category),
-  m_generator(generator)
+  m_generator(generator),
+  m_docs(docs),
+  m_ttl(ttl)
 {
 }
 
@@ -165,6 +168,26 @@ void Channel::setGenerator(const std::string& generator)
   m_generator = generator;
 }
 
+const std::string& Channel::docs() const
+{
+  return m_docs;
+}
+
+void Channel::setDocs(const std::string& docs)
+{
+  m_docs = docs;
+}
+
+int Channel::ttl() const
+{
+  return m_ttl;
+}
+
+void Channel::setTtl(const int ttl)
+{
+  m_ttl = ttl;
+}
+
 bool Channel::operator==(const Channel& other) const
 {
   return ((m_title == other.m_title) && (m_link == other.m_link)
@@ -173,6 +196,7 @@ bool Channel::operator==(const Channel& other) const
       && (m_managingEditor == other.m_managingEditor) && (m_webMaster == other.m_webMaster)
       && (m_pubDate == other.m_pubDate) && (m_lastBuildDate == other.m_lastBuildDate)
       && (m_category == other.m_category) && (m_generator == other.m_generator)
+      && (m_docs == other.m_docs) && (m_ttl == other.m_ttl)
     );
 }
 

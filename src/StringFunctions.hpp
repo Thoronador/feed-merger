@@ -34,6 +34,16 @@
 bool stringToUnsignedInt(const std::string& str, unsigned int& value);
 
 
+/** \brief tries to convert the string into a signed int
+ *
+ * \param str    the string that contains the number
+ * \param value  the signed int that will be used to store the result
+ * \return Returns true on success, false on failure.
+ * \remarks If false is returned, the value of parameter value is undefined.
+ */
+bool stringToInt(const std::string& str, int& value);
+
+
 /** \brief splits the given string into pieces, treating a given character
  * as the separator for values, and returns the pieces as a vector
  *

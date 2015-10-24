@@ -50,6 +50,47 @@ bool stringToUnsignedInt(const std::string& str, unsigned int& value)
   return true;
 }
 
+bool stringToInt(const std::string& str, int& value)
+{
+  if (str.empty()) return false;
+  value = 0;
+  unsigned int i;
+  const int cTenthLimit = std::numeric_limits<int>::max() / 10;
+  const int cRealLimit = std::numeric_limits<int>::max();
+  bool negative;
+  if (str.at(0)=='-')
+  {
+    i=1;
+    negative = true;
+  }
+  else
+  {
+    i=0;
+    negative = false;
+  }
+  for ( ; i<str.size(); ++i)
+  {
+    if ((str.at(i)>='0') and (str.at(i)<='9'))
+    {
+      /* If the result of the multiplication in the next line would go out of
+         the type range, then the result is not useful anyway, so quit here. */
+      if (value>cTenthLimit) return false;
+      value = value * 10;
+      /* If the result of the addition in the next line would go out of the
+         type's range, then the result is not useful anyway, so quit here. */
+      if (value>cRealLimit-(str.at(i)-'0')) return false;
+      value = value + (str.at(i)-'0');
+    }//if
+    else
+    {
+      //unknown or invalid character detected
+      return false;
+    }
+  }//for
+  if (negative) value = -value;
+  return true;
+}
+
 std::vector<std::string> splitAtSeparator(std::string line, const char separator)
 {
   std::vector<std::string> result;
