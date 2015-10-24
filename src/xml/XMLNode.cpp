@@ -150,3 +150,8 @@ bool XMLNode::isTextNode() const
 {
   return (m_Node->type==XML_TEXT_NODE);
 }
+
+bool XMLNode::isCommentNode() const
+{
+  return (m_Node->type==XML_COMMENT_NODE);
+}

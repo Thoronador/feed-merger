@@ -60,7 +60,7 @@ class XMLNode
     bool hasParent() const;
 
 
-    /** returns true, if the node has a parent node */
+    /** returns true, if the node has (at least) one attribute */
     bool hasAttribute() const;
 
 
@@ -107,6 +107,10 @@ class XMLNode
 
     /** returns true, if the node is a text node */
     bool isTextNode() const;
+
+
+    /** returns true, if the node is a comment node */
+    bool isCommentNode() const;
 
 
     /** returns the text contained in the node, if it's a text node.  If there is no
