@@ -37,6 +37,10 @@
 		<Linker>
 			<Add library="xml2" />
 		</Linker>
+		<Unit filename="../../../../src/StringFunctions.cpp" />
+		<Unit filename="../../../../src/StringFunctions.hpp" />
+		<Unit filename="../../../../src/rfc822/Date.cpp" />
+		<Unit filename="../../../../src/rfc822/Date.hpp" />
 		<Unit filename="../../../../src/rss2.0/Category.cpp" />
 		<Unit filename="../../../../src/rss2.0/Category.hpp" />
 		<Unit filename="../../../../src/rss2.0/Channel.cpp" />
