@@ -155,3 +155,12 @@ bool XMLNode::isCommentNode() const
 {
   return (m_Node->type==XML_COMMENT_NODE);
 }
+
+void XMLNode::skipEmptyCommentAndTextSiblings()
+{
+  while ((isCommentNode() or (isTextNode() and getContentBoth().empty()))
+          and hasNextSibling())
+  {
+    m_Node = m_Node->next;
+  } //while)
+}

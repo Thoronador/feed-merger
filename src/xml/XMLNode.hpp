@@ -131,6 +131,11 @@ class XMLNode
        will return an empty string.
     */
     std::string getContentBoth() const;
+
+
+    /** \brief replaces the current node with its first non-empty, non-comment sibling node
+     */
+    void skipEmptyCommentAndTextSiblings();
   private:
     xmlNodePtr m_Node;
 };//class
