@@ -6,7 +6,7 @@
 
 # install dependencies
 sudo apt-get update
-sudo apt-get install -y libxml2-dev zlib1g-dev
+sudo apt-get install -y libcurl3-gnutls libcurl4-gnutls-dev libxml2-dev zlib1g-dev
 
 # pre-build test: C++ syntax check
 ./cpplint.sh

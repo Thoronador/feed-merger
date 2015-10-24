@@ -6,6 +6,8 @@ sudo: false
 addons:
   apt:
     packages:
+    - libcurl3-gnutls
+    - libcurl4-gnutls-dev
     - libxml2
     - libxml2-dev
     - zlib1g-dev

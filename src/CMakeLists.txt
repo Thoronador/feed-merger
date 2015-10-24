@@ -36,3 +36,12 @@ if (LIBXML2_FOUND)
 else ()
   message ( FATAL_ERROR "libxml2 was not found!" )
 endif (LIBXML2_FOUND)
+
+# find cURL library
+find_package (CURL)
+if (CURL_FOUND)
+  include_directories(${CURL_INCLUDE_DIRS})
+  target_link_libraries (feed-merger ${CURL_LIBRARIES})
+else ()
+  message ( FATAL_ERROR "cURL was not found!" )
+endif (CURL_FOUND)

@@ -36,7 +36,10 @@
 		</Compiler>
 		<Linker>
 			<Add library="xml2" />
+			<Add library="curl" />
 		</Linker>
+		<Unit filename="Curly.cpp" />
+		<Unit filename="Curly.hpp" />
 		<Unit filename="StringFunctions.cpp" />
 		<Unit filename="StringFunctions.hpp" />
 		<Unit filename="main.cpp" />
