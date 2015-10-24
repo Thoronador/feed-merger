@@ -52,6 +52,8 @@
 		<Unit filename="rss2.0/Guid.hpp" />
 		<Unit filename="rss2.0/Item.cpp" />
 		<Unit filename="rss2.0/Item.hpp" />
+		<Unit filename="rss2.0/Parser.cpp" />
+		<Unit filename="rss2.0/Parser.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />
 		<Unit filename="rss2.0/Source.hpp" />
 		<Unit filename="xml/XMLDocument.cpp" />
