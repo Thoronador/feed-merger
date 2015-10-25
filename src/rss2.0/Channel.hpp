@@ -31,7 +31,12 @@ namespace RSS20
   class Channel
   {
     public:
-      /** \brief default constructor
+      /** \brief default constructor - Sets all members to an empty state.
+       */
+      Channel();
+
+
+      /** \brief constructor with option to pass parameters
        *
        * \param title  title of the channel
        * \param link   link URL

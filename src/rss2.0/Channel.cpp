@@ -23,6 +23,24 @@
 namespace RSS20
 {
 
+Channel::Channel()
+: m_title(""),
+  m_link(""),
+  m_description(""),
+  m_items(std::vector<Item>()),
+  m_language(""),
+  m_copyright(""),
+  m_managingEditor(""),
+  m_webMaster(""),
+  m_pubDate(static_cast<std::time_t>(0)),
+  m_lastBuildDate(static_cast<std::time_t>(0)),
+  m_category(Category()),
+  m_generator(""),
+  m_docs(""),
+  m_ttl(-1)
+{
+}
+
 Channel::Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items,
               const std::string& language, const std::string& copyright,
