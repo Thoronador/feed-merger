@@ -7,6 +7,7 @@ set(devops-sample-test_sources
     ../../../../src/rfc822/Date.cpp
     ../../../../src/rss2.0/Category.cpp
     ../../../../src/rss2.0/Channel.cpp
+    ../../../../src/rss2.0/Cloud.cpp
     ../../../../src/rss2.0/Enclosure.cpp
     ../../../../src/rss2.0/Guid.cpp
     ../../../../src/rss2.0/Item.cpp

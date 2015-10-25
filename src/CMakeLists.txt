@@ -9,6 +9,7 @@ set(feed_merger_sources
     rfc822/Date.cpp
     rss2.0/Category.cpp
     rss2.0/Channel.cpp
+    rss2.0/Cloud.cpp
     rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
     rss2.0/Item.cpp

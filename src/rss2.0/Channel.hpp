@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include "Cloud.hpp"
 #include "Item.hpp"
 
 namespace RSS20
@@ -51,6 +52,7 @@ namespace RSS20
        * \param category         category of the channel
        * \param generator        program used to generate the channel
        * \param docs             format documentation URL
+       * \param cloud  cloud information for lightweight publish-subscribe protocol
        * \param ttl              "time to live" (minutes)
        */
       Channel(const std::string& title, const std::string& link,
@@ -59,7 +61,8 @@ namespace RSS20
               const std::string& managingEditor = "", const std::string& webMaster = "",
               const std::time_t pubDate = 0, const std::time_t lastBuildDate = 0,
               const Category& category = Category(), const std::string& generator = "",
-              const std::string& docs = "", const int ttl = -1);
+              const std::string& docs = "", const Cloud& cloud = Cloud(),
+              const int ttl = -1);
 
 
       /** \brief gets the channel's title
@@ -246,6 +249,20 @@ namespace RSS20
       void setDocs(const std::string& docs);
 
 
+      /** \brief gets the cloud information for publish-subscribe protocol
+       *
+       * \return Returns the cloud information.
+       */
+      const Cloud& cloud() const;
+
+
+      /** \brief sets the cloud information for publish-subscribe protocol
+       *
+       * \param cloud  the new cloud information
+       */
+      void setCloud(const Cloud& cloud);
+
+
       /** \brief gets the TTL (time to live) in minutes
        *
        * \return Returns the TTL in minutes.
@@ -284,7 +301,7 @@ namespace RSS20
       Category m_category; /**< the channel's category */
       std::string m_generator; /**< program that was used to generate the channel */
       std::string m_docs; /**< URL for format documentation */
-      // Cloud m_cloud; /**< cloud information for lightweight publish-subscribe protocol */
+      Cloud m_cloud; /**< cloud information for lightweight publish-subscribe protocol */
       int m_ttl; /**< number of minutes that indicates how long a channel can be cached before refreshing from the source */
       #warning TODO: implement missing optional channel elements!
   }; //class
