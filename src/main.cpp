@@ -36,7 +36,7 @@ const int rcParserError = 3;
 
 void showVersion()
 {
-  std::cout << "feed-merger, version 0.02, 2015-10-25" << std::endl;
+  std::cout << "feed-merger, version 0.03, 2015-10-25" << std::endl;
 }
 
 void showHelp()
@@ -128,6 +128,11 @@ int main(int argc, char** argv)
   {
     Curly cURL;
     cURL.setURL(item);
+    //Allow cURL to follow redirects, ...
+    cURL.followRedirects(true);
+    /* ... but only up to three. That should be more than enough for most
+       sanely configured servers and avoids endless redirect loops. */
+    cURL.setMaximumRedirects(3);
     std::string sourceOfFeed;
     if (!cURL.perform(sourceOfFeed))
     {
@@ -135,6 +140,13 @@ int main(int argc, char** argv)
                 << std::endl;
       return rcNetworkError;
     } //if
+    if (cURL.getResponseCode() != 200)
+    {
+      std::cout << "Error: Retrieving feed from " << item << " returned "
+                << "unexpected response code " << cURL.getResponseCode()
+                << ". Expected: 200." << std::endl;
+      return rcNetworkError;
+    }
     if (sourceOfFeed.empty())
     {
       std::cout << "Error: Getting URL " << item << " returned empty result!"
