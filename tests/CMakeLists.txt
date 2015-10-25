@@ -3,6 +3,9 @@ cmake_minimum_required (VERSION 2.8)
 
 enable_testing()
 
+# Recurse into subdirectory for test of binary executable file.
+add_subdirectory (feed-merger)
+
 # Recurse into subdirectory for test of RFC 822 date stuff.
 add_subdirectory (rfc822_date)
 
