@@ -184,7 +184,20 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
 {
   //parse XML file
-  XMLDocument doc(fileName);
+  const XMLDocument doc(fileName);
+  return fromDocument(doc, feed);
+}
+
+bool Parser::fromString(const std::string& source, Channel& feed)
+{
+  if (source.empty())
+    return false;
+  XMLDocument doc(xmlParseDoc(reinterpret_cast<const xmlChar*>(source.c_str())));
+  return fromDocument(doc, feed);
+}
+
+bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
+{
   if (!doc.isParsed())
   {
     std::cout << "Could not parse XML file!" << std::endl;
