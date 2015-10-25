@@ -181,6 +181,103 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
   return (!theItem.empty());
 }
 
+bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
+{
+  if (!cloudNode.isElementNode() or (cloudNode.getNameAsString() != "cloud"))
+    return false;
+
+  const auto attributes = cloudNode.getAttributes();
+  if (attributes.size() != 5)
+  {
+    std::cout << "Cloud element should have exactly five attributes, but "
+              << attributes.size() << " attributes were found instead."
+              << std::endl;
+    return false;
+  } //if not five attributes
+
+  //initialize element with empty values
+  cloudInfo = Cloud();
+  for (const auto& a : attributes)
+  {
+    const std::string attrName = a.first;
+    if (attrName == "domain")
+    {
+      if (!cloudInfo.domain().empty())
+      {
+        std::cout << "Cloud element already has a domain!" << std::endl;
+        return false;
+      } //if domain was already specified
+      cloudInfo.setDomain(a.second);
+    } //if domain
+    else if (attrName == "port")
+    {
+      if (cloudInfo.port() > 0)
+      {
+        std::cout << "Cloud element already has a port!" << std::endl;
+        return false;
+      } //if port was already specified
+      int port = -1;
+      if (!stringToInt(a.second, port))
+      {
+        std::cout << "Error while parsing <cloud>'s port: " << a.second
+                  << " is not an integer value!" << std::endl;
+        return false;
+      }
+      if ((port <= 0) or (port >= 65536))
+      {
+        std::cout << "Port of <cloud> element must be greater than zero and "
+                  << "less than 65536." << std::endl;
+        return false;
+      }
+      cloudInfo.setPort(port);
+    } //if port
+    else if (attrName == "path")
+    {
+      if (!cloudInfo.path().empty())
+      {
+        std::cout << "Cloud element already has a path!" << std::endl;
+        return false;
+      } //if path was already specified
+      cloudInfo.setPath(a.second);
+    } //if path
+    else if (attrName == "registerProcedure")
+    {
+      if (!cloudInfo.registerProcedure().empty())
+      {
+        std::cout << "Cloud element already has a registerProcedure!" << std::endl;
+        return false;
+      } //if registerProcedure was already specified
+      cloudInfo.setRegisterProcedure(a.second);
+    } //if registerProcedure
+    else if (attrName == "protocol")
+    {
+      if (!cloudInfo.protocol().empty())
+      {
+        std::cout << "Cloud element already has a protocol!" << std::endl;
+        return false;
+      } //if protocol was already specified
+      cloudInfo.setProtocol(a.second);
+    } //if protocol
+    else
+    {
+      std::cout << "Error: found unknown attribute " << a.first
+                << " in <cloud> element of RSS 2.0 channel!" << std::endl;
+      return false;
+    }
+  } //for
+
+  //Check, if all elements are set.
+  if (cloudInfo.domain().empty() || cloudInfo.port() <= 0
+      || cloudInfo.path().empty() || cloudInfo.registerProcedure().empty()
+      || cloudInfo.protocol().empty())
+  {
+    std::cout << "Error: The <cloud> element of the RSS 2.0 channel does not "
+              << "contain all the required information/attributes!" << std::endl;
+      return false;
+  }
+  return true;
+}
+
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
 {
   //parse XML file
@@ -402,7 +499,22 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
         return false;
       } //if documentation URL was already specified
       feed.setDocs(node.getContentBoth());
-    } //if
+    } //if docs
+    else if (nodeName == "cloud")
+    {
+      if (!feed.cloud().empty())
+      {
+        std::cout << "Feed's cloud information was already set!" << std::endl;
+        return false;
+      } //if <cloud> was already specified
+      Cloud cl;
+      if (!cloudFromNode(node, cl))
+      {
+        std::cout << "Could not parse RSS 2.0 <cloud> element!" << std::endl;
+        return false;
+      }
+      feed.setCloud(std::move(cl));
+    } //if cloud
     else if (nodeName == "ttl")
     {
       if (feed.ttl() >= 0)
@@ -425,7 +537,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
         return false;
       }
       feed.setTtl(ttl);
-    } //if
+    } //if ttl
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"

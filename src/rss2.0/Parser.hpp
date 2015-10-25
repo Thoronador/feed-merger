@@ -71,6 +71,16 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool itemFromNode(const XMLNode& itemNode, Item& theItem);
+
+
+      /** \brief parses a cloud element from the given XML node
+       *
+       * \param cloudNode  the <cloud> node
+       * \param cloudInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the cloud node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo);
   }; //class
 
 } //namespace

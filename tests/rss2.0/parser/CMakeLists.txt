@@ -10,3 +10,6 @@ add_subdirectory (spec-sample)
 
 # Recurse into subdirectory for tests of parsing of tumblr sample file.
 add_subdirectory (devops-sample)
+
+# Recurse into subdirectory for test of parsing <cloud> element of <channel>.
+add_subdirectory (cloud-channel-element)
