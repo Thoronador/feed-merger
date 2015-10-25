@@ -55,7 +55,9 @@ Curly::Curly()
   m_PostFields(std::unordered_map<std::string, std::string>()),
   m_Files(std::unordered_map<std::string, std::string>()),
   m_LastResponseCode(0),
-  m_LastContentType("")
+  m_LastContentType(""),
+  m_followRedirects(false),
+  m_maxRedirects(-1)
 {
 }
 
@@ -108,6 +110,29 @@ bool Curly::addFile(const std::string& filename, const std::string& field)
   return true;
 }
 
+bool Curly::followsRedirects() const
+{
+  return m_followRedirects;
+}
+
+void Curly::followRedirects(const bool follow)
+{
+  m_followRedirects = follow;
+}
+
+long int Curly::maximumRedirects() const
+{
+  return m_maxRedirects;
+}
+
+void Curly::setMaximumRedirects(const long int maxRedirect)
+{
+  if (maxRedirect >= 0)
+    m_maxRedirects = maxRedirect;
+  else
+    m_maxRedirects = -1; //map all negative values to -1
+}
+
 bool Curly::perform(std::string& response)
 {
   //"minimum" URL should be something like "http://a.bc"
@@ -138,6 +163,32 @@ bool Curly::perform(std::string& response)
     curl_easy_cleanup(handle);
     return false;
   }
+
+  //set redirection parameters
+  if (followsRedirects())
+  {
+    //make cURL follow redirects
+    retCode = curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
+    if (retCode != CURLE_OK)
+    {
+      std::cerr << "cURL error: setting redirection mode failed!" << std::endl;
+      std::cerr << curl_easy_strerror(retCode) << std::endl;
+      curl_easy_cleanup(handle);
+      return false;
+    }
+    //set limit - but only if we are not "limited" to infinite redirects
+    if (maximumRedirects() >= 0)
+    {
+      retCode = curl_easy_setopt(handle, CURLOPT_MAXREDIRS, maximumRedirects());
+      if (retCode != CURLE_OK)
+      {
+        std::cerr << "cURL error: setting redirection limit failed!" << std::endl;
+        std::cerr << curl_easy_strerror(retCode) << std::endl;
+        curl_easy_cleanup(handle);
+        return false;
+      } //if cURL error
+    } //if redirect limit is given
+  } //if redirects are followed
 
   //construct fields for post request
   #ifdef DEBUG_MODE
