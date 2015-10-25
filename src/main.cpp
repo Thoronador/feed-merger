@@ -18,16 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <unordered_set>
+#include <vector>
+#include "Curly.hpp"
+#include "rss2.0/Channel.hpp"
+#include "rss2.0/Parser.hpp"
 
 //Return code that indicates invalid command line arguments.
 const int rcInvalidParameter = 1;
+//Return code that indicates some network-related problem.
+const int rcNetworkError = 2;
+//Return code that indicates that some data could not be parsed as feed.
+const int rcParserError = 3;
 
 void showVersion()
 {
-  std::cout << "feed-merger, version 0.01, 2015-10-25" << std::endl;
+  std::cout << "feed-merger, version 0.02, 2015-10-25" << std::endl;
 }
 
 void showHelp()
@@ -111,6 +120,60 @@ int main(int argc, char** argv)
               << "are needed to perform a merge." << std::endl;
     return rcInvalidParameter;
   }
+
+  std::vector<std::string> feedSources;
+
+  //Get all the feeds via cURL.
+  for (auto item : feedURLs)
+  {
+    Curly cURL;
+    cURL.setURL(item);
+    std::string sourceOfFeed;
+    if (!cURL.perform(sourceOfFeed))
+    {
+      std::cout << "Error: Unable to retrieve feed from " << item << "!"
+                << std::endl;
+      return rcNetworkError;
+    } //if
+    if (sourceOfFeed.empty())
+    {
+      std::cout << "Error: Getting URL " << item << " returned empty result!"
+                << std::endl;
+      return rcNetworkError;
+    }
+    feedSources.push_back(sourceOfFeed);
+  } //for
+
+  //Parse feed sources into RSS 2.0 feeds.
+  /* TODO: Support Atom feeds, too! */
+
+  std::vector<RSS20::Channel> feeds;
+  std::vector<std::string>::const_iterator feedSrcIter = feedSources.begin();
+  while (feedSrcIter != feedSources.end())
+  {
+    RSS20::Channel feed;
+    if (!RSS20::Parser::fromString(*feedSrcIter, feed))
+    {
+      std::cout << "Error: Could not parse the data from one feed as RSS 2.0!"
+                << std::endl;
+      return rcParserError;
+    }
+    ++feedSrcIter;
+  } //while
+
+  std::vector<RSS20::Item> totalItems;
+  std::vector<RSS20::Channel>::const_iterator feedIter = feeds.begin();
+  while (feedIter != feeds.end())
+  {
+    int i;
+    for (i = 0; i < feedIter->items().size(); ++i)
+    {
+      totalItems.push_back(feedIter->items().at(i));
+    } //for i
+  } //while
+
+  //sort items
+  std::sort(totalItems.begin(), totalItems.end());
 
   std::cout << "Not implemented yet!" << std::endl;
   return 0;
