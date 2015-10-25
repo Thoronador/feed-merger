@@ -4,6 +4,7 @@ cmake_minimum_required (VERSION 2.8)
 project(feed-merger)
 
 set(feed_merger_sources
+    Curly.cpp
     StringFunctions.cpp
     rfc822/Date.cpp
     rss2.0/Category.cpp
