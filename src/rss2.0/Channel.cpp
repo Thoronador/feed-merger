@@ -38,7 +38,8 @@ Channel::Channel()
   m_generator(""),
   m_docs(""),
   m_cloud(Cloud()),
-  m_ttl(-1)
+  m_ttl(-1),
+  m_image(Image())
 {
 }
 
@@ -49,7 +50,7 @@ Channel::Channel(const std::string& title, const std::string& link,
               const std::time_t pubDate, const std::time_t lastBuildDate,
               const Category& category, const std::string& generator,
               const std::string& docs, const Cloud& cloud,
-              const int ttl)
+              const int ttl, const Image& image)
 : m_title(title),
   m_link(link),
   m_description(description),
@@ -64,7 +65,8 @@ Channel::Channel(const std::string& title, const std::string& link,
   m_generator(generator),
   m_docs(docs),
   m_cloud(cloud),
-  m_ttl(ttl)
+  m_ttl(ttl),
+  m_image(image)
 {
 }
 
@@ -219,6 +221,16 @@ void Channel::setTtl(const int ttl)
   m_ttl = ttl;
 }
 
+const Image& Channel::image() const
+{
+  return m_image;
+}
+
+void Channel::setImage(const Image& image)
+{
+  m_image = image;
+}
+
 bool Channel::operator==(const Channel& other) const
 {
   return ((m_title == other.m_title) && (m_link == other.m_link)
@@ -228,7 +240,7 @@ bool Channel::operator==(const Channel& other) const
       && (m_pubDate == other.m_pubDate) && (m_lastBuildDate == other.m_lastBuildDate)
       && (m_category == other.m_category) && (m_generator == other.m_generator)
       && (m_docs == other.m_docs) && (m_cloud == other.m_cloud)
-      && (m_ttl == other.m_ttl)
+      && (m_ttl == other.m_ttl) && (m_image == other.m_image)
     );
 }
 

@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include "Cloud.hpp"
+#include "Image.hpp"
 #include "Item.hpp"
 
 namespace RSS20
@@ -54,6 +55,7 @@ namespace RSS20
        * \param docs             format documentation URL
        * \param cloud  cloud information for lightweight publish-subscribe protocol
        * \param ttl              "time to live" (minutes)
+       * \param image            channel image information
        */
       Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
@@ -62,7 +64,7 @@ namespace RSS20
               const std::time_t pubDate = 0, const std::time_t lastBuildDate = 0,
               const Category& category = Category(), const std::string& generator = "",
               const std::string& docs = "", const Cloud& cloud = Cloud(),
-              const int ttl = -1);
+              const int ttl = -1, const Image& image = Image());
 
 
       /** \brief gets the channel's title
@@ -278,6 +280,20 @@ namespace RSS20
       void setTtl(const int ttl);
 
 
+      /** \brief gets the channel's image
+       *
+       * \return Returns the channel image (if any was set).
+       */
+      const Image& image() const;
+
+
+      /** \brief sets the channel image information
+       *
+       * \param image  the new image information
+       */
+      void setImage(const Image& image);
+
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
@@ -303,6 +319,7 @@ namespace RSS20
       std::string m_docs; /**< URL for format documentation */
       Cloud m_cloud; /**< cloud information for lightweight publish-subscribe protocol */
       int m_ttl; /**< number of minutes that indicates how long a channel can be cached before refreshing from the source */
+      Image m_image; /**< graphic that can be displayed with the channel */
       #warning TODO: implement missing optional channel elements!
   }; //class
 } //namespace

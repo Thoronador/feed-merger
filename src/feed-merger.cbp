@@ -55,6 +55,8 @@
 		<Unit filename="rss2.0/Enclosure.hpp" />
 		<Unit filename="rss2.0/Guid.cpp" />
 		<Unit filename="rss2.0/Guid.hpp" />
+		<Unit filename="rss2.0/Image.cpp" />
+		<Unit filename="rss2.0/Image.hpp" />
 		<Unit filename="rss2.0/Item.cpp" />
 		<Unit filename="rss2.0/Item.hpp" />
 		<Unit filename="rss2.0/Parser.cpp" />

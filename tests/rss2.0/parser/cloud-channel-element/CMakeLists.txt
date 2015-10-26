@@ -10,6 +10,7 @@ set(rss20-cloud-element-test_sources
     ../../../../src/rss2.0/Cloud.cpp
     ../../../../src/rss2.0/Enclosure.cpp
     ../../../../src/rss2.0/Guid.cpp
+    ../../../../src/rss2.0/Image.cpp
     ../../../../src/rss2.0/Item.cpp
     ../../../../src/rss2.0/Parser.cpp
     ../../../../src/rss2.0/Source.cpp
