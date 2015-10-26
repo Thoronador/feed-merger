@@ -135,7 +135,7 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
         if (isPermaLink == "true")
           permaLink = true;
         else if (isPermaLink == "false")
-          permaLink == false;
+          permaLink = false;
         else
         {
           std::cout << "Error: Value of attribute isPermaLink in <guid> has "
