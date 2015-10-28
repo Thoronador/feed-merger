@@ -83,6 +83,16 @@ namespace RSS20
       static bool cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo);
 
 
+      /** \brief parses a enclosure element from the given XML node
+       *
+       * \param enclosureNode  the <enclosure> node
+       * \param enclosureInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the enclosure node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosureInfo);
+
+
       /** \brief parses an image element from the given XML node
        *
        * \param imageNode  the <image> node

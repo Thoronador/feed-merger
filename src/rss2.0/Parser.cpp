@@ -106,10 +106,19 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
     }
     else if (nodeName == "enclosure")
     {
-      #warning Not implemented yet!
-      std::cout << "Enclosure parsing is not implemented yet!" << std::endl;
-      return false;
-    }
+      if (!theItem.enclosure().empty())
+      {
+        std::cout << "Item already has an enclosure!" << std::endl;
+        return false;
+      }
+      Enclosure encl;
+      if (!enclosureFromNode(child, encl))
+      {
+        std::cout << "Could not parse RSS 2.0 <enclosure> element!" << std::endl;
+        return false;
+      }
+      theItem.setEnclosure(std::move(encl));
+    } //if enclosure
     else if (nodeName == "guid")
     {
       if (!theItem.guid().empty())
@@ -146,7 +155,7 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
       } //if attribute is present
       //set GUID
       theItem.setGUID(GUID(plainGUID, permaLink));
-    }
+    } //if GUID
     else if (nodeName == "pubDate")
     {
       if (theItem.pubDate() != 0)
@@ -275,6 +284,85 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
               << "contain all the required information/attributes!" << std::endl;
       return false;
   }
+  return true;
+}
+
+bool Parser::enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosureInfo)
+{
+  if (!enclosureNode.isElementNode()
+      or (enclosureNode.getNameAsString() != "enclosure"))
+    return false;
+
+  const auto attributes = enclosureNode.getAttributes();
+  if (attributes.size() != 3)
+  {
+    std::cout << "Enclosure element should have exactly three attributes, but "
+              << attributes.size() << " attributes were found instead."
+              << std::endl;
+    return false;
+  } //if not three attributes
+
+  //initialize element with empty values
+  enclosureInfo = Enclosure();
+  for (const auto& a : attributes)
+  {
+    const std::string attrName = a.first;
+    if (attrName == "url")
+    {
+      if (!enclosureInfo.url().empty())
+      {
+        std::cout << "Enclosure element already has URL!" << std::endl;
+        return false;
+      } //if URL was already specified
+      enclosureInfo.setUrl(a.second);
+    } //if URL
+    else if (attrName == "length")
+    {
+      if (enclosureInfo.length() > 0)
+      {
+        std::cout << "Enclosure element already has a length!" << std::endl;
+        return false;
+      } //if length was already specified
+      unsigned int length = -1;
+      if (!stringToUnsignedInt(a.second, length))
+      {
+        std::cout << "Error while parsing <enclosure>'s length: " << a.second
+                  << " is not an integer value!" << std::endl;
+        return false;
+      }
+      if (length <= 0)
+      {
+        std::cout << "Length value of <enclosure> element must be greater than zero." << std::endl;
+        return false;
+      }
+      enclosureInfo.setLength(length);
+    } //if port
+    else if (attrName == "type")
+    {
+      if (!enclosureInfo.type().empty())
+      {
+        std::cout << "Enclosure element already has a type!" << std::endl;
+        return false;
+      } //if type was already specified
+      enclosureInfo.setType(a.second);
+    } //if path
+    else
+    {
+      std::cout << "Error: found unknown attribute " << a.first
+                << " in <enclosure> element of RSS 2.0 channel!" << std::endl;
+      return false;
+    }
+  } //for
+
+  //Check, if all elements are set.
+  if (enclosureInfo.url().empty() || (enclosureInfo.length() <= 0)
+      || enclosureInfo.type().empty())
+  {
+    std::cout << "Error: The <enclosure> element of the RSS 2.0 channel does not "
+              << "contain all the required information/attributes!" << std::endl;
+      return false;
+  }
+
   return true;
 }
 
