@@ -35,7 +35,7 @@ namespace RSS20
        * \param category  the category name
        * \param domain    value of the domain attribute, optional
        */
-      Category(const std::string& category = "", const std::string& domain = "");
+      explicit Category(const std::string& category = "", const std::string& domain = "");
 
 
       /** \brief gets the category's name

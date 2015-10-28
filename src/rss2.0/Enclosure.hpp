@@ -35,7 +35,7 @@ namespace RSS20
        * \param length  length of the enclosure in bytes
        * \param type  media type (MIME type)
        */
-      Enclosure(const std::string& url = "", const uint64_t length = 0, const std::string& type = "");
+      explicit Enclosure(const std::string& url = "", const uint64_t length = 0, const std::string& type = "");
 
 
       /** \brief gets the enclosure's URL
@@ -45,6 +45,13 @@ namespace RSS20
       const std::string& url() const;
 
 
+      /** \brief sets the URL of the enclosure
+       *
+       * \param url the new URL of the enclosure
+       */
+      void setUrl(const std::string& url);
+
+
       /** \brief gets the enclosure's length in bytes
        *
        * \return Returns a the length of the enclosure in bytes.
@@ -52,11 +59,25 @@ namespace RSS20
       const uint64_t length() const;
 
 
+      /** \brief sets the length of the enclosure
+       *
+       * \param length the new length of the enclosure
+       */
+      void setLength(const uint64_t length);
+
+
       /** \brief gets the enclosure's MIME type
        *
        * \return Returns a the enclosure's MIME type.
        */
       const std::string& type() const;
+
+
+      /** \brief sets the MIME type of the enclosure
+       *
+       * \param type the new MIME type of the enclosure
+       */
+      void setType(const std::string& type);
 
 
       /** \brief checks whether this element is empty

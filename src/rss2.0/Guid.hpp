@@ -31,7 +31,7 @@ namespace RSS20
   {
     public:
       /** default constructor */
-      GUID(const std::string& guid = "", const bool isPermanent = true);
+      explicit GUID(const std::string& guid = "", const bool isPermanent = true);
 
 
       /** \brief gets the GUID's value

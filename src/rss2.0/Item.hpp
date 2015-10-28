@@ -122,7 +122,7 @@ namespace RSS20
        *
        * \param category  the new item category
        */
-      void setCategory(const std::string& category);
+      void setCategory(const Category& category);
 
 
       /** \brief gets the item's comment URL
@@ -150,7 +150,7 @@ namespace RSS20
        *
        * \param enclosure  the new enclosure
        */
-      void setEnclosure(const std::string& enclosure);
+      void setEnclosure(const Enclosure& enclosure);
 
 
       /** \brief gets the item's GUID
@@ -192,7 +192,7 @@ namespace RSS20
        *
        * \param source  the new source
        */
-      void setSource(const std::string& source);
+      void setSource(const Source& source);
 
 
       /** \brief checks whether this item is empty

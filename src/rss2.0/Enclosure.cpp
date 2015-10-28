@@ -35,14 +35,29 @@ const std::string& Enclosure::url() const
   return m_url;
 }
 
+void Enclosure::setUrl(const std::string& url)
+{
+  m_url = url;
+}
+
 const uint64_t Enclosure::length() const
 {
   return m_length;
 }
 
+void Enclosure::setLength(const uint64_t length)
+{
+  m_length = length;
+}
+
 const std::string& Enclosure::type() const
 {
   return m_type;
+}
+
+void Enclosure::setType(const std::string& type)
+{
+  m_type = type;
 }
 
 const bool Enclosure::empty() const

@@ -86,7 +86,7 @@ const Category& Item::category() const
   return m_category;
 }
 
-void Item::setCategory(const std::string& category)
+void Item::setCategory(const Category& category)
 {
   m_category = category;
 }
@@ -106,7 +106,7 @@ const Enclosure& Item::enclosure() const
   return m_enclosure;
 }
 
-void Item::setEnclosure(const std::string& enclosure)
+void Item::setEnclosure(const Enclosure& enclosure)
 {
   m_enclosure = enclosure;
 }
@@ -136,7 +136,7 @@ const Source& Item::source() const
   return m_source;
 }
 
-void Item::setSource(const std::string& source)
+void Item::setSource(const Source& source)
 {
   m_source = source;
 }
