@@ -177,7 +177,7 @@ int main(int argc, char** argv)
   std::vector<RSS20::Channel>::const_iterator feedIter = feeds.begin();
   while (feedIter != feeds.end())
   {
-    int i;
+    std::vector<RSS20::Item>::size_type i;
     for (i = 0; i < feedIter->items().size(); ++i)
     {
       totalItems.push_back(feedIter->items().at(i));
