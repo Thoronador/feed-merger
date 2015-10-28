@@ -81,6 +81,16 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo);
+
+
+      /** \brief parses an image element from the given XML node
+       *
+       * \param imageNode  the <image> node
+       * \param imageInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the image node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool imageFromNode(const XMLNode& imageNode, Image& imageInfo);
   }; //class
 
 } //namespace

@@ -47,4 +47,9 @@ bool GUID::operator==(const GUID& other) const
   return ((m_guid == other.m_guid) && (m_isPermaLink == other.m_isPermaLink));
 }
 
+bool GUID::operator!=(const GUID& other) const
+{
+  return ((m_guid != other.m_guid) || (m_isPermaLink != other.m_isPermaLink));
+}
+
 } //namespace

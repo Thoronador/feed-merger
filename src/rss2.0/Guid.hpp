@@ -62,6 +62,14 @@ namespace RSS20
        * \return Returns true, if this instance and other are equal.
        */
       bool operator==(const GUID& other) const;
+
+
+      /** \brief inequality operator
+       *
+       * \param other  the other instance
+       * \return Returns true, if this instance and other are NOT equal.
+       */
+      bool operator!=(const GUID& other) const;
     private:
       std::string m_guid; /**< the GUID's value */
       bool m_isPermaLink; /**< whether the GUID is a permalink or not */

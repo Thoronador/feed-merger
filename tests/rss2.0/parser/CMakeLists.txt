@@ -13,3 +13,6 @@ add_subdirectory (devops-sample)
 
 # Recurse into subdirectory for test of parsing <cloud> element of <channel>.
 add_subdirectory (cloud-channel-element)
+
+# Recurse into subdirectory for test of parsing <image> element of <channel>.
+add_subdirectory (image-element)

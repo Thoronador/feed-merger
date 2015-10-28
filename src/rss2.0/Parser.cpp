@@ -278,6 +278,122 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
   return true;
 }
 
+bool Parser::imageFromNode(const XMLNode& imageNode, Image& imageInfo)
+{
+  if (!imageNode.isElementNode() or (imageNode.getNameAsString() != "image"))
+    return false;
+
+  if (!imageNode.hasChild())
+    return false;
+
+  XMLNode child = imageNode.getChild();
+
+  imageInfo = Image();
+
+  while (child.hasNextSibling())
+  {
+    child.skipEmptyCommentAndTextSiblings();
+
+    if (!child.isElementNode())
+    {
+      std::cout << "Parser::imageFromNode: Expected element node, but current"
+                << " node is not an element node!" << std::endl;
+      return false;
+    }
+
+    const std::string nodeName = child.getNameAsString();
+    if (nodeName == "url")
+    {
+      if (!imageInfo.url().empty())
+      {
+        std::cout << "Image already has an URL!" << std::endl;
+        return false;
+      } //if URL was already specified
+      imageInfo.setUrl(child.getContentBoth());
+    }
+    else if (nodeName == "title")
+    {
+      if (!imageInfo.title().empty())
+      {
+        std::cout << "Image already has a title!" << std::endl;
+        return false;
+      } //if title was already specified
+      imageInfo.setTitle(child.getContentBoth());
+    }
+    else if (nodeName == "link")
+    {
+      if (!imageInfo.link().empty())
+      {
+        std::cout << "Image already has a link!" << std::endl;
+        return false;
+      } //if link was already specified
+      imageInfo.setLink(child.getContentBoth());
+    }
+    else if (nodeName == "width")
+    {
+      if (imageInfo.width() > 0)
+      {
+        std::cout << "Image already has a width value!" << std::endl;
+        return false;
+      } //if width was already specified
+      const std::string value = child.getContentBoth();
+      int tempInt = -1;
+      if (!stringToInt(value, tempInt))
+      {
+        std::cout << "Error: " << value << " is no integer value!" << std::endl;
+        return false;
+      }
+      if (tempInt <= 0)
+      {
+        std::cout << "Width must be greater than zero, but current value is "
+                  << tempInt << "!" << std::endl;
+        return false;
+      }
+      imageInfo.setWidth(tempInt);
+    }
+    else if (nodeName == "height")
+    {
+      if (imageInfo.height() > 0)
+      {
+        std::cout << "Image already has a height value!" << std::endl;
+        return false;
+      } //if height was already specified
+      const std::string value = child.getContentBoth();
+      int tempInt = -1;
+      if (!stringToInt(value, tempInt))
+      {
+        std::cout << "Error: " << value << " is no integer value!" << std::endl;
+        return false;
+      }
+      if (tempInt <= 0)
+      {
+        std::cout << "Height must be greater than zero, but current value is "
+                  << tempInt << "!" << std::endl;
+        return false;
+      }
+      imageInfo.setHeight(tempInt);
+    }
+    else if (nodeName == "description")
+    {
+      if (!imageInfo.description().empty())
+      {
+        std::cout << "Image already has a description!" << std::endl;
+        return false;
+      } //if description was already specified
+      imageInfo.setDescription(child.getContentBoth());
+    }
+    else
+    {
+      std::cout << "Found unexpected node name within image: \"" << nodeName
+                << "\"!" << std::endl;
+      return false;
+    }
+    child = child.getNextSibling();
+  } //while
+  //We are done here. Image should not be empty by now.
+  return (!imageInfo.empty());
+}
+
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
 {
   //parse XML file
@@ -538,6 +654,21 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       }
       feed.setTtl(ttl);
     } //if ttl
+    else if (nodeName == "image")
+    {
+      if (!feed.image().empty())
+      {
+        std::cout << "Feed's image was already set!" << std::endl;
+        return false;
+      } //if image was already specified
+      Image img;
+      if (!imageFromNode(node, img))
+      {
+        std::cout << "Could not parse RSS 2.0 <image> element!" << std::endl;
+        return false;
+      }
+      feed.setImage(std::move(img));
+    } //if image
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"

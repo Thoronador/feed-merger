@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Image element test feed</title>
+      <link>http://rss2test.example.com/image/</link>
+      <description>Picture this!</description>
+      <image>
+         <url>http://rss2test.example.com/resource/image.png</url>
+         <title>Well-formed test feed</title>
+         <link>http://rss2test.example.com/image/</link>
+         <width>81</width>
+         <height>38</height>
+         <description>Funny, there is no image.</description>
+      </image>
+      <item>
+         <title>Why?</title>
+         <link>http://rss2test.example.com/image/item1.html</link>
+         <description>A glass of wine</description>
+         <pubDate>Wed, 28 Oct 2015 19:58:31 GMT</pubDate>
+         <guid isPermaLink="false">http://www.example.com/guid-unknown-404</guid>
+      </item>
+   </channel>
+</rss>
