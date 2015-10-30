@@ -22,3 +22,13 @@ add_subdirectory (enclosure-element)
 
 # Recurse into subdirectory for test of parsing <source> element of <item>.
 add_subdirectory (source-element)
+
+# Recurse into subdirectory for test of parsing <category> element of <item>.
+add_subdirectory (category-element)
+
+# Recurse into subdirectory for test of parsing <category> element of <item>,
+# but without the optional domain attribute.
+add_subdirectory (category-element-nd)
+
+# Recurse into subdirectory for test of parsing <category> element of <channel>.
+add_subdirectory (category-element-channel)
