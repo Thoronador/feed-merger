@@ -832,6 +832,15 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       }
       feed.setImage(std::move(img));
     } //if image
+    else if (nodeName == "rating")
+    {
+      if (!feed.rating().empty())
+      {
+        std::cout << "Feed already has a rating!" << std::endl;
+        return false;
+      } //if rating was already specified
+      feed.setRating(node.getContentBoth());
+    } //if rating
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"
