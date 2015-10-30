@@ -46,12 +46,26 @@ namespace RSS20
       const std::string& get() const;
 
 
+      /** \brief sets a new category
+       *
+       * \param category  the new category name
+       */
+      void setCategory(const std::string& category);
+
+
       /** \brief gets the category's domain
        *
        * \return Returns a string representing the domain.
        *         Returns an empty string, if no domain is set.
        */
       const std::string& domain() const;
+
+
+      /** \brief sets a new domain
+       *
+       * \param domain  the new domain of the category
+       */
+      void setDomain(const std::string& domain);
 
 
       /** \brief checks whether this element is empty

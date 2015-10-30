@@ -34,9 +34,19 @@ const std::string& Category::get() const
   return m_category;
 }
 
+void Category::setCategory(const std::string& category)
+{
+  m_category = category;
+}
+
 const std::string& Category::domain() const
 {
   return m_domain;
+}
+
+void Category::setDomain(const std::string& domain)
+{
+  m_domain = domain;
 }
 
 const bool Category::empty() const
