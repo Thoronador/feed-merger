@@ -174,9 +174,18 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
     }
     else if (nodeName == "source")
     {
-      #warning Not implemented yet!
-      std::cout << "Source parsing is not implemented yet!" << std::endl;
-      return false;
+      if (!theItem.source().empty())
+      {
+        std::cout << "Item's source was already set!" << std::endl;
+        return false;
+      } //if source was already specified
+      Source src;
+      if (!sourceFromNode(child, src))
+      {
+        std::cout << "Could not parse RSS 2.0 <source> element!" << std::endl;
+        return false;
+      }
+      theItem.setSource(std::move(src));
     }
     else
     {
@@ -480,6 +489,31 @@ bool Parser::imageFromNode(const XMLNode& imageNode, Image& imageInfo)
   } //while
   //We are done here. Image should not be empty by now.
   return (!imageInfo.empty());
+}
+
+bool Parser::sourceFromNode(const XMLNode& sourceNode, Source& sourceInfo)
+{
+  if (!sourceNode.isElementNode() or (sourceNode.getNameAsString() != "source"))
+    return false;
+
+  const auto attrs = sourceNode.getAttributes();
+  if (attrs.size() != 1)
+  {
+    std::cout << "Error: Node <source> should have exactly one attribute!" << std::endl;
+    return false;
+  } //if
+  if (attrs[0].first != "url")
+  {
+    std::cout << "Error: Node <source> should have a 'url' attribute!" << std::endl;
+    return false;
+  }
+  sourceInfo = Source(sourceNode.getContentBoth(), attrs[0].second);
+  if (sourceInfo.empty())
+  {
+    std::cout << "Error: <source> node is (partially) empty." << std::endl;
+    return false;
+  }
+  return true;
 }
 
 bool Parser::fromFile(const std::string& fileName, Channel& feed)

@@ -19,3 +19,6 @@ add_subdirectory (image-element)
 
 # Recurse into subdirectory for test of parsing <enclosure> element of <item>.
 add_subdirectory (enclosure-element)
+
+# Recurse into subdirectory for test of parsing <source> element of <item>.
+add_subdirectory (source-element)

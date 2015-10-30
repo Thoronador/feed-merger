@@ -101,6 +101,16 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool imageFromNode(const XMLNode& imageNode, Image& imageInfo);
+
+
+      /** \brief parses a source element from the given XML node
+       *
+       * \param sourceNode  the <source> node
+       * \param sourceInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the source node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool sourceFromNode(const XMLNode& sourceNode, Source& sourceInfo);
   }; //class
 
 } //namespace
