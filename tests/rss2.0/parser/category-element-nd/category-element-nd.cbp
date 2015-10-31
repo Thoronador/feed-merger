@@ -59,6 +59,8 @@
 		<Unit filename="../../../../src/rss2.0/Parser.hpp" />
 		<Unit filename="../../../../src/rss2.0/Source.cpp" />
 		<Unit filename="../../../../src/rss2.0/Source.hpp" />
+		<Unit filename="../../../../src/rss2.0/TextInput.cpp" />
+		<Unit filename="../../../../src/rss2.0/TextInput.hpp" />
 		<Unit filename="../../../../src/xml/XMLDocument.cpp" />
 		<Unit filename="../../../../src/xml/XMLDocument.hpp" />
 		<Unit filename="../../../../src/xml/XMLNode.cpp" />

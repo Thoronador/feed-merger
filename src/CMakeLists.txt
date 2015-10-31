@@ -16,6 +16,7 @@ set(feed_merger_sources
     rss2.0/Item.cpp
     rss2.0/Parser.cpp
     rss2.0/Source.cpp
+    rss2.0/TextInput.cpp
     xml/XMLDocument.cpp
     xml/XMLNode.cpp
     main.cpp)

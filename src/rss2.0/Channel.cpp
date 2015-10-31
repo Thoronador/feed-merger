@@ -40,7 +40,8 @@ Channel::Channel()
   m_cloud(Cloud()),
   m_ttl(-1),
   m_image(Image()),
-  m_rating("")
+  m_rating(""),
+  m_textInput(TextInput())
 {
 }
 
@@ -52,7 +53,7 @@ Channel::Channel(const std::string& title, const std::string& link,
               const Category& category, const std::string& generator,
               const std::string& docs, const Cloud& cloud,
               const int ttl, const Image& image,
-              const std::string& rating)
+              const std::string& rating, const TextInput& textInput)
 : m_title(title),
   m_link(link),
   m_description(description),
@@ -69,7 +70,8 @@ Channel::Channel(const std::string& title, const std::string& link,
   m_cloud(cloud),
   m_ttl(ttl),
   m_image(image),
-  m_rating(rating)
+  m_rating(rating),
+  m_textInput(textInput)
 {
 }
 
@@ -244,6 +246,16 @@ void Channel::setRating(const std::string& rating)
   m_rating = rating;
 }
 
+const TextInput& Channel::textInput() const
+{
+  return m_textInput;
+}
+
+void Channel::setTextInput(const TextInput& textInput)
+{
+  m_textInput = textInput;
+}
+
 bool Channel::operator==(const Channel& other) const
 {
   return ((m_title == other.m_title) && (m_link == other.m_link)
@@ -254,7 +266,7 @@ bool Channel::operator==(const Channel& other) const
       && (m_category == other.m_category) && (m_generator == other.m_generator)
       && (m_docs == other.m_docs) && (m_cloud == other.m_cloud)
       && (m_ttl == other.m_ttl) && (m_image == other.m_image)
-      && (m_rating == other.m_rating)
+      && (m_rating == other.m_rating) && (m_textInput == other.m_textInput)
     );
 }
 

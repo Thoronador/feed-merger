@@ -63,6 +63,8 @@
 		<Unit filename="rss2.0/Parser.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />
 		<Unit filename="rss2.0/Source.hpp" />
+		<Unit filename="rss2.0/TextInput.cpp" />
+		<Unit filename="rss2.0/TextInput.hpp" />
 		<Unit filename="xml/XMLDocument.cpp" />
 		<Unit filename="xml/XMLDocument.hpp" />
 		<Unit filename="xml/XMLNode.cpp" />

@@ -26,6 +26,7 @@
 #include "Cloud.hpp"
 #include "Image.hpp"
 #include "Item.hpp"
+#include "TextInput.hpp"
 
 namespace RSS20
 {
@@ -57,6 +58,7 @@ namespace RSS20
        * \param ttl              "time to live" (minutes)
        * \param image            channel image information
        * \param rating           the PICS rating of the channel
+       * \param textInput        text input box that can be displayed with the channel
        */
       Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
@@ -66,7 +68,7 @@ namespace RSS20
               const Category& category = Category(), const std::string& generator = "",
               const std::string& docs = "", const Cloud& cloud = Cloud(),
               const int ttl = -1, const Image& image = Image(),
-              const std::string& rating = "");
+              const std::string& rating = "", const TextInput& textInput = TextInput());
 
 
       /** \brief gets the channel's title
@@ -310,6 +312,19 @@ namespace RSS20
       void setRating(const std::string& rating);
 
 
+      /** \brief gets the text input box for the channel
+       *
+       * \return Returns the text input box for the channel.
+       */
+      const TextInput& textInput() const;
+
+
+      /** \brief sets the text input box for the channel
+       *
+       * \param textInput  the new text input box
+       */
+      void setTextInput(const TextInput& textInput);
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
@@ -337,6 +352,7 @@ namespace RSS20
       int m_ttl; /**< number of minutes that indicates how long a channel can be cached before refreshing from the source */
       Image m_image; /**< graphic that can be displayed with the channel */
       std::string m_rating; /**< the PICS rating for the channel */
+      TextInput m_textInput; /**< text input box that can be displayed with the channel */
       #warning TODO: implement missing optional channel elements!
   }; //class
 } //namespace
