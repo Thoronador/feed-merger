@@ -38,3 +38,6 @@ add_subdirectory (textinput-element)
 
 # Recurse into subdirectory for test of parsing <skipHours> element of <channel>.
 add_subdirectory (skiphours-element)
+
+# Recurse into subdirectory for test of parsing <skipDays> element of <channel>.
+add_subdirectory (skipdays-element)

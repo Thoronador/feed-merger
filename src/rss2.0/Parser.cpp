@@ -674,7 +674,7 @@ bool Parser::skipHoursFromNode(const XMLNode& skipHoursNode, std::set<unsigned i
     }
     else
     {
-      std::cout << "Found unexpected node name within skipDays: \"" << nodeName
+      std::cout << "Found unexpected node name within skipHours: \"" << nodeName
                 << "\"!" << std::endl;
       return false;
     }
@@ -682,6 +682,76 @@ bool Parser::skipHoursFromNode(const XMLNode& skipHoursNode, std::set<unsigned i
   } //while
   //We are done here. Set should not be empty by now.
   return (!skipHoursInfo.empty());
+}
+
+bool Parser::skipDaysFromNode(const XMLNode& skipDaysNode, std::set<Days>& skipDaysInfo)
+{
+  if (!skipDaysNode.isElementNode() or (skipDaysNode.getNameAsString() != "skipDays"))
+    return false;
+
+  if (!skipDaysNode.hasChild())
+    return false;
+
+  XMLNode child = skipDaysNode.getChild();
+
+  skipDaysInfo = std::set<Days>();
+
+  while (child.hasNextSibling())
+  {
+    child.skipEmptyCommentAndTextSiblings();
+
+    if (!child.isElementNode())
+    {
+      std::cout << "Parser::skipDaysFromNode: Expected element node, but current"
+                << " node is not an element node!" << std::endl;
+      return false;
+    }
+
+    const std::string nodeName = child.getNameAsString();
+
+    if (nodeName == "day")
+    {
+      Days day = Days::Monday;
+      const std::string strDay = child.getContentBoth();
+      if (strDay == "Monday")
+        day = Days::Monday;
+      else if (strDay == "Tuesday")
+        day = Days::Tuesday;
+      else if (strDay == "Wednesday")
+        day = Days::Wednesday;
+      else if (strDay == "Thursday")
+        day = Days::Thursday;
+      else if (strDay == "Friday")
+        day = Days::Friday;
+      else if (strDay == "Saturday")
+        day = Days::Saturday;
+      else if (strDay == "Sunday")
+        day = Days::Sunday;
+      else
+      {
+        std::cout << "Error while parsing <day>'s content: " << strDay
+                  << " is not an valid day of the week!" << std::endl;
+        return false;
+      }
+
+      if (skipDaysInfo.find(day) != skipDaysInfo.end())
+      {
+        std::cout << "Error: <skipDays> already contains day " << strDay
+                  << "!" << std::endl;
+        return false;
+      }
+      skipDaysInfo.insert(day);
+    }
+    else
+    {
+      std::cout << "Found unexpected node name within skipDays: \"" << nodeName
+                << "\"!" << std::endl;
+      return false;
+    }
+    child = child.getNextSibling();
+  } //while
+  //We are done here. Set should not be empty by now.
+  return (!skipDaysInfo.empty());
 }
 
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
@@ -1006,6 +1076,21 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       }
       feed.setSkipHours(std::move(skipH));
     } //if skipHours
+    else if (nodeName == "skipDays")
+    {
+      if (!feed.skipDays().empty())
+      {
+        std::cout << "Feed already has skipDays set!" << std::endl;
+        return false;
+      } //if skipDays was already specified
+      std::set<Days> skipD;
+      if (!skipDaysFromNode(node, skipD))
+      {
+        std::cout << "Could not parse RSS 2.0 <skipDays> element!" << std::endl;
+        return false;
+      }
+      feed.setSkipDays(std::move(skipD));
+    } //if skipDays
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"

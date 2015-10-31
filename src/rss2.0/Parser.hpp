@@ -141,6 +141,16 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool skipHoursFromNode(const XMLNode& skipHoursNode, std::set<unsigned int>& skipHoursInfo);
+
+
+      /** \brief parses a skipDays element from the given XML node
+       *
+       * \param skipDaysNode   the <skipDays> node
+       * \param skipDaysInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the skipDays node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool skipDaysFromNode(const XMLNode& skipDaysNode, std::set<Days>& skipDaysInfo);
   }; //class
 
 } //namespace

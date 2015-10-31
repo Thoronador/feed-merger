@@ -25,6 +25,7 @@
 #include <string>
 #include <vector>
 #include "Cloud.hpp"
+#include "Days.hpp"
 #include "Image.hpp"
 #include "Item.hpp"
 #include "TextInput.hpp"
@@ -61,6 +62,7 @@ namespace RSS20
        * \param rating           the PICS rating of the channel
        * \param textInput        text input box that can be displayed with the channel
        * \param skipHours        initial value for skipHours element
+       * \param skipDays         initial value for skipDays element
        */
       Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
@@ -71,7 +73,8 @@ namespace RSS20
               const std::string& docs = "", const Cloud& cloud = Cloud(),
               const int ttl = -1, const Image& image = Image(),
               const std::string& rating = "", const TextInput& textInput = TextInput(),
-              const std::set<unsigned int>& skipHours = std::set<unsigned int>());
+              const std::set<unsigned int>& skipHours = std::set<unsigned int>(),
+              const std::set<Days>& skipDays = std::set<Days>());
 
 
       /** \brief gets the channel's title
@@ -342,6 +345,20 @@ namespace RSS20
        */
       void setSkipHours(const std::set<unsigned int>& skipHours);
 
+
+      /** \brief gets the days (in GMT) where aggregators shall skip querying the channel
+       *
+       * \return Returns the set of days.
+       */
+      const std::set<Days>& skipDays() const;
+
+
+      /** \brief sets the skip days
+       *
+       * \param skipDays  the new set of days
+       */
+      void setSkipDays(const std::set<Days>& skipDays);
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
@@ -371,7 +388,7 @@ namespace RSS20
       std::string m_rating; /**< the PICS rating for the channel */
       TextInput m_textInput; /**< text input box that can be displayed with the channel */
       std::set<unsigned int> m_skipHours; /**< hint for aggregators telling them which hours they can skip */
-      #warning TODO: implement missing optional channel elements!
+      std::set<Days> m_skipDays; /**< hint for aggregators telling them which days they can skip */
   }; //class
 } //namespace
 

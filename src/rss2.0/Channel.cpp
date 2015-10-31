@@ -55,7 +55,8 @@ Channel::Channel(const std::string& title, const std::string& link,
               const std::string& docs, const Cloud& cloud,
               const int ttl, const Image& image,
               const std::string& rating, const TextInput& textInput,
-              const std::set<unsigned int>& skipHours)
+              const std::set<unsigned int>& skipHours,
+              const std::set<Days>& skipDays)
 : m_title(title),
   m_link(link),
   m_description(description),
@@ -74,7 +75,8 @@ Channel::Channel(const std::string& title, const std::string& link,
   m_image(image),
   m_rating(rating),
   m_textInput(textInput),
-  m_skipHours(skipHours)
+  m_skipHours(skipHours),
+  m_skipDays(skipDays)
 {
 }
 
@@ -280,6 +282,16 @@ void Channel::setSkipHours(const std::set<unsigned int>& skipHours)
     m_skipHours.erase(iter24plus, m_skipHours.end());
 }
 
+const std::set<Days>& Channel::skipDays() const
+{
+  return m_skipDays;
+}
+
+void Channel::setSkipDays(const std::set<Days>& skipDays)
+{
+  m_skipDays = skipDays;
+}
+
 bool Channel::operator==(const Channel& other) const
 {
   return ((m_title == other.m_title) && (m_link == other.m_link)
@@ -291,7 +303,7 @@ bool Channel::operator==(const Channel& other) const
       && (m_docs == other.m_docs) && (m_cloud == other.m_cloud)
       && (m_ttl == other.m_ttl) && (m_image == other.m_image)
       && (m_rating == other.m_rating) && (m_textInput == other.m_textInput)
-      && (m_skipHours == other.m_skipHours)
+      && (m_skipHours == other.m_skipHours) && (m_skipDays == other.m_skipDays)
     );
 }
 
