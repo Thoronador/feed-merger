@@ -549,6 +549,78 @@ bool Parser::categoryFromNode(const XMLNode& categoryNode, Category& categoryInf
   return !categoryInfo.empty();
 }
 
+bool Parser::textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo)
+{
+  if (!textInputNode.isElementNode() or (textInputNode.getNameAsString() != "textInput"))
+    return false;
+
+  if (!textInputNode.hasChild())
+    return false;
+
+  XMLNode child = textInputNode.getChild();
+
+  textInputInfo = TextInput();
+
+  while (child.hasNextSibling())
+  {
+    child.skipEmptyCommentAndTextSiblings();
+
+    if (!child.isElementNode())
+    {
+      std::cout << "Parser::textInputFromNode: Expected element node, but current"
+                << " node is not an element node!" << std::endl;
+      return false;
+    }
+
+    const std::string nodeName = child.getNameAsString();
+    if (nodeName == "title")
+    {
+      if (!textInputInfo.title().empty())
+      {
+        std::cout << "<textInput> already has a title!" << std::endl;
+        return false;
+      } //if title was already specified
+      textInputInfo.setTitle(child.getContentBoth());
+    }
+    else if (nodeName == "description")
+    {
+      if (!textInputInfo.description().empty())
+      {
+        std::cout << "Text input box already has a description!" << std::endl;
+        return false;
+      } //if description was already specified
+      textInputInfo.setDescription(child.getContentBoth());
+    }
+    else if (nodeName == "name")
+    {
+      if (!textInputInfo.name().empty())
+      {
+        std::cout << "Text input box already has a name!" << std::endl;
+        return false;
+      } //if name was already specified
+      textInputInfo.setName(child.getContentBoth());
+    }
+    else if (nodeName == "link")
+    {
+      if (!textInputInfo.link().empty())
+      {
+        std::cout << "Text input box already has a link!" << std::endl;
+        return false;
+      } //if link was already specified
+      textInputInfo.setLink(child.getContentBoth());
+    }
+    else
+    {
+      std::cout << "Found unexpected node name within textInput: \"" << nodeName
+                << "\"!" << std::endl;
+      return false;
+    }
+    child = child.getNextSibling();
+  } //while
+  //We are done here. Text input box should not be empty by now.
+  return (!textInputInfo.empty());
+}
+
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
 {
   //parse XML file
@@ -841,6 +913,21 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       } //if rating was already specified
       feed.setRating(node.getContentBoth());
     } //if rating
+    else if (nodeName == "textInput")
+    {
+      if (!feed.textInput().empty())
+      {
+        std::cout << "Feed already has a text input element!" << std::endl;
+        return false;
+      } //if text input element was already specified
+      TextInput txIn;
+      if (!textInputFromNode(node, txIn))
+      {
+        std::cout << "Could not parse RSS 2.0 <textInput> element!" << std::endl;
+        return false;
+      }
+      feed.setTextInput(std::move(txIn));
+    } //if
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"

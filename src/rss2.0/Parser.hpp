@@ -121,6 +121,16 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo);
+
+
+      /** \brief parses a textInput element from the given XML node
+       *
+       * \param textInputNode  the <textInput> node
+       * \param textInputInfo   variable that will be used to store the parsed result
+       * \return Returns true, if the textInput node could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo);
   }; //class
 
 } //namespace

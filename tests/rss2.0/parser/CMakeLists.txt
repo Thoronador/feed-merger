@@ -32,3 +32,6 @@ add_subdirectory (category-element-nd)
 
 # Recurse into subdirectory for test of parsing <category> element of <channel>.
 add_subdirectory (category-element-channel)
+
+# Recurse into subdirectory for test of parsing <textInput> element of <channel>.
+add_subdirectory (textinput-element)
