@@ -21,6 +21,7 @@
 #ifndef RSS20_CHANNEL_HPP
 #define RSS20_CHANNEL_HPP
 
+#include <set>
 #include <string>
 #include <vector>
 #include "Cloud.hpp"
@@ -59,6 +60,7 @@ namespace RSS20
        * \param image            channel image information
        * \param rating           the PICS rating of the channel
        * \param textInput        text input box that can be displayed with the channel
+       * \param skipHours        initial value for skipHours element
        */
       Channel(const std::string& title, const std::string& link,
               const std::string& description, const std::vector<Item>& items = std::vector<Item>(),
@@ -68,7 +70,8 @@ namespace RSS20
               const Category& category = Category(), const std::string& generator = "",
               const std::string& docs = "", const Cloud& cloud = Cloud(),
               const int ttl = -1, const Image& image = Image(),
-              const std::string& rating = "", const TextInput& textInput = TextInput());
+              const std::string& rating = "", const TextInput& textInput = TextInput(),
+              const std::set<unsigned int>& skipHours = std::set<unsigned int>());
 
 
       /** \brief gets the channel's title
@@ -325,6 +328,20 @@ namespace RSS20
        */
       void setTextInput(const TextInput& textInput);
 
+
+      /** \brief gets the hours (in GMT) where aggregators shall skip querying the channel
+       *
+       * \return Returns the set of hours (range [0;23]).
+       */
+      const std::set<unsigned int>& skipHours() const;
+
+
+      /** \brief sets the skip hours
+       *
+       * \param skipHours  the new set of hours
+       */
+      void setSkipHours(const std::set<unsigned int>& skipHours);
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
@@ -353,6 +370,7 @@ namespace RSS20
       Image m_image; /**< graphic that can be displayed with the channel */
       std::string m_rating; /**< the PICS rating for the channel */
       TextInput m_textInput; /**< text input box that can be displayed with the channel */
+      std::set<unsigned int> m_skipHours; /**< hint for aggregators telling them which hours they can skip */
       #warning TODO: implement missing optional channel elements!
   }; //class
 } //namespace

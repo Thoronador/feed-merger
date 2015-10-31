@@ -379,8 +379,7 @@ bool Parser::enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosur
     std::cout << "Error: The <enclosure> element of the RSS 2.0 channel does not "
               << "contain all the required information/attributes!" << std::endl;
       return false;
-  }
-
+  } //if
   return true;
 }
 
@@ -619,6 +618,70 @@ bool Parser::textInputFromNode(const XMLNode& textInputNode, TextInput& textInpu
   } //while
   //We are done here. Text input box should not be empty by now.
   return (!textInputInfo.empty());
+}
+
+bool Parser::skipHoursFromNode(const XMLNode& skipHoursNode, std::set<unsigned int>& skipHoursInfo)
+{
+  if (!skipHoursNode.isElementNode() or (skipHoursNode.getNameAsString() != "skipHours"))
+    return false;
+
+  if (!skipHoursNode.hasChild())
+    return false;
+
+  XMLNode child = skipHoursNode.getChild();
+
+  skipHoursInfo = std::set<unsigned int>();
+
+  while (child.hasNextSibling())
+  {
+    child.skipEmptyCommentAndTextSiblings();
+
+    if (!child.isElementNode())
+    {
+      std::cout << "Parser::skipHoursFromNode: Expected element node, but current"
+                << " node is not an element node!" << std::endl;
+      return false;
+    }
+
+    const std::string nodeName = child.getNameAsString();
+
+    if (nodeName == "hour")
+    {
+      unsigned int hour = 25;
+      if (!stringToUnsignedInt(child.getContentBoth(), hour))
+      {
+        std::cout << "Error while parsing <hour>'s content: "
+                  << child.getContentBoth() << " is not an unsigned integer value!"
+                  << std::endl;
+        return false;
+      }
+
+      if (hour == 24)
+        hour = 0;
+      if (skipHoursInfo.find(hour) != skipHoursInfo.end())
+      {
+        std::cout << "Error: <skipHours> already contains hour " << hour
+                  << "!" << std::endl;
+        return false;
+      }
+      if (hour >= 24)
+      {
+        std::cout << "Error: <skipHours> only allows values up to 23, but encountered value is "
+                  << hour << "!" << std::endl;
+        return false;
+      }
+      skipHoursInfo.insert(hour);
+    }
+    else
+    {
+      std::cout << "Found unexpected node name within skipDays: \"" << nodeName
+                << "\"!" << std::endl;
+      return false;
+    }
+    child = child.getNextSibling();
+  } //while
+  //We are done here. Set should not be empty by now.
+  return (!skipHoursInfo.empty());
 }
 
 bool Parser::fromFile(const std::string& fileName, Channel& feed)
@@ -927,7 +990,22 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
         return false;
       }
       feed.setTextInput(std::move(txIn));
-    } //if
+    } //if textInput
+    else if (nodeName == "skipHours")
+    {
+      if (!feed.skipHours().empty())
+      {
+        std::cout << "Feed already has skipHours set!" << std::endl;
+        return false;
+      } //if skipHours was already specified
+      std::set<unsigned int> skipH;
+      if (!skipHoursFromNode(node, skipH))
+      {
+        std::cout << "Could not parse RSS 2.0 <skipHours> element!" << std::endl;
+        return false;
+      }
+      feed.setSkipHours(std::move(skipH));
+    } //if skipHours
     else
     {
       std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"

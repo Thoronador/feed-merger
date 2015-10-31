@@ -35,3 +35,6 @@ add_subdirectory (category-element-channel)
 
 # Recurse into subdirectory for test of parsing <textInput> element of <channel>.
 add_subdirectory (textinput-element)
+
+# Recurse into subdirectory for test of parsing <skipHours> element of <channel>.
+add_subdirectory (skiphours-element)

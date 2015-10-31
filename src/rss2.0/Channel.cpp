@@ -41,7 +41,8 @@ Channel::Channel()
   m_ttl(-1),
   m_image(Image()),
   m_rating(""),
-  m_textInput(TextInput())
+  m_textInput(TextInput()),
+  m_skipHours(std::set<unsigned int>())
 {
 }
 
@@ -53,7 +54,8 @@ Channel::Channel(const std::string& title, const std::string& link,
               const Category& category, const std::string& generator,
               const std::string& docs, const Cloud& cloud,
               const int ttl, const Image& image,
-              const std::string& rating, const TextInput& textInput)
+              const std::string& rating, const TextInput& textInput,
+              const std::set<unsigned int>& skipHours)
 : m_title(title),
   m_link(link),
   m_description(description),
@@ -71,7 +73,8 @@ Channel::Channel(const std::string& title, const std::string& link,
   m_ttl(ttl),
   m_image(image),
   m_rating(rating),
-  m_textInput(textInput)
+  m_textInput(textInput),
+  m_skipHours(skipHours)
 {
 }
 
@@ -256,6 +259,27 @@ void Channel::setTextInput(const TextInput& textInput)
   m_textInput = textInput;
 }
 
+const std::set<unsigned int>& Channel::skipHours() const
+{
+  return m_skipHours;
+}
+
+void Channel::setSkipHours(const std::set<unsigned int>& skipHours)
+{
+  m_skipHours = skipHours;
+  //replace 24 by zero
+  auto iter24plus = m_skipHours.find(24);
+  if (iter24plus != m_skipHours.end())
+  {
+    m_skipHours.erase(iter24plus);
+    m_skipHours.insert(0);
+  }
+  //remove invalid values (e.g. 24 or larger), if any
+  iter24plus = m_skipHours.upper_bound(24);
+  if (iter24plus != m_skipHours.end())
+    m_skipHours.erase(iter24plus, m_skipHours.end());
+}
+
 bool Channel::operator==(const Channel& other) const
 {
   return ((m_title == other.m_title) && (m_link == other.m_link)
@@ -267,6 +291,7 @@ bool Channel::operator==(const Channel& other) const
       && (m_docs == other.m_docs) && (m_cloud == other.m_cloud)
       && (m_ttl == other.m_ttl) && (m_image == other.m_image)
       && (m_rating == other.m_rating) && (m_textInput == other.m_textInput)
+      && (m_skipHours == other.m_skipHours)
     );
 }
 
