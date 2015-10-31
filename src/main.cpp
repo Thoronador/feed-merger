@@ -36,7 +36,7 @@ const int rcParserError = 3;
 
 void showVersion()
 {
-  std::cout << "feed-merger, version 0.03, 2015-10-25" << std::endl;
+  std::cout << "feed-merger, version 0.04, 2015-10-31" << std::endl;
 }
 
 void showHelp()

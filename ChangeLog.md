@@ -1,6 +1,6 @@
 # ChangeLog for feed-merger
 
-## upcoming version 0.04 (2015-10-30)
+## Version 0.04 (2015-10-31)
   - parsing of all default RSS 2.0 feed elements implemented
 
 ## Version 0.03 (2015-10-25)
