@@ -324,12 +324,109 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     }
   } //if ttl
 
-  /* ********************* */
-  /* ********************* */
-  #warning TODO: write image!
-  /* ********************* */
-  /* ********************* */
-
+  //write <image>
+  if (!feed.image().empty())
+  {
+    //open image tag
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("image"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <image> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    /* required elements: url, title, link, so no check for emptiness */
+    //write <url>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("url"),
+              reinterpret_cast<const xmlChar*>(feed.image().url().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <url> element of <image>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <title>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("title"),
+              reinterpret_cast<const xmlChar*>(feed.image().title().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <title> element of <image>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <link>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("link"),
+              reinterpret_cast<const xmlChar*>(feed.image().link().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <title> element of <image>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <width>
+    if (feed.image().width() > 0)
+    {
+      //write <width>
+      ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("width"),
+                reinterpret_cast<const xmlChar*>(intToString(feed.image().width()).c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write <width> element of <image>!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //if width
+    //write <height>
+    if (feed.image().height() > 0)
+    {
+      //write <width>
+      ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("height"),
+                reinterpret_cast<const xmlChar*>(intToString(feed.image().height()).c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write <height> element of <image>!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //if height
+    //write <description>
+    if (!feed.image().description().empty())
+    {
+      //write <width>
+      ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("description"),
+                reinterpret_cast<const xmlChar*>(feed.image().description().c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write <description> element of <image>!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //if description
+    //close image element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <image> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if image
 
   //write <rating>
   if (!feed.rating().empty())
