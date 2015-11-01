@@ -54,17 +54,22 @@ int main(int argc, char ** argv)
           "GNU FDL 1.3 for this feed", //copyright
           "W. Riter <wr@example.com>", //managing editor
           "M. Aster <ma@example.com>", //webmaster
-          0, //pubDate
-          0, //lastBuildDate
+          std::mktime(&tempTM), //pubDate
+          std::mktime(&tempTM), //lastBuildDate
           RSS20::Category(), //category
           "feed-merger with libxml2", //generator
           "http://www.rssboard.org/rss-specification", //docs
-          RSS20::Cloud(), //cloud
-          -1, //ttl
-          RSS20::Image(), //image
+          RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", "xml-rpc"), //cloud
+          60, //ttl
+          RSS20::Image("http://rss2test.example.com/resource/image.png", //url
+                       "Well-formed test feed", //title
+                       "http://rss2test.example.com/image/", //link
+                       81,
+                       38,
+                       "Funny, there is no image."), //image
           "", //rating
           RSS20::TextInput(), //textInput
-          {}, //skipHours
+          { 0, 1, 8, 9, 17, 22, 23 }, //skipHours
           { RSS20::Days::Monday, RSS20::Days::Tuesday, RSS20::Days::Wednesday,
             RSS20::Days::Thursday, RSS20::Days::Friday, RSS20::Days::Saturday,
             RSS20::Days::Sunday } //skipDays

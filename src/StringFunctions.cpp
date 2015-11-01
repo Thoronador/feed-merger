@@ -21,6 +21,7 @@
 #include "StringFunctions.hpp"
 #include <cctype>
 #include <limits>
+#include <sstream>
 
 bool stringToUnsignedInt(const std::string& str, unsigned int& value)
 {
@@ -127,4 +128,18 @@ bool isEmptyOrWhitespace(const std::string& str)
     ++iter;
   } //while
   return true;
+}
+
+std::string intToString(const int value)
+{
+  std::ostringstream s_str;
+  s_str << value;
+  return s_str.str();
+}
+
+std::string uintToString(const unsigned int value)
+{
+  std::ostringstream s_str;
+  s_str << value;
+  return s_str.str();
 }

@@ -22,6 +22,7 @@
 #include <iostream>
 #include <libxml/tree.h>
 #include <libxml/xmlwriter.h>
+#include "../StringFunctions.hpp"
 
 namespace RSS20
 {
@@ -228,11 +229,103 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     }
   } //if docs
 
+  //write <cloud>
+  if (!feed.cloud().empty())
+  {
+    //open cloud tag
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("cloud"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute domain
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
+              reinterpret_cast<const xmlChar*>(feed.cloud().domain().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write domain attribute of <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute port
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("port"),
+              reinterpret_cast<const xmlChar*>(intToString(feed.cloud().port()).c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write port attribute of <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute path
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("path"),
+              reinterpret_cast<const xmlChar*>(feed.cloud().path().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write path attribute of <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute registerProcedure
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("registerProcedure"),
+              reinterpret_cast<const xmlChar*>(feed.cloud().registerProcedure().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write registerProcedure attribute of <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute protocol
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("protocol"),
+              reinterpret_cast<const xmlChar*>(feed.cloud().protocol().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write protocol attribute of <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //close cloud element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <cloud> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if cloud
+
+  //write <ttl>
+  if (feed.ttl() > 0)
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("ttl"),
+              reinterpret_cast<const xmlChar*>(intToString(feed.ttl()).c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <ttl> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if ttl
 
   /* ********************* */
   /* ********************* */
-  #warning TODO: write cloud!
-  #warning TODO: write ttl!
   #warning TODO: write image!
   /* ********************* */
   /* ********************* */

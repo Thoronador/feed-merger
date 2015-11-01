@@ -60,4 +60,8 @@ std::vector<std::string> splitAtSeparator(std::string line, const char separator
  */
 bool isEmptyOrWhitespace(const std::string& str);
 
+/* Returns string representation of integer 'value' */
+std::string intToString(const int value);
+std::string uintToString(const unsigned int value);
+
 #endif // STRINGFUNCTIONS_HPP
