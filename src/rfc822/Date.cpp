@@ -257,3 +257,45 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   output = tt;
   return true;
 }
+
+bool timeToRFC822String(const time_t t, std::string& output)
+{
+  struct std::tm* tempTM = std::localtime(&t);
+  if (nullptr == tempTM)
+    return false;
+  const struct std::tm savedTM(*tempTM);
+  //set "C" locale to get uniform, locale-independent behaviour
+  char * curLocale = std::setlocale(LC_TIME, nullptr);
+  if (nullptr == curLocale)
+    return false;
+  const std::string previousLocale(curLocale);
+  if (previousLocale != "C")
+  {
+    //set new "C" locale
+    char * newLocale = std::setlocale(LC_TIME, "C");
+    if (nullptr == newLocale)
+      return false;
+  } //if locale is not "C"
+
+  char buffer[128];
+  std::memset(buffer, '\0', 128);
+
+  //format like "Mon, 02 Nov 2015 11:01:43 -0500"
+  const std::size_t bytesWritten = std::strftime(buffer, 127, "a, d b Y H:M:S z", &savedTM);
+  //set locale back
+  if (previousLocale != "C")
+  {
+    //set old locale
+    char * oldLocale = std::setlocale(LC_TIME, previousLocale.c_str());
+    if (nullptr == oldLocale)
+      return false;
+  } //if locale was not "C"
+  //Did strftime() fail?
+  if (bytesWritten <= 0)
+  {
+    return false;
+  }
+  //set result
+  output = std::move(std::string(buffer));
+  return true;
+}

@@ -37,7 +37,7 @@
 		<Unit filename="../../src/StringFunctions.hpp" />
 		<Unit filename="../../src/rfc822/Date.cpp" />
 		<Unit filename="../../src/rfc822/Date.hpp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="rfc822_date.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

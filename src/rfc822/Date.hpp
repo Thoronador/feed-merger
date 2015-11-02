@@ -34,4 +34,13 @@
  */
 bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output);
 
+
+/** \brief converts the given time_t value to a RFC 822 conforming date/time string
+ *
+ * \param t  time_t variable
+ * \param output  variable that is used to return the string representation of the given time
+ * \return Returns true, if conversion was successful. Returns false otherwise.
+ */
+bool timeToRFC822String(const time_t t, std::string& output);
+
 #endif // RFC822_DATE_HPP

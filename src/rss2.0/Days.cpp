@@ -18,25 +18,32 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef RSS20_DAYS_HPP
-#define RSS20_DAYS_HPP
-
-#include <string>
+#include "Days.hpp"
 
 namespace RSS20
 {
-  /** enumeration type for days of the week */
-  enum class Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 
+std::string dayToString(const Days d)
+{
+  switch (d)
+  {
+    case Days::Monday:
+         return "Monday";
+    case Days::Tuesday:
+         return "Tuesday";
+    case Days::Wednesday:
+         return "Wednesday";
+    case Days::Thursday:
+         return "Thursday";
+    case Days::Friday:
+         return "Friday";
+    case Days::Saturday:
+         return "Saturday";
+    case Days::Sunday:
+         return "Sunday";
+  } //swi
+  //should never get to this point
+  throw 42;
+}
 
-  /** \brief returns the name of the day as string
-   *
-   * \param d  the day
-   * \param
-   * \return Returns a string like "Monday" etc., suitable for use in RSS 2.0
-   * <skipDays>'s <day> subelements.
-   */
-  std::string dayToString(const Days d);
 } //namespace
-
-#endif // RSS20_DAYS_HPP

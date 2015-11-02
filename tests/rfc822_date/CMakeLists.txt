@@ -6,7 +6,7 @@ project(rfc822date_test)
 set(rfc822date_sources
     ../../src/StringFunctions.cpp
     ../../src/rfc822/Date.cpp
-    main.cpp)
+    rfc822_date.cpp)
 
 if (CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-Wall -O3 -fexceptions)
