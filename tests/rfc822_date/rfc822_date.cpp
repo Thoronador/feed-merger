@@ -72,6 +72,24 @@ int main()
                 << std::endl;
       return 1;
     }
+
+    //conversion from time_t back to string
+    std::string datestring;
+    if (!timeToRFC822String(timeOutput, datestring))
+    {
+      std::cout << "Error: could not convert time_t "
+                << static_cast<int>(timeOutput) << " back to string!"
+                << std::endl;
+      return 1;
+    }
+    if (datestring != i.first)
+    {
+      std::cout << "Error: time_t " << static_cast<int>(timeOutput)
+                << " should result in " << i.first << ", but returned value is "
+                << datestring << "." << std::endl;
+      return 1;
+    }
+    std::cout << datestring << std::endl;
   } //for
 
   //Everything is fine.

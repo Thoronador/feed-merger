@@ -281,7 +281,7 @@ bool timeToRFC822String(const time_t t, std::string& output)
   std::memset(buffer, '\0', 128);
 
   //format like "Mon, 02 Nov 2015 11:01:43 -0500"
-  const std::size_t bytesWritten = std::strftime(buffer, 127, "a, d b Y H:M:S z", &savedTM);
+  const std::size_t bytesWritten = std::strftime(buffer, 127, "%a, %d %b %Y %H:%M:%S", &savedTM);
   //set locale back
   if (previousLocale != "C")
   {
@@ -296,6 +296,6 @@ bool timeToRFC822String(const time_t t, std::string& output)
     return false;
   }
   //set result
-  output = std::move(std::string(buffer));
+  output = std::move(std::string(buffer) + " GMT");
   return true;
 }
