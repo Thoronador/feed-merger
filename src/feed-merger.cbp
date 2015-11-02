@@ -51,6 +51,7 @@
 		<Unit filename="rss2.0/Channel.hpp" />
 		<Unit filename="rss2.0/Cloud.cpp" />
 		<Unit filename="rss2.0/Cloud.hpp" />
+		<Unit filename="rss2.0/Days.cpp" />
 		<Unit filename="rss2.0/Days.hpp" />
 		<Unit filename="rss2.0/Enclosure.cpp" />
 		<Unit filename="rss2.0/Enclosure.hpp" />

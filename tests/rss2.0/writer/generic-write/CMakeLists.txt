@@ -8,6 +8,7 @@ set(rss20-writer-generic-test_sources
     ../../../../src/rss2.0/Category.cpp
     ../../../../src/rss2.0/Channel.cpp
     ../../../../src/rss2.0/Cloud.cpp
+    ../../../../src/rss2.0/Days.cpp
     ../../../../src/rss2.0/Enclosure.cpp
     ../../../../src/rss2.0/Guid.cpp
     ../../../../src/rss2.0/Image.cpp

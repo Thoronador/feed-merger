@@ -47,6 +47,8 @@
 		<Unit filename="../../../../src/rss2.0/Channel.hpp" />
 		<Unit filename="../../../../src/rss2.0/Cloud.cpp" />
 		<Unit filename="../../../../src/rss2.0/Cloud.hpp" />
+		<Unit filename="../../../../src/rss2.0/Days.cpp" />
+		<Unit filename="../../../../src/rss2.0/Days.hpp" />
 		<Unit filename="../../../../src/rss2.0/Enclosure.cpp" />
 		<Unit filename="../../../../src/rss2.0/Enclosure.hpp" />
 		<Unit filename="../../../../src/rss2.0/Guid.cpp" />

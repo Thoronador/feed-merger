@@ -10,6 +10,7 @@ set(feed_merger_sources
     rss2.0/Category.cpp
     rss2.0/Channel.cpp
     rss2.0/Cloud.cpp
+    rss2.0/Days.cpp
     rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
     rss2.0/Image.cpp
