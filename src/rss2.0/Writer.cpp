@@ -527,11 +527,78 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     }
   } //if rating
 
-  /* ********************* */
-  /* ********************* */
-  #warning TODO: write textInput!
-  /* ********************* */
-  /* ********************* */
+  //write <textInput>
+  if (!feed.textInput().empty())
+  {
+    //open textInput tag
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("textInput"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <textInput> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+
+    /* All four sub elements are required by the standard, so we can write all
+       of them without further checks for emptiness. */
+    //write <title>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("title"),
+              reinterpret_cast<const xmlChar*>(feed.textInput().title().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <title> element of <textInput>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <description>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("description"),
+              reinterpret_cast<const xmlChar*>(feed.textInput().description().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <description> element of <textInput>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <name>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("name"),
+              reinterpret_cast<const xmlChar*>(feed.textInput().name().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <name> element of <textInput>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <link>
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("link"),
+              reinterpret_cast<const xmlChar*>(feed.textInput().link().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <link> element of <textInput>!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+
+    //close textInput element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <textInput> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if textInput
 
   //write <skipHours>
   if (!feed.skipHours().empty())
