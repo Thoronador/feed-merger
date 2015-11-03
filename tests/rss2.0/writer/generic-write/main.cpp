@@ -67,7 +67,10 @@ int main(int argc, char ** argv)
                        81,
                        38,
                        "Funny, there is no image."), //image
-          "", //rating
+          std::string("(PICS-1.1 \"http://www.gcf.org/v2.5\" by \"Jim Johnson\"")
+            + std::string(" labels on \"1994.11.05T08:15-0500\" until \"1995.12.31T23:59-0000\"")
+            + " for \"http://w3.org/PICS/Overview.html\" ratings (suds 0.5 density 0 color/hue 1)"
+            + " for \"http://w3.org/PICS/Underview.html\" by \"Jane Johandottir\" ratings (subject 2 density 1 color/hue 1))", //rating
           RSS20::TextInput(), //textInput
           { 0, 1, 8, 9, 17, 22, 23 }, //skipHours
           { RSS20::Days::Monday, RSS20::Days::Tuesday, RSS20::Days::Wednesday,
