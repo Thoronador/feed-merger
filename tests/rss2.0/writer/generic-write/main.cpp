@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include "../../../../src/rss2.0/Channel.hpp"
+#include "../../../../src/rss2.0/Parser.hpp"
 #include "../../../../src/rss2.0/Writer.hpp"
 
 int main(int argc, char ** argv)
@@ -82,9 +83,25 @@ int main(int argc, char ** argv)
       );
 
   /* Write feed to a file. */
-  if (!RSS20::Writer::toFile(outputChannel, "test-rss-2.xml"))
+  const std::string fileName = "test-rss-2.xml";
+  if (!RSS20::Writer::toFile(outputChannel, fileName))
   {
     std::cout << "Error: Could not write feed to file!" << std::endl;
+    return 1;
+  }
+
+  /* Try to read the file with the parser and check its contents against the
+     feed that was written to the disk. */
+  RSS20::Channel readFeed;
+  if (!RSS20::Parser::fromFile(fileName, readFeed))
+  {
+    std::cout << "Error: Could not read the written feed!" << std::endl;
+    return 1;
+  }
+
+  if (readFeed != outputChannel)
+  {
+    std::cout << "Error: Original feed and the feed parsed from the written file do not match!" << std::endl;
     return 1;
   }
 

@@ -307,4 +307,10 @@ bool Channel::operator==(const Channel& other) const
     );
 }
 
+bool Channel::operator!=(const Channel& other) const
+{
+  /* Inequality operator is the negation of the equality operator. */
+  return (!(*this == other));
+}
+
 } //namespace

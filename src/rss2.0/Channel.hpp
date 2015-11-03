@@ -359,12 +359,21 @@ namespace RSS20
        */
       void setSkipDays(const std::set<Days>& skipDays);
 
+
       /** \brief equality operator for RSS 2.0 channel instances
        *
        * \param other   the other channel
        * \return Returns true, if this instance and other are equal.
        */
       bool operator==(const Channel& other) const;
+
+
+      /** \brief inequality operator for RSS 2.0 channel instances
+       *
+       * \param other   the other channel
+       * \return Returns true, if this instance and other are NOT equal.
+       */
+      bool operator!=(const Channel& other) const;
     private:
       //required elements; title, link, description
       std::string m_title; /**< title of the channel */
