@@ -21,12 +21,283 @@
 #include "Writer.hpp"
 #include <iostream>
 #include <libxml/tree.h>
-#include <libxml/xmlwriter.h>
 #include "../rfc822/Date.hpp"
 #include "../StringFunctions.hpp"
 
 namespace RSS20
 {
+
+bool Writer::writeCategory(const Category& category, xmlTextWriterPtr writer)
+{
+  if (nullptr == writer)
+    return false;
+
+  //write <category>
+  if (!category.empty())
+  {
+    int ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("category"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <category> element!" << std::endl;
+      return false;
+    }
+    //attribute domain
+    if (!category.domain().empty())
+    {
+      ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
+                reinterpret_cast<const xmlChar*>(category.domain().c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write domain attribute of <category> element!" << std::endl;
+        return false;
+      }
+    } //if domain attribute is present
+
+    //write category string
+    ret = xmlTextWriterWriteString(writer,
+              reinterpret_cast<const xmlChar*>(category.get().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write content of <category> element!" << std::endl;
+      return false;
+    }
+    //close category element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <category> element!" << std::endl;
+      return false;
+    } //if
+  } //if category
+
+  return true;
+}
+
+bool Writer::writeItem(const Item& item, xmlTextWriterPtr writer)
+{
+  if (nullptr == writer)
+    return false;
+
+  //start item element
+  int ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("item"));
+  if (ret < 0)
+  {
+    std::cout << "Error: Could not start <item> element!" << std::endl;
+    return false;
+  }
+
+  //write <title>
+  if (!item.title().empty())
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("title"),
+              reinterpret_cast<const xmlChar*>(item.title().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <title> element!" << std::endl;
+      return false;
+    }
+  } //if title
+
+  //write <link>
+  if (!item.link().empty())
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("link"),
+              reinterpret_cast<const xmlChar*>(item.link().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <link> element!" << std::endl;
+      return false;
+    }
+  } //if link
+
+  //write <description>
+  if (!item.description().empty())
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("description"),
+              reinterpret_cast<const xmlChar*>(item.description().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <description> element!" << std::endl;
+      return false;
+    }
+  } //if description
+
+  //write <author>
+  if (!item.author().empty())
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("author"),
+              reinterpret_cast<const xmlChar*>(item.author().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <author> element!" << std::endl;
+      return false;
+    }
+  } //if author
+
+  //write <category>
+  if (!writeCategory(item.category(), writer))
+  {
+    return false;
+  } //category
+
+  //write <comments>
+  if (!item.comments().empty())
+  {
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("comments"),
+              reinterpret_cast<const xmlChar*>(item.comments().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <comments> element!" << std::endl;
+      return false;
+    }
+  } //if comments
+
+  //write <enclosure>
+  if (!item.enclosure().empty())
+  {
+    //start enclosure element
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("enclosure"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <enclosure> element!" << std::endl;
+      return false;
+    }
+    //attribute url
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("url"),
+              reinterpret_cast<const xmlChar*>(item.enclosure().url().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write url attribute of <enclosure> element!" << std::endl;
+      return false;
+    }
+    //attribute length
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("length"),
+              reinterpret_cast<const xmlChar*>(uintToString(item.enclosure().length()).c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write length attribute of <enclosure> element!" << std::endl;
+      return false;
+    }
+    //attribute type
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("type"),
+              reinterpret_cast<const xmlChar*>(item.enclosure().type().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write type attribute of <enclosure> element!" << std::endl;
+      return false;
+    }
+    //close enclosure element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <enclosure> element!" << std::endl;
+      return false;
+    } //if
+  } //if enclosure
+
+  //write <guid>
+  if (!item.guid().empty())
+  {
+    //start guid element
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("guid"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <guid> element!" << std::endl;
+      return false;
+    }
+    //write permaLink attribute, but only if it is false, because true is default
+    if (!item.guid().isPermaLink())
+    {
+      //attribute isPermaLink
+      ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("isPermaLink"),
+                reinterpret_cast<const xmlChar*>("false"));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write isPermaLink attribute of <guid> element!" << std::endl;
+        return false;
+      }
+    } //if GUID is not a permanent link
+    //write guid
+    ret = xmlTextWriterWriteString(writer,
+              reinterpret_cast<const xmlChar*>(item.guid().get().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write content of <guid> element!" << std::endl;
+      return false;
+    }
+    //close guid element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <guid> element!" << std::endl;
+      return false;
+    } //if
+  } //if guid
+
+  //write <pubDate>
+  if (item.pubDate() != static_cast<std::time_t>(0))
+  {
+    std::string pubDate;
+    if (!timeToRFC822String(item.pubDate(), pubDate))
+    {
+      std::cout << "Error: Could not convert pubDate (time_t) to string!" << std::endl;
+      return false;
+    } //if conversion failed
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("pubDate"),
+              reinterpret_cast<const xmlChar*>(pubDate.c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <pubDate> element!" << std::endl;
+      return false;
+    }
+  } //if pubDate
+
+  //write <source>
+  if (!item.source().empty())
+  {
+    //start source element
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("source"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <source> element!" << std::endl;
+      return false;
+    }
+
+    //attribute url (required, so no presence / emptiness check here)
+    ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("url"),
+                reinterpret_cast<const xmlChar*>(item.source().url().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write url attribute of <source> element!" << std::endl;
+      return false;
+    }
+    //write source
+    ret = xmlTextWriterWriteString(writer,
+              reinterpret_cast<const xmlChar*>(item.source().get().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write content of <source> element!" << std::endl;
+      return false;
+    }
+    //close source element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <source> element!" << std::endl;
+      return false;
+    } //if
+  } //if source
+
+  //close item element
+  ret = xmlTextWriterEndElement(writer);
+  if (ret < 0)
+  {
+    std::cout << "Error: Could not end <item> element!" << std::endl;
+    return false;
+  }
+  //Item was successfully written.
+  return true;
+}
 
 bool Writer::toFile(const Channel& feed, const std::string& fileName)
 {
@@ -123,13 +394,20 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     return false;
   }
 
-
-  /* ********************* */
-  /* ********************* */
-  #warning TODO: write items!
-  /* ********************* */
-  /* ********************* */
-
+  //write (possibly multiple) <item> elements
+  if (!feed.items().empty())
+  {
+    for (const auto& item : feed.items())
+    {
+      if (!writeItem(item, writer))
+      {
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //for
+  } //if items
 
   //write <language>
   if (!feed.language().empty())
@@ -198,6 +476,9 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     if (!timeToRFC822String(feed.pubDate(), pubDate))
     {
       std::cout << "Error: Could not convert pubDate (time_t) to string!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
       return false;
     } //if conversion failed
     ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("pubDate"),
@@ -234,54 +515,13 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   } //if lastBuildDate
 
   //write <category>
-  if (!feed.category().empty())
+  if (!writeCategory(feed.category(), writer))
   {
-    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("category"));
-    if (ret < 0)
-    {
-      std::cout << "Error: Could not start <category> element!" << std::endl;
-      xmlFreeTextWriter(writer);
-      if (nullptr != document)
-        xmlFreeDoc(document);
-      return false;
-    }
-    //attribute domain
-    if (!feed.category().domain().empty())
-    {
-      ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
-                reinterpret_cast<const xmlChar*>(feed.category().domain().c_str()));
-      if (ret < 0)
-      {
-        std::cout << "Error: Could not write domain attribute of <category> element!" << std::endl;
-        xmlFreeTextWriter(writer);
-        if (nullptr != document)
-          xmlFreeDoc(document);
-        return false;
-      }
-    } //if domain attribute is present
-
-    //write category string
-    ret = xmlTextWriterWriteString(writer,
-              reinterpret_cast<const xmlChar*>(feed.category().get().c_str()));
-    if (ret < 0)
-    {
-      std::cout << "Error: Could not write content of <category> element!" << std::endl;
-      xmlFreeTextWriter(writer);
-      if (nullptr != document)
-        xmlFreeDoc(document);
-      return false;
-    }
-    //close category element
-    ret = xmlTextWriterEndElement(writer);
-    if (ret < 0)
-    {
-      std::cout << "Error: Could not end <category> element!" << std::endl;
-      xmlFreeTextWriter(writer);
-      if (nullptr != document)
-        xmlFreeDoc(document);
-      return false;
-    } //if
-  } //if category
+    xmlFreeTextWriter(writer);
+    if (nullptr != document)
+      xmlFreeDoc(document);
+    return false;
+  } //category
 
   //write <generator>
   if (!feed.generator().empty())

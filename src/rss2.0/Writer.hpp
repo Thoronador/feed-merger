@@ -21,6 +21,7 @@
 #ifndef RSS20_WRITER_HPP
 #define RSS20_WRITER_HPP
 
+#include <libxml/xmlwriter.h>
 #include "Channel.hpp"
 
 namespace RSS20
@@ -37,6 +38,25 @@ namespace RSS20
        * Returns false, if an error occurred.
        */
       static bool toFile(const Channel& feed, const std::string& fileName);
+    private:
+      /** \brief tries to write a category element with the help of an XML text writer (libxml2)
+       *
+       * \param cat   the category that shall be written
+       * \param writer xmlTextWriterPtr for the writer
+       * \return Returns true, if the operation was successful.
+       * Returns false, if the operation failed.
+       */
+      static bool writeCategory(const Category& cat, xmlTextWriterPtr writer);
+
+
+      /** \brief tries to write a given feed item with the help of an XML text writer (libxml2)
+       *
+       * \param item   the item that shall be written
+       * \param writer xmlTextWriterPtr for the writer
+       * \return Returns true, if the operation was successful.
+       * Returns false, if the operation failed.
+       */
+      static bool writeItem(const Item& item, xmlTextWriterPtr writer);
   }; //class
 } //namespace
 
