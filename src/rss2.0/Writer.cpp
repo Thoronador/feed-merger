@@ -22,6 +22,7 @@
 #include <iostream>
 #include <libxml/tree.h>
 #include <libxml/xmlwriter.h>
+#include "../rfc822/Date.hpp"
 #include "../StringFunctions.hpp"
 
 namespace RSS20
@@ -190,12 +191,47 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     }
   } //if webMaster
 
-  /* ********************* */
-  /* ********************* */
-  #warning TODO: write pubDate!
-  #warning TODO: write lastBuildDate!
-  /* ********************* */
-  /* ********************* */
+  //write <pubDate>
+  if (feed.pubDate() != static_cast<std::time_t>(0))
+  {
+    std::string pubDate;
+    if (!timeToRFC822String(feed.pubDate(), pubDate))
+    {
+      std::cout << "Error: Could not convert pubDate (time_t) to string!" << std::endl;
+      return false;
+    } //if conversion failed
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("pubDate"),
+              reinterpret_cast<const xmlChar*>(pubDate.c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <pubDate> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if pubDate
+
+  //write <lastBuildDate>
+  if (feed.lastBuildDate() != static_cast<std::time_t>(0))
+  {
+    std::string lastBuildDate;
+    if (!timeToRFC822String(feed.lastBuildDate(), lastBuildDate))
+    {
+      std::cout << "Error: Could not convert lastBuildDate (time_t) to string!" << std::endl;
+      return false;
+    } //if conversion failed
+    ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("lastBuildDate"),
+              reinterpret_cast<const xmlChar*>(lastBuildDate.c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write <lastBuildDate> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if lastBuildDate
 
   //write <category>
   if (!feed.category().empty())
