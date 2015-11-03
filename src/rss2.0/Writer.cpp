@@ -530,11 +530,86 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   /* ********************* */
   /* ********************* */
   #warning TODO: write textInput!
-  #warning TODO: write skipHours!
-  #warning TODO: write skipDays!
   /* ********************* */
   /* ********************* */
 
+  //write <skipHours>
+  if (!feed.skipHours().empty())
+  {
+    //open skipHours tag
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("skipHours"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <skipHours> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <hour> tags
+    for (const auto hour : feed.skipHours())
+    {
+      ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("hour"),
+                reinterpret_cast<const xmlChar*>(intToString(hour).c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write <hour> element of <skipHours>!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      } //if failure
+    } //for
+    //close skipHours element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <skipHours> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if skipHours
+
+  //write <skipDays>
+  if (!feed.skipDays().empty())
+  {
+    //open skipDays tag
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("skipDays"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <skipDays> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //write <days>
+    for (const auto day : feed.skipDays())
+    {
+      ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("day"),
+                reinterpret_cast<const xmlChar*>(dayToString(day).c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write <day> element of <skipDays>!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      } //if failure
+    } //for
+    //close skipDays element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <skipDays> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+  } //if skipDays
 
   /* xmlTextWriterEndDocument closes all open elements, i.e. <channel> and <rss> in this case. */
   ret = xmlTextWriterEndDocument(writer);
