@@ -194,10 +194,58 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   /* ********************* */
   #warning TODO: write pubDate!
   #warning TODO: write lastBuildDate!
-  #warning TODO: write category!
   /* ********************* */
   /* ********************* */
 
+  //write <category>
+  if (!feed.category().empty())
+  {
+    ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("category"));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not start <category> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //attribute domain
+    if (!feed.category().domain().empty())
+    {
+      ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
+                reinterpret_cast<const xmlChar*>(feed.category().domain().c_str()));
+      if (ret < 0)
+      {
+        std::cout << "Error: Could not write domain attribute of <category> element!" << std::endl;
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //if domain attribute is present
+
+    //write category string
+    ret = xmlTextWriterWriteString(writer,
+              reinterpret_cast<const xmlChar*>(feed.category().get().c_str()));
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not write content of <category> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    }
+    //close category element
+    ret = xmlTextWriterEndElement(writer);
+    if (ret < 0)
+    {
+      std::cout << "Error: Could not end <category> element!" << std::endl;
+      xmlFreeTextWriter(writer);
+      if (nullptr != document)
+        xmlFreeDoc(document);
+      return false;
+    } //if
+  } //if category
 
   //write <generator>
   if (!feed.generator().empty())

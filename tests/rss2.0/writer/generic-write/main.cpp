@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
                           "http://rss2test.example.com/item1.html", //link
                           "A glass of wine", //description
                           "W. Riter <wr@example.com>", //author
-                          RSS20::Category(),
+                          RSS20::Category("Cats", "http://cat-content.example.com/cats/"),
                           "http://rss2test.example.com/comments.php", //comments
                           RSS20::Enclosure("http://rss2test.example.com/url.txt", 5098, "text/plain"), //enclosure
                           RSS20::GUID("http://www.example.com/guid-unknown-404", false), //guid
@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
           "M. Aster <ma@example.com>", //webmaster
           std::mktime(&tempTM), //pubDate
           std::mktime(&tempTM), //lastBuildDate
-          RSS20::Category(), //category
+          RSS20::Category("Cats & hats", "http://cat-content.example.com/"), //category
           "feed-merger with libxml2", //generator
           "http://www.rssboard.org/rss-specification", //docs
           RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", "xml-rpc"), //cloud
