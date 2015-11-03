@@ -49,7 +49,7 @@ int main(int argc, char ** argv)
                           RSS20::Enclosure("http://rss2test.example.com/url.txt", 5098, "text/plain"), //enclosure
                           RSS20::GUID("http://www.example.com/guid-unknown-404", false), //guid
                           std::mktime(&tempTM),
-                          RSS20::Source())), //items
+                          RSS20::Source("The Stuff's Source", "https://www.example.com/stuff.xml"))), //items
           "en-gb", //language
           "GNU FDL 1.3 for this feed", //copyright
           "W. Riter <wr@example.com>", //managing editor
