@@ -8,6 +8,66 @@
 feed-merger will be an application to merge several feeds (Atom 1.0 or RSS 2.0)
 into one single feed.
 
+## Building from source
+
+### Prerequisites
+
+To build the feed-merger application from source you need a C++ compiler,
+CMake 2.8 or later, the cURL library and the libxml2 library.
+It also helps to have Git, a distributed version control system, on your build
+system to get the latest source code directly from the Git repository.
+
+All of that can usually be installed be typing
+
+    apt-get install cmake g++ git libcurl4-gnutls-dev libxml2-dev
+
+or
+
+    yum install cmake gcc-c++ git libcurl-devel libxml2-devel
+
+into a root terminal.
+
+### Getting the source code
+
+Get the source directly from Git by cloning the Git repository and change to
+the directory after the repository is completely cloned:
+
+    git clone https://github.com/Thoronador/feed-merger.git ./feed-merger
+    cd feed-merger
+
+That's it, you should now have the current source code of feed-merger on your
+machine.
+
+### Build process
+
+The build process is relatively easy, because CMake does all the preparations.
+Starting in the root directory of the source, you can do the following steps:
+
+    mkdir build
+    cd build
+    cmake ../
+    make -j2
+
+### Test suite
+
+The build commands as described above also creates files for a small test suite
+for feed-merger. The test suite uses CTest, which usually comes with CMake.
+To run the test suite, make sure you are still in the build directory that was
+created during the build process and then type:
+
+    ctest -V
+
+If all tests succeeded, the output of the above command should end with
+something like:
+
+    100% tests passed, 0 tests failed out of 20
+
+    Total Test time (real) =   0.64 sec
+
+That's an indication that the basic functionality of feed-merger still works as
+it was intended by the developer.
+
+
 ## Copyright and Licensing
 
 Copyright 2015 Thoronador
