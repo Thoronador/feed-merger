@@ -50,7 +50,7 @@ Starting in the root directory of the source, you can do the following steps:
 
 ### Test suite
 
-The build commands as described above also creates files for a small test suite
+The build commands as described above also create files for a small test suite
 for feed-merger. The test suite uses CTest, which usually comes with CMake.
 To run the test suite, make sure you are still in the build directory that was
 created during the build process and then type:
