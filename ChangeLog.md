@@ -1,5 +1,8 @@
 # ChangeLog for feed-merger
 
+## Version 0.05 (2015-11-06)
+  - first version that writes the merged feeds to a file
+
 ## Version 0.04 (2015-10-31)
   - parsing of all default RSS 2.0 feed elements implemented
 
