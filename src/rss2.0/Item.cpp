@@ -25,7 +25,7 @@ namespace RSS20
 
 Item::Item(const std::string& title, const std::string& link,
            const std::string& description, const std::string& author,
-           const Category& category, const std::string& comments,
+           const std::set<Category>& category, const std::string& comments,
            const Enclosure& enclosure, const GUID& guid,
            const std::time_t pubDate, const Source& source)
 : m_title(title),
@@ -81,14 +81,19 @@ void Item::setAuthor(const std::string& author)
   m_author = author;
 }
 
-const Category& Item::category() const
+const std::set<Category>& Item::category() const
 {
   return m_category;
 }
 
-void Item::setCategory(const Category& category)
+void Item::setCategory(const std::set<Category>& category)
 {
   m_category = category;
+}
+
+void Item::addCategory(const Category& category)
+{
+  m_category.insert(category);
 }
 
 const std::string& Item::comments() const

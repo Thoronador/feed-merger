@@ -22,6 +22,7 @@
 #define RSS20_ITEM_HPP
 
 #include <ctime>
+#include <set>
 #include <string>
 #include "Category.hpp"
 #include "Enclosure.hpp"
@@ -41,7 +42,7 @@ namespace RSS20
        * \param link   link of the item
        * \param description description of the item
        * \param author      author of the item
-       * \param category    category of the item
+       * \param category    category element(s) of the item
        * \param comments    comment URL of the item
        * \param enclosure   enclosure of the item
        * \param guid        guid of the item
@@ -50,7 +51,7 @@ namespace RSS20
        */
       Item(const std::string& title, const std::string& link,
            const std::string& description, const std::string& author,
-           const Category& category, const std::string& comments,
+           const std::set<Category>& category, const std::string& comments,
            const Enclosure& enclosure, const GUID& guid,
            const std::time_t pubDate, const Source& source);
 
@@ -113,16 +114,23 @@ namespace RSS20
 
       /** \brief gets the item's category
        *
-       * \return Returns the value of the category element.
+       * \return Returns the value(s) of the category element(s).
        */
-      const Category& category() const;
+      const std::set<Category>& category() const;
 
 
-      /** \brief sets the item's category
+      /** \brief sets the item's categories
        *
-       * \param category  the new item category
+       * \param category  the new item category set
        */
-      void setCategory(const Category& category);
+      void setCategory(const std::set<Category>& category);
+
+
+      /** \brief adds a new item category to the existing categories
+       *
+       * \param category  the item category which shall be added
+       */
+      void addCategory(const Category& category);
 
 
       /** \brief gets the item's comment URL
@@ -223,7 +231,7 @@ namespace RSS20
       std::string m_link; /**< link URL */
       std::string m_description; /**< description, if any */
       std::string m_author; /**< author of the linked item */
-      Category m_category; /**< the item's category */
+      std::set<Category> m_category; /**< the item's categories */
       std::string m_comments; /**< URL to the comment section / website */
       Enclosure m_enclosure; /**< enclosure */
       GUID m_guid; /**< the item's GUID */

@@ -53,7 +53,7 @@ namespace RSS20
        * \param webMaster        webmaster's e-mail address
        * \param pubDate          publication date of the channel
        * \param lastBuildDate    time when the channel was last changed
-       * \param category         category of the channel
+       * \param category         category element(s) of the channel
        * \param generator        program used to generate the channel
        * \param docs             format documentation URL
        * \param cloud  cloud information for lightweight publish-subscribe protocol
@@ -69,7 +69,7 @@ namespace RSS20
               const std::string& language = "", const std::string& copyright = "",
               const std::string& managingEditor = "", const std::string& webMaster = "",
               const std::time_t pubDate = 0, const std::time_t lastBuildDate = 0,
-              const Category& category = Category(), const std::string& generator = "",
+              const std::set<Category>& category = std::set<Category>(), const std::string& generator = "",
               const std::string& docs = "", const Cloud& cloud = Cloud(),
               const int ttl = -1, const Image& image = Image(),
               const std::string& rating = "", const TextInput& textInput = TextInput(),
@@ -219,18 +219,25 @@ namespace RSS20
       void setLastBuildDate(const std::time_t lastBuildDate);
 
 
-      /** \brief gets the channel's category
+      /** \brief gets the channel's category element(s)
        *
-       * \return Returns the category.
+       * \return Returns the category elements.
        */
-      const Category& category() const;
+      const std::set<Category>& category() const;
 
 
-      /** \brief sets the channel's category
+      /** \brief sets the channel's category elements
        *
-       * \param category  the new channel category
+       * \param category  the new channel categories
        */
-      void setCategory(const Category& category);
+      void setCategory(const std::set<Category>& category);
+
+
+      /** \brief adds a new channel category to the existing categories
+       *
+       * \param category  the item category which shall be added
+       */
+      void addCategory(const Category& category);
 
 
       /** \brief gets the channel's language
@@ -388,7 +395,7 @@ namespace RSS20
       std::string m_webMaster; /**< e-mail address for person responsible for technical issues relating to channel */
       std::time_t m_pubDate; /**< publication date for content in the channel */
       std::time_t m_lastBuildDate; /**< last time the content of the channel changed */
-      Category m_category; /**< the channel's category */
+      std::set<Category> m_category; /**< the channel's categories */
       std::string m_generator; /**< program that was used to generate the channel */
       std::string m_docs; /**< URL for format documentation */
       Cloud m_cloud; /**< cloud information for lightweight publish-subscribe protocol */

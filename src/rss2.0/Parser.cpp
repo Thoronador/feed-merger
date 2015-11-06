@@ -32,7 +32,7 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
   if (!itemNode.isElementNode() or (itemNode.getNameAsString() != "item"))
     return false;
 
-  theItem = Item("", "", "", "", Category(), "", Enclosure(), GUID(),
+  theItem = Item("", "", "", "", std::set<Category>(), "", Enclosure(), GUID(),
                  0, Source());
 
   if (!itemNode.hasChild())
@@ -91,18 +91,18 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
     }
     else if (nodeName == "category")
     {
-      if (!theItem.category().empty())
-      {
-        std::cout << "Item already has a category!" << std::endl;
-        return false;
-      } //if category was already specified
       Category cat;
       if (!categoryFromNode(child, cat))
       {
         std::cout << "Could not parse RSS 2.0 <category> element!" << std::endl;
         return false;
       }
-      theItem.setCategory(std::move(cat));
+      if (theItem.category().find(cat) != theItem.category().end())
+      {
+        std::cout << "Item already has that category!" << std::endl;
+        return false;
+      } //if category was already specified
+      theItem.addCategory(std::move(cat));
     }
     else if (nodeName == "comments")
     {
@@ -874,7 +874,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
     } //if description
     else if (nodeName == "item")
     {
-      Item it = Item("", "", "", "", Category(), "", Enclosure(), GUID(),
+      Item it = Item("", "", "", "", std::set<Category>(), "", Enclosure(), GUID(),
                      0, Source());
       if (!itemFromNode(node, it))
       {
@@ -953,18 +953,18 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
     } //if
     else if (nodeName == "category")
     {
-      if (!feed.category().empty())
-      {
-        std::cout << "Feed already has a category!" << std::endl;
-        return false;
-      } //if category was already specified
       Category cat;
       if (!categoryFromNode(node, cat))
       {
         std::cout << "Could not parse RSS 2.0 <category> element!" << std::endl;
         return false;
       }
-      feed.setCategory(std::move(cat));
+      if (feed.category().find(cat) != feed.category().end())
+      {
+        std::cout << "Feed already has that category!" << std::endl;
+        return false;
+      } //if category was already specified
+      feed.addCategory(std::move(cat));
     } //if
     else if (nodeName == "generator")
     {

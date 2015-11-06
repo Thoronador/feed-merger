@@ -34,7 +34,7 @@ Channel::Channel()
   m_webMaster(""),
   m_pubDate(static_cast<std::time_t>(0)),
   m_lastBuildDate(static_cast<std::time_t>(0)),
-  m_category(Category()),
+  m_category(std::set<Category>()),
   m_generator(""),
   m_docs(""),
   m_cloud(Cloud()),
@@ -51,7 +51,7 @@ Channel::Channel(const std::string& title, const std::string& link,
               const std::string& language, const std::string& copyright,
               const std::string& managingEditor, const std::string& webMaster,
               const std::time_t pubDate, const std::time_t lastBuildDate,
-              const Category& category, const std::string& generator,
+              const std::set<Category>& category, const std::string& generator,
               const std::string& docs, const Cloud& cloud,
               const int ttl, const Image& image,
               const std::string& rating, const TextInput& textInput,
@@ -181,14 +181,19 @@ void Channel::setLastBuildDate(const std::time_t lastBuildDate)
   m_lastBuildDate = lastBuildDate;
 }
 
-const Category& Channel::category() const
+const std::set<Category>& Channel::category() const
 {
   return m_category;
 }
 
-void Channel::setCategory(const Category& category)
+void Channel::setCategory(const std::set<Category>& category)
 {
   m_category = category;
+}
+
+void Channel::addCategory(const Category& category)
+{
+  m_category.insert(category);
 }
 
 const std::string& Channel::generator() const

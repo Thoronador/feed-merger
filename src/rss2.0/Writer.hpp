@@ -41,12 +41,12 @@ namespace RSS20
     private:
       /** \brief tries to write a category element with the help of an XML text writer (libxml2)
        *
-       * \param cat   the category that shall be written
+       * \param cat   the category elements that shall be written
        * \param writer xmlTextWriterPtr for the writer
        * \return Returns true, if the operation was successful.
        * Returns false, if the operation failed.
        */
-      static bool writeCategory(const Category& cat, xmlTextWriterPtr writer);
+      static bool writeCategory(const std::set<Category>& cat, xmlTextWriterPtr writer);
 
 
       /** \brief tries to write a given feed item with the help of an XML text writer (libxml2)

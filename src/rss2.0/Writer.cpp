@@ -27,7 +27,7 @@
 namespace RSS20
 {
 
-bool Writer::writeCategory(const Category& category, xmlTextWriterPtr writer)
+bool Writer::writeCategory(const std::set<Category>& category, xmlTextWriterPtr writer)
 {
   if (nullptr == writer)
     return false;
@@ -35,40 +35,46 @@ bool Writer::writeCategory(const Category& category, xmlTextWriterPtr writer)
   //write <category>
   if (!category.empty())
   {
-    int ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("category"));
-    if (ret < 0)
+    for (const auto & categ : category)
     {
-      std::cout << "Error: Could not start <category> element!" << std::endl;
-      return false;
-    }
-    //attribute domain
-    if (!category.domain().empty())
-    {
-      ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
-                reinterpret_cast<const xmlChar*>(category.domain().c_str()));
-      if (ret < 0)
+      if (!categ.empty())
       {
-        std::cout << "Error: Could not write domain attribute of <category> element!" << std::endl;
-        return false;
-      }
-    } //if domain attribute is present
+        int ret = xmlTextWriterStartElement(writer, reinterpret_cast<const xmlChar*>("category"));
+        if (ret < 0)
+        {
+          std::cout << "Error: Could not start <category> element!" << std::endl;
+          return false;
+        }
+        //attribute domain
+        if (!categ.domain().empty())
+        {
+          ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("domain"),
+                    reinterpret_cast<const xmlChar*>(categ.domain().c_str()));
+          if (ret < 0)
+          {
+            std::cout << "Error: Could not write domain attribute of <category> element!" << std::endl;
+            return false;
+          }
+        } //if domain attribute is present
 
-    //write category string
-    ret = xmlTextWriterWriteString(writer,
-              reinterpret_cast<const xmlChar*>(category.get().c_str()));
-    if (ret < 0)
-    {
-      std::cout << "Error: Could not write content of <category> element!" << std::endl;
-      return false;
-    }
-    //close category element
-    ret = xmlTextWriterEndElement(writer);
-    if (ret < 0)
-    {
-      std::cout << "Error: Could not end <category> element!" << std::endl;
-      return false;
-    } //if
-  } //if category
+        //write category string
+        ret = xmlTextWriterWriteString(writer,
+                  reinterpret_cast<const xmlChar*>(categ.get().c_str()));
+        if (ret < 0)
+        {
+          std::cout << "Error: Could not write content of <category> element!" << std::endl;
+          return false;
+        }
+        //close category element
+        ret = xmlTextWriterEndElement(writer);
+        if (ret < 0)
+        {
+          std::cout << "Error: Could not end <category> element!" << std::endl;
+          return false;
+        } //if
+      } //if categ is not empty
+    } //for
+  } //if category set is not empty
 
   return true;
 }
