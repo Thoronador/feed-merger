@@ -61,4 +61,14 @@ bool Category::operator==(const Category& cat) const
   return ((m_domain == cat.m_domain) && (m_category == cat.m_category));
 }
 
+bool Category::operator<(const Category& cat) const
+{
+  //First compare by category. If categories are equal, then compare by domain.
+  if (m_category < cat.m_category)
+    return true;
+  if (m_category == cat.m_category)
+    return (m_domain < cat.m_domain);
+  return false;
+}
+
 } //namespace

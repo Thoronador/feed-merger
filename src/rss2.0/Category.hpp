@@ -82,6 +82,15 @@ namespace RSS20
        * \return Returns true, if this category and the other category are equal.
        */
       bool operator==(const Category& cat) const;
+
+
+      /** \brief "less than"-like operator
+       *
+       * \param cat   the other category instance which will be compared to this instance
+       * \return Returns true, if this category should appear before the other
+       * in a sorted set.
+       */
+      bool operator<(const Category& cat) const;
     private:
       std::string m_category; /**< category name */
       std::string m_domain; /**< category's domain, if any */
