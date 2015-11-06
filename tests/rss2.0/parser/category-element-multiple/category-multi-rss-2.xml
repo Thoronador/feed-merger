@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Image element test feed</title>
+      <link>http://rss2test.example.com/image/</link>
+      <description>Picture this!</description>
+      <category domain="https://channel.example.com/channel/">Channel category</category>
+      <category domain="https://channel.example.com/channel/">Channel category, 2nd</category>
+      <category domain="https://channel.example.com/channel/">Channel category, 3rd</category>
+      <item>
+         <title>Why?</title>
+         <link>http://rss2test.example.com/image/item1.html</link>
+         <description>A glass of wine</description>
+         <pubDate>Wed, 28 Oct 2015 19:58:31 GMT</pubDate>
+         <guid isPermaLink="false">http://www.example.com/guid-unknown-404</guid>
+         <category domain="https://cat.example.com/cats.php">Example category</category>
+         <category domain="https://cat.example.com/cats2.php">Example category 2</category>
+         <category domain="https://cat.example.com/cats3.php">Example category 3</category>
+         <category domain="https://cat.example.com/cats4.php">Example category 4</category>
+      </item>
+   </channel>
+</rss>
