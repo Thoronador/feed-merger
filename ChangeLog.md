@@ -1,5 +1,8 @@
 # ChangeLog for feed-merger
 
+## next version 0.07 (????-??-??)
+  - adjust sort order of items in merged feed
+
 ## Version 0.06 (2015-11-06)
   - RSS 2.0 feeds with multiple categories per channel and/or per item can now
     be parsed properly.

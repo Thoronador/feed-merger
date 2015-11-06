@@ -167,4 +167,9 @@ bool Item::operator<(const Item& other) const
   return (std::difftime(other.m_pubDate, m_pubDate) > 0);
 }
 
+bool Item::operator>(const Item& other) const
+{
+  return (std::difftime(other.m_pubDate, m_pubDate) < 0);
+}
+
 } //namespace

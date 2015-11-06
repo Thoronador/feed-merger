@@ -234,7 +234,7 @@ int main(int argc, char** argv)
   } //while
 
   //sort items
-  std::sort(totalItems.begin(), totalItems.end());
+  std::sort(totalItems.begin(), totalItems.end(), std::greater<RSS20::Item>());
 
   //create merged feed object
   RSS20::Channel mergedFeed;
