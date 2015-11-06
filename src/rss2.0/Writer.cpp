@@ -401,19 +401,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   }
 
   //write (possibly multiple) <item> elements
-  if (!feed.items().empty())
-  {
-    for (const auto& item : feed.items())
-    {
-      if (!writeItem(item, writer))
-      {
-        xmlFreeTextWriter(writer);
-        if (nullptr != document)
-          xmlFreeDoc(document);
-        return false;
-      }
-    } //for
-  } //if items
+  // ---> see end of function; items are written as the last elements
 
   //write <language>
   if (!feed.language().empty())
@@ -923,6 +911,23 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
       return false;
     }
   } //if skipDays
+
+  /* Items are written as last elements in channel, as per RSS 2.0 best
+     practices recommendation. */
+  //write (possibly multiple) <item> elements
+  if (!feed.items().empty())
+  {
+    for (const auto& item : feed.items())
+    {
+      if (!writeItem(item, writer))
+      {
+        xmlFreeTextWriter(writer);
+        if (nullptr != document)
+          xmlFreeDoc(document);
+        return false;
+      }
+    } //for
+  } //if items
 
   /* xmlTextWriterEndDocument closes all open elements, i.e. <channel> and <rss> in this case. */
   ret = xmlTextWriterEndDocument(writer);
