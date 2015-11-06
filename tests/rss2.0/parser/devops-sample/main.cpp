@@ -115,7 +115,7 @@ int main(int argc, char ** argv)
           + "<img data-orig-width=\"322\" data-orig-height=\"385\" src=\"http://33.media.tumblr.com/6204e2a3e75edbb21b6cbecf33f1e408/tumblr_inline_nwfyl5kHZl1raprkq_500.gif\"/>"
           + std::string("</figure><p>by @uaiHebert<br/></p>"), //desc
       "", //author
-      RSS20::Category(), //category
+      { }, //category
       "", //comments
       RSS20::Enclosure(),
       RSS20::GUID("http://devopsreactions.tumblr.com/post/131738532813", true), //guid

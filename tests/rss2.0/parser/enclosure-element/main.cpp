@@ -75,7 +75,7 @@ int main(int argc, char ** argv)
                           "http://rss2test.example.com/image/item1.html", //link
                           "A glass of wine", //description
                           "", //author
-                          RSS20::Category(),
+                          { }, //category
                           "", //comments
                           RSS20::Enclosure("http://u.rl/file.ogg", 12345678, "audio/ogg"), //enclosure
                           RSS20::GUID("http://www.example.com/guid-unknown-404", false), //guid
@@ -87,7 +87,7 @@ int main(int argc, char ** argv)
           "", //webmaster
           0, //pubDate
           0, //lastBuildDate
-          RSS20::Category(), //category
+          { }, //category
           "", //generator
           "", //docs
           RSS20::Cloud(), //cloud

@@ -188,7 +188,7 @@ int main(int argc, char ** argv)
       std::string("How do Americans get ready to work with Russians aboard the International Space Station? ")
           +"They take a crash course in culture, language and protocol at Russia's <a href=\"http://howe.iki.rssi.ru/GCTC/gctc_e.htm\">Star City</a>.", //desc
       "", //author
-      RSS20::Category(), //category
+      { }, //category
       "", //comments
       RSS20::Enclosure(),
       RSS20::GUID("http://liftoff.msfc.nasa.gov/2003/06/03.html#item573", true), //guid
