@@ -42,8 +42,8 @@ const int rcFileError = 4;
 const std::string cDefaultOutputFileName = "merged-feeds.xml";
 
 //strings that indicate the program's version
-const std::string cVersionString( "feed-merger, version 0.05, 2015-11-06");
-const std::string cVersionStringGenerator("feed-merger v0.05");
+const std::string cVersionString( "feed-merger, version 0.06, 2015-11-06");
+const std::string cVersionStringGenerator("feed-merger v0.06");
 
 void showVersion()
 {

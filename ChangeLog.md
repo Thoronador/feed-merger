@@ -1,5 +1,10 @@
 # ChangeLog for feed-merger
 
+## Version 0.06 (2015-11-06)
+  - RSS 2.0 feeds with multiple categories per channel and/or per item can now
+    be parsed properly.
+  - Parser and Writer should now be fully compliant with RSS 2.0 specification.
+
 ## Version 0.05 (2015-11-06)
   - first version that writes the merged feeds to a file
 
