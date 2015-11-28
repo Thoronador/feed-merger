@@ -43,6 +43,8 @@
 		<Unit filename="Curly.hpp" />
 		<Unit filename="StringFunctions.cpp" />
 		<Unit filename="StringFunctions.hpp" />
+		<Unit filename="atom1.0/PersonConstruct.cpp" />
+		<Unit filename="atom1.0/PersonConstruct.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rfc822/Date.cpp" />
 		<Unit filename="rfc822/Date.hpp" />
