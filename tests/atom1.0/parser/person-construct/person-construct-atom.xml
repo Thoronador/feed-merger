@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<personConstruct>
+   <name>Eric Example</name>
+   <uri>https://eric.example.com/blog/</uri>
+   <email>eric@example.com</email>
+</personConstruct>

@@ -37,6 +37,15 @@ namespace Atom10
       PersonConstruct();
 
 
+      /** \brief alternative constructor with initial values
+       *
+       * \param name   the initial value for name
+       * \param uri    initial value for URI
+       * \param email  intial e-mail address
+       */
+      PersonConstruct(const std::string& name, const std::string& uri, const std::string& email);
+
+
       /** \brief returns the person's name
        *
        * \return Returns the name of the person.

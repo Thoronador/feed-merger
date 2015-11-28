@@ -11,3 +11,6 @@ add_subdirectory (rfc822_date)
 
 # Recurse into subdirectory for tests of RSS 2.0 classes.
 add_subdirectory (rss2.0)
+
+# Recurse into subdirectory for tests of Atom 1.0 classes.
+add_subdirectory (atom1.0)

@@ -30,6 +30,13 @@ PersonConstruct::PersonConstruct()
 {
 }
 
+PersonConstruct::PersonConstruct(const std::string& name, const std::string& uri, const std::string& email)
+: m_name(name),
+  m_uri(uri),
+  m_email(email)
+{
+}
+
 const std::string& PersonConstruct::name() const
 {
   return m_name;
