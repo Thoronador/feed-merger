@@ -136,7 +136,7 @@ namespace RSS20
       const bool empty() const;
 
 
-      /** \brief equality operator for Enclosure
+      /** \brief equality operator for Cloud
        *
        * \param other  the other instance
        * \return Returns true, if both instances are equal.
