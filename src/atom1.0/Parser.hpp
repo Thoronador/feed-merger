@@ -21,6 +21,7 @@
 #ifndef ATOM10_PARSER_HPP
 #define ATOM10_PARSER_HPP
 
+#include "Category.hpp"
 #include "PersonConstruct.hpp"
 
 //forward declarations
@@ -32,6 +33,15 @@ namespace Atom10
   class Parser
   {
     public:
+      /** \brief parses a category from the given XML node
+       *
+       * \param categoryNode  the element node of the category
+       * \param categoryInfo  variable that will be used to store the parsed result
+       * \return Returns true, if the person construct could be parsed.
+       * Returns false, if errors occurred.
+       */
+      static bool categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo);
+
       /** \brief parses a person construct from the given XML node
        *
        * \param personConstructNode  the root node of the person construct

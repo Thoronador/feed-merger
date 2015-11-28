@@ -25,6 +25,63 @@
 namespace Atom10
 {
 
+bool Parser::categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo)
+{
+  if (!categoryNode.isElementNode()
+      or (categoryNode.getNameAsString() != "category"))
+    return false;
+
+  const auto attributes = categoryNode.getAttributes();
+  if (attributes.empty())
+  {
+    std::cout << "Category element should have at least one attribute!" << std::endl;
+    return false;
+  } //if not enough attributes
+
+  //initialize element with empty values
+  categoryInfo = Category();
+  for (const auto& a : attributes)
+  {
+    const std::string attrName = a.first;
+    if (attrName == "term")
+    {
+      if (!categoryInfo.term().empty())
+      {
+        std::cout << "Category element already has a term!" << std::endl;
+        return false;
+      } //if term was already specified
+      categoryInfo.setTerm(a.second);
+    } //if term
+    else if (attrName == "scheme")
+    {
+      if (!categoryInfo.scheme().empty())
+      {
+        std::cout << "Category element already has a scheme!" << std::endl;
+        return false;
+      } //if scheme was already specified
+      categoryInfo.setScheme(a.second);
+    } //if scheme
+    else if (attrName == "label")
+    {
+      if (!categoryInfo.label().empty())
+      {
+        std::cout << "Category element already has a label!" << std::endl;
+        return false;
+      } //if label was already specified
+      categoryInfo.setLabel(a.second);
+    } //if label
+    else
+    {
+      std::cout << "Error: found unknown attribute " << a.first
+                << " in <category> element of Atom 1.0 feed!" << std::endl;
+      return false;
+    }
+  } //for
+
+  //Category should not be empty.
+  return (!categoryInfo.empty());
+}
+
 bool Parser::personConstructFromNode(const XMLNode& personConstructNode, PersonConstruct& personInfo, const std::string& nodeName)
 {
   if (!personConstructNode.isElementNode() or (personConstructNode.getNameAsString() != nodeName))
