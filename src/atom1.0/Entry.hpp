@@ -64,7 +64,8 @@ namespace Atom10
        * \param contributors  list of contributors
        * \param id            the entry's ID
        */
-      Entry();
+      Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
+            const std::vector<PersonConstruct>& contributors, const std::string& id);
 
 
       /** \brief returns the author(s)

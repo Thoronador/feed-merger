@@ -32,6 +32,15 @@ Entry::Entry()
 {
 }
 
+Entry::Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
+             const std::vector<PersonConstruct>& contributors, const std::string& id)
+: m_authors(authors),
+  m_categories(categories),
+  m_contributors(contributors),
+  m_id(id)
+{
+}
+
 const std::vector<PersonConstruct>& Entry::authors() const
 {
   return m_authors;
