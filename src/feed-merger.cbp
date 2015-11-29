@@ -45,6 +45,8 @@
 		<Unit filename="StringFunctions.hpp" />
 		<Unit filename="atom1.0/Category.cpp" />
 		<Unit filename="atom1.0/Category.hpp" />
+		<Unit filename="atom1.0/Entry.cpp" />
+		<Unit filename="atom1.0/Entry.hpp" />
 		<Unit filename="atom1.0/Parser.cpp" />
 		<Unit filename="atom1.0/Parser.hpp" />
 		<Unit filename="atom1.0/PersonConstruct.cpp" />

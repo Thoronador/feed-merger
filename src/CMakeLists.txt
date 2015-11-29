@@ -7,6 +7,7 @@ set(feed_merger_sources
     Curly.cpp
     StringFunctions.cpp
     rfc822/Date.cpp
+    atom1.0/Entry.cpp
     atom1.0/PersonConstruct.cpp
     rss2.0/Category.cpp
     rss2.0/Channel.cpp
