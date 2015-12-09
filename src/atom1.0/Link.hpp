@@ -150,8 +150,8 @@ namespace Atom10
       std::string m_href; /**< the link's IRI, mandatory */
       std::string m_rel; /**< link relation type, optional */
       std::string m_type; /**< media type, optional */
-      std::string m_hreflang; /**< language of the resource */
-      std::string m_title; /**< human-readable information about the link. optional */
+      std::string m_hreflang; /**< language of the resource, optional */
+      std::string m_title; /**< human-readable information about the link, optional */
       uint64_t m_length; /**< length of linked content in octets, optional */
   }; //class
 } //namespace
