@@ -41,7 +41,7 @@ Link::Link(const std::string& href, const std::string& rel,
   m_type(type),
   m_hreflang(hreflang),
   m_title(title),
-  m_length(0)
+  m_length(length)
 {
 }
 

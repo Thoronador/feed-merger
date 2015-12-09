@@ -22,6 +22,7 @@
 #define ATOM10_PARSER_HPP
 
 #include "Category.hpp"
+#include "Link.hpp"
 #include "PersonConstruct.hpp"
 
 //forward declarations
@@ -37,10 +38,20 @@ namespace Atom10
        *
        * \param categoryNode  the element node of the category
        * \param categoryInfo  variable that will be used to store the parsed result
-       * \return Returns true, if the person construct could be parsed.
+       * \return Returns true, if the category could be parsed.
        * Returns false, if errors occurred.
        */
       static bool categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo);
+
+
+      /** \brief parses a link from the given XML node
+       *
+       * \param linkNode  the element node of the link
+       * \param linkInfo  variable that will be used to store the parsed result
+       * \return Returns true, if the link could be parsed.
+       * Returns false, if an error occurred.
+       */
+      static bool linkFromNode(const XMLNode& linkNode, Link& linkInfo);
 
       /** \brief parses a person construct from the given XML node
        *

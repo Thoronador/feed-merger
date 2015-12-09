@@ -6,6 +6,7 @@ project(atom10-person-construct-test)
 set(atom10-person-construct-test_sources
     ../../../../src/StringFunctions.cpp
     ../../../../src/atom1.0/Category.cpp
+    ../../../../src/atom1.0/Link.cpp
     ../../../../src/atom1.0/Parser.cpp
     ../../../../src/atom1.0/PersonConstruct.cpp
     ../../../../src/xml/XMLDocument.cpp

@@ -21,6 +21,7 @@
 #include "Parser.hpp"
 #include <iostream>
 #include "../xml/XMLDocument.hpp"
+#include "../StringFunctions.hpp"
 
 namespace Atom10
 {
@@ -80,6 +81,103 @@ bool Parser::categoryFromNode(const XMLNode& categoryNode, Category& categoryInf
 
   //Category should not be empty.
   return (!categoryInfo.empty());
+}
+
+bool Parser::linkFromNode(const XMLNode& linkNode, Link& linkInfo)
+{
+  if (!linkNode.isElementNode() or (linkNode.getNameAsString() != "link"))
+    return false;
+
+  //link should not have any child nodes
+  if (linkNode.hasChild())
+    return false;
+
+  const auto attributes = linkNode.getAttributes();
+  if (attributes.empty())
+  {
+    std::cout << "Link element should have at least one attribute!" << std::endl;
+    return false;
+  } //if not enough attributes
+
+  //initialize element with empty values
+  linkInfo = Link();
+  for (const auto& a : attributes)
+  {
+    const std::string attrName = a.first;
+    if (attrName == "href")
+    {
+      if (!linkInfo.href().empty())
+      {
+        std::cout << "Link element already has a href value!" << std::endl;
+        return false;
+      } //if href was already specified
+      linkInfo.setHref(a.second);
+    } //if href
+    else if (attrName == "rel")
+    {
+      if (!linkInfo.rel().empty())
+      {
+        std::cout << "Link element already has a rel attribute!" << std::endl;
+        return false;
+      } //if rel was already specified
+      linkInfo.setRel(a.second);
+    } //if rel
+    else if (attrName == "type")
+    {
+      if (!linkInfo.type().empty())
+      {
+        std::cout << "Link element already has a type attribute!" << std::endl;
+        return false;
+      } //if type was already specified
+      linkInfo.setType(a.second);
+    } //if type
+    else if (attrName == "hreflang")
+    {
+      if (!linkInfo.hreflang().empty())
+      {
+        std::cout << "Link element already has a hreflang attribute!" << std::endl;
+        return false;
+      } //if hreflang was already specified
+      linkInfo.setHreflang(a.second);
+    } //if hreflang
+    else if (attrName == "title")
+    {
+      if (!linkInfo.title().empty())
+      {
+        std::cout << "Link element already has a title attribute!" << std::endl;
+        return false;
+      } //if title was already specified
+      linkInfo.setTitle(a.second);
+    } //if title
+    else if (attrName == "length")
+    {
+      if (linkInfo.length() > 0)
+      {
+        std::cout << "Link element already has a length attribute!" << std::endl;
+        return false;
+      } //if length was already specified
+      uint64_t tempUnsigned = 0;
+      if (!stringToUnsignedInt<uint64_t>(a.second, tempUnsigned))
+      {
+        std::cout << "Length attribute of link element must have an integer value!" << std::endl;
+        return false;
+      }
+      if (tempUnsigned == 0)
+      {
+        std::cout << "Length attribute of link element must not be zero!" << std::endl;
+        return false;
+      }
+      linkInfo.setLength(tempUnsigned);
+    } //if length
+    else
+    {
+      std::cout << "Error: found unknown attribute " << a.first
+                << " in <link> element of Atom 1.0 feed!" << std::endl;
+      return false;
+    }
+  } //for
+  //structure should not be empty
+  return (!linkInfo.empty());
 }
 
 bool Parser::personConstructFromNode(const XMLNode& personConstructNode, PersonConstruct& personInfo, const std::string& nodeName)

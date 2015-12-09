@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<link href="https://link.example.com/directory/a.ps" rel="alternate"
+      type="application/postscript" hreflang="en-GB"
+      title="I am a title!" length="1234567890"  />

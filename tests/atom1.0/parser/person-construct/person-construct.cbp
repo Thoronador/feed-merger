@@ -41,6 +41,8 @@
 		<Unit filename="../../../../src/StringFunctions.hpp" />
 		<Unit filename="../../../../src/atom1.0/Category.cpp" />
 		<Unit filename="../../../../src/atom1.0/Category.hpp" />
+		<Unit filename="../../../../src/atom1.0/Link.cpp" />
+		<Unit filename="../../../../src/atom1.0/Link.hpp" />
 		<Unit filename="../../../../src/atom1.0/Parser.cpp" />
 		<Unit filename="../../../../src/atom1.0/Parser.hpp" />
 		<Unit filename="../../../../src/atom1.0/PersonConstruct.cpp" />
