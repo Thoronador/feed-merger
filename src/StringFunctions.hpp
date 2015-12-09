@@ -21,7 +21,9 @@
 #ifndef STRINGFUNCTIONS_HPP
 #define STRINGFUNCTIONS_HPP
 
+#include <limits>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 /** \brief tries to convert a string to an unsigned integer
@@ -31,7 +33,37 @@
  * \return Returns true, if the conversion was successful.
  *         Returns false, if an error occurred.
  */
-bool stringToUnsignedInt(const std::string& str, unsigned int& value);
+template<typename uintT>
+bool stringToUnsignedInt(const std::string& str, uintT& value)
+{
+  static_assert(std::is_integral<uintT>::value, "uintT must be an integral type!");
+  static_assert(std::is_unsigned<uintT>::value, "uintT must be an unsigned type!");
+  if (str.empty()) return false;
+  value = 0;
+  const uintT cTenthLimit = std::numeric_limits<uintT>::max() / 10;
+  const uintT cRealLimit = std::numeric_limits<uintT>::max();
+  std::string::size_type i = 0;
+  for ( ; i < str.size(); ++i)
+  {
+    if ((str.at(i)>='0') and (str.at(i)<='9'))
+    {
+      /* If the result of the multiplication in the next line would go out of
+         the type range, then the result is not useful anyway, so quit here. */
+      if (value>cTenthLimit) return false;
+      value = value * 10;
+      /* If the result of the addition in the next line would go out of the
+         type's range, then the result is not useful anyway, so quit here. */
+      if (value>cRealLimit-(str.at(i)-'0')) return false;
+      value = value + (str.at(i)-'0');
+    }//if
+    else
+    {
+      //unknown or invalid character detected
+      return false;
+    }
+  }//for
+  return true;
+}
 
 
 /** \brief tries to convert the string into a signed int
