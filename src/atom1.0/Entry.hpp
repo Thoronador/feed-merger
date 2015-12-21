@@ -65,13 +65,14 @@ namespace Atom10
        * \param contributors  list of contributors
        * \param id            the entry's ID
        * \param link          the links for the entry
+       * \param rights        rights held in and over an entry or feed
        * \param summary       short summary of the entry
        * \param title         human-readable title for the entry
        */
       Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
             const std::vector<PersonConstruct>& contributors, const std::string& id,
-            const std::vector<Link>& links, const std::string& summary,
-            const std::string& title);
+            const std::vector<Link>& links, const std::string& rights,
+            const std::string& summary, const std::string& title);
 
 
       /** \brief returns the author(s)
@@ -177,6 +178,23 @@ namespace Atom10
 
       #warning TODO!
 
+
+      /** \brief returns the entry's copyright information
+       *
+       * \return Returns the copyright information.
+       */
+      const std::string& rights() const;
+
+
+      /** \brief sets the entry's copyright information
+       *
+       * \param rights   the new copyright information of the entry
+       */
+      void setRights(const std::string& rights);
+
+      #warning TODO
+
+
       /** \brief returns the entry's summary
        *
        * \return Returns the summary.
@@ -213,6 +231,8 @@ namespace Atom10
       std::vector<PersonConstruct> m_contributors; /**< vector of contributors */
       std::string m_id; /**< id element */
       std::vector<Link> m_links; /**< vector of links */
+      #warning TODO!
+      std::string m_rights; /**< info about rights held in and over an entry */
       #warning TODO!
       std::string m_summary; /**< short summary, abstract or excerpt of the entry */
       std::string m_title; /**< human-readable title for the entry */
