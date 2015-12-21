@@ -28,16 +28,19 @@ Entry::Entry()
 : m_authors(std::vector<PersonConstruct>()),
   m_categories(std::vector<Category>()),
   m_contributors(std::vector<PersonConstruct>()),
-  m_id("")
+  m_id(""),
+  m_links(std::vector<Link>())
 {
 }
 
 Entry::Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
-             const std::vector<PersonConstruct>& contributors, const std::string& id)
+             const std::vector<PersonConstruct>& contributors, const std::string& id,
+             const std::vector<Link>& links)
 : m_authors(authors),
   m_categories(categories),
   m_contributors(contributors),
-  m_id(id)
+  m_id(id),
+  m_links(links)
 {
 }
 
@@ -103,6 +106,24 @@ const std::string& Entry::id() const
 void Entry::setId(const std::string& id)
 {
   m_id = id;
+}
+
+const std::vector<Link>& Entry::links() const
+{
+  return m_links;
+}
+
+void Entry::setLinks(const std::vector<Link>& links)
+{
+  m_links = links;
+}
+
+void Entry::addLink(const Link& link)
+{
+  /* Link should not be empty and not be present in the vector yet. */
+  if (!link.empty()
+      && (std::find(m_links.begin(), m_links.end(), link) == m_links.end()))
+    m_links.push_back(link);
 }
 
 } //namespace

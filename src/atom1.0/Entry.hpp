@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include "Category.hpp"
+#include "Link.hpp"
 #include "PersonConstruct.hpp"
 
 namespace Atom10
@@ -63,9 +64,11 @@ namespace Atom10
        * \param categories    initial list of categories
        * \param contributors  list of contributors
        * \param id            the entry's ID
+       * \param link          the links for the entry
        */
       Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
-            const std::vector<PersonConstruct>& contributors, const std::string& id);
+            const std::vector<PersonConstruct>& contributors, const std::string& id,
+            const std::vector<Link>& links);
 
 
       /** \brief returns the author(s)
@@ -148,6 +151,27 @@ namespace Atom10
        */
       void setId(const std::string& id);
 
+
+      /** \brief returns the link(s)
+       *
+       * \return Returns a vector of links.
+       */
+      const std::vector<Link>& links() const;
+
+
+      /** \brief sets the links of the entry
+       *
+       * \param links   the new vector of links
+       */
+      void setLinks(const std::vector<Link>& links);
+
+
+      /** \brief adds a new link to the entry's links
+       *
+       * \param link  the additional link
+       */
+      void addLink(const Link& link);
+
       #warning TODO!
     private:
       std::vector<PersonConstruct> m_authors; /**< vector of authors */
@@ -155,6 +179,7 @@ namespace Atom10
       #warning TODO: content element!
       std::vector<PersonConstruct> m_contributors; /**< vector of contributors */
       std::string m_id; /**< id element */
+      std::vector<Link> m_links; /**< vector of links */
       #warning TODO!
   }; //class
 } //namespace
