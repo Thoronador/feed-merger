@@ -29,18 +29,23 @@ Entry::Entry()
   m_categories(std::vector<Category>()),
   m_contributors(std::vector<PersonConstruct>()),
   m_id(""),
-  m_links(std::vector<Link>())
+  m_links(std::vector<Link>()),
+  m_summary(""),
+  m_title("")
 {
 }
 
 Entry::Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
              const std::vector<PersonConstruct>& contributors, const std::string& id,
-             const std::vector<Link>& links)
+             const std::vector<Link>& links, const std::string& summary,
+             const std::string& title)
 : m_authors(authors),
   m_categories(categories),
   m_contributors(contributors),
   m_id(id),
-  m_links(links)
+  m_links(links),
+  m_summary(summary),
+  m_title(title)
 {
 }
 
@@ -124,6 +129,26 @@ void Entry::addLink(const Link& link)
   if (!link.empty()
       && (std::find(m_links.begin(), m_links.end(), link) == m_links.end()))
     m_links.push_back(link);
+}
+
+const std::string& Entry::summary() const
+{
+  return m_summary;
+}
+
+void Entry::setSummary(const std::string& summary)
+{
+  m_summary = summary;
+}
+
+const std::string& Entry::title() const
+{
+  return m_title;
+}
+
+void Entry::setTitle(const std::string& title)
+{
+  m_title = title;
 }
 
 } //namespace

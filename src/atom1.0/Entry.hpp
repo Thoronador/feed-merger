@@ -65,10 +65,13 @@ namespace Atom10
        * \param contributors  list of contributors
        * \param id            the entry's ID
        * \param link          the links for the entry
+       * \param summary       short summary of the entry
+       * \param title         human-readable title for the entry
        */
       Entry(const std::vector<PersonConstruct>& authors, const std::vector<Category>& categories,
             const std::vector<PersonConstruct>& contributors, const std::string& id,
-            const std::vector<Link>& links);
+            const std::vector<Link>& links, const std::string& summary,
+            const std::string& title);
 
 
       /** \brief returns the author(s)
@@ -173,6 +176,36 @@ namespace Atom10
       void addLink(const Link& link);
 
       #warning TODO!
+
+      /** \brief returns the entry's summary
+       *
+       * \return Returns the summary.
+       */
+      const std::string& summary() const;
+
+
+      /** \brief sets the summary of the entry
+       *
+       * \param summary   the new summary of the entry
+       */
+      void setSummary(const std::string& summary);
+
+
+      /** \brief returns the entry's title
+       *
+       * \return Returns the title.
+       */
+      const std::string& title() const;
+
+
+      /** \brief sets the title of the entry
+       *
+       * \param title   the new title of the entry
+       */
+      void setTitle(const std::string& title);
+
+
+      #warning TODO!
     private:
       std::vector<PersonConstruct> m_authors; /**< vector of authors */
       std::vector<Category> m_categories; /**< vector of categories */
@@ -180,6 +213,9 @@ namespace Atom10
       std::vector<PersonConstruct> m_contributors; /**< vector of contributors */
       std::string m_id; /**< id element */
       std::vector<Link> m_links; /**< vector of links */
+      #warning TODO!
+      std::string m_summary; /**< short summary, abstract or excerpt of the entry */
+      std::string m_title; /**< human-readable title for the entry */
       #warning TODO!
   }; //class
 } //namespace
