@@ -73,7 +73,7 @@ int main(int argc, char** argv)
   if ((argc > 1) and (argv != nullptr))
   {
     int i = 1;
-    while (i<argc)
+    while (i < argc)
     {
       if (argv[i] != nullptr)
       {
@@ -168,7 +168,7 @@ int main(int argc, char** argv)
   std::vector<std::string> feedSources;
 
   //Get all the feeds via cURL.
-  for (auto item : feedURLs)
+  for (const auto & item : feedURLs)
   {
     Curly cURL;
     cURL.setURL(item);
@@ -204,34 +204,29 @@ int main(int argc, char** argv)
   /* TODO: Support Atom feeds, too! */
 
   std::vector<RSS20::Channel> feeds;
-  std::vector<std::string>::const_iterator feedSrcIter = feedSources.begin();
-  while (feedSrcIter != feedSources.end())
+  for (const auto & feedSrc : feedSources)
   {
     RSS20::Channel feed;
     #ifdef DEBUG
     std::cout << "Parsing feed ..." << std::endl;
     #endif // DEBUG
-    if (!RSS20::Parser::fromString(*feedSrcIter, feed))
+    if (!RSS20::Parser::fromString(feedSrc, feed))
     {
       std::cout << "Error: Could not parse the data from one feed as RSS 2.0!"
                 << std::endl;
       return rcParserError;
     }
     feeds.push_back(feed);
-    ++feedSrcIter;
-  } //while
+  } //for
 
   std::vector<RSS20::Item> totalItems;
-  std::vector<RSS20::Channel>::const_iterator feedIter = feeds.begin();
-  while (feedIter != feeds.end())
+  for (const auto & feed : feeds)
   {
-    std::vector<RSS20::Item>::size_type i;
-    for (i = 0; i < feedIter->items().size(); ++i)
+    for (const auto & item : feed.items())
     {
-      totalItems.push_back(feedIter->items().at(i));
+      totalItems.push_back(item);
     } //for i
-    ++feedIter;
-  } //while
+  } //for
 
   //sort items
   std::sort(totalItems.begin(), totalItems.end(), std::greater<RSS20::Item>());
