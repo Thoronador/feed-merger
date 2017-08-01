@@ -23,8 +23,8 @@ add_test(NAME feed-merger_version
          COMMAND $<TARGET_FILE:feed-merger> --version)
 
 # redirect handling
-# Feeds at heise.de are provided via "generic" URLs that are redirected
-# to the current incarnation of that feed. We can use this to test the
-# redirection handling of feed-merger.
+# Some feeds might be provided via "generic" URLs that are redirected
+# to the current incarnation of that feed. We can use httpbin's redirect to
+# test the redirection handling of feed-merger.
 add_test(NAME feed-merger_redirects
-         COMMAND $<TARGET_FILE:feed-merger> "http://www.heise.de/open/news/news.rdf" "http://www.heise.de/security/news/news.rdf")
+         COMMAND $<TARGET_FILE:feed-merger> "https://httpbin.org/redirect-to?url=http%3A%2F%2Fdevopsreactions.tumblr.com%2Frss" "https://httpbin.org/redirect-to?url=http%3A%2F%2Fsecurityreactions.tumblr.com%2Frss")
