@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of scan-tool.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2016, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 extern "C"
 {
@@ -60,10 +61,12 @@ class Curly
      *
      * \param name   name of the field
      * \param value  the field's value
+     * \return Returns true, if a field with the given name was added.
+     *         Returns false otherwise.
      * \remarks If a POST field with the same name already exists, its value
      *          will be overwritten.
      */
-    void addPostField(const std::string& name, const std::string& value);
+    bool addPostField(const std::string& name, const std::string& value);
 
 
     /** \brief checks, if this class instance has a POST field with the given name
@@ -106,46 +109,52 @@ class Curly
     bool addFile(const std::string& filename, const std::string& field);
 
 
-    /** \brief checks whether Curly will follow redirects
+    /** \brief gets the list of additional / custom HTTP headers
      *
-     * \return Returns true, if Curly's perform() method will follow redirects.
-     * Returns false, if redirects are ignored.
-     * \remarks Default behaviour is not to follow redirects.
-     * You can limit the maximum number of redirects which are followed with
-     * setMaximumRedirects() function.
+     * \return Returns a vector of strings that represents the headers.
      */
-    bool followsRedirects() const;
+    const std::vector<std::string>& getHeaders() const;
 
 
-    /** \brief changes whether Curly::perform() shall follow redirects.
+    /** \brief adds a custom HTTP header
      *
-     * \param follow  Set this to true, if Curly shall follow redirects.
-     *                False (default) means that redirects are ignored.
-     * \remarks Default behaviour is not to follow redirects.
-     * You can limit the maximum number of redirects which are followed with
-     * setMaximumRedirects() function.
+     * \param header   the header, without(!) CRLF at the end
+     * \return Returns true, if the header was added.
+     *         Returns false otherwise.
      */
-    void followRedirects(const bool follow);
+    bool addHeader(const std::string& header);
 
 
-    /** \brief gets the maximum number of redirects that Curly will follow
+    /** \brief define the body of a HTTP POST request directly
      *
-     * \return Returns the maximum number of redirects that Curly will follow.
-     * \remarks This setting only takes effect, if followsRedirects() returns
-     *          true. Default value is -1, which means that there is no limit
-     *          on the number of redirects.
+     * \param body  the content of the HTTP body
+     * \remarks This will only work, if no post fields have been set via the
+     * addPostField() method and if no files were added with addFile().
+     * Otherwise the fields and files from these functions will be used to
+     * create the body of the HTTP post request.
+     * \return Returns true, if the post body was added.
+     *         Returns false, if the post body could not be added.
      */
-    long int maximumRedirects() const;
+    bool setPostBody(const std::string& body);
 
 
-    /** \brief Set the maximum number of redirects that Curly will follow.
+    /** \brief sets the path to a certificate file to verify the peer with
      *
-     * \param maxRedirect  the new maximum number of redirects
-     * \remarks This setting only takes effect, if followsRedirects() returns
-     *          true. Negative values are interpreted as "follow (up to) an
-     *          indefinite number of redirects". Preset value is -1.
+     * \param certFile  path to the file holding one or more certificates
+     * \return Returns true, if the path could be set.
+     * Returns false, if the operation failed.
      */
-    void setMaximumRedirects(const long int maxRedirect);
+    bool setCertificateFile(const std::string& certFile);
+
+
+    /** \brief limits the speed of an upload operation
+     *
+     * \param maxBytesPerSecond  limit in bytes per second
+     * \remarks A value of zero means no limit. (That is the default.)
+     * \return Returns true, if the limit could be set.
+     *         Returns false otherwise.
+     */
+    bool limitUpstreamSpeed(const unsigned int maxBytesPerSecond);
 
 
     /** \brief performs the (POST) request
@@ -177,14 +186,73 @@ class Curly
      *         or no request was performed yet.
      */
     const std::string& getContentType() const;
+
+
+    /** \brief structure to hold version information about the underlying cURL
+     *         library
+     */
+    struct VersionData
+    {
+      /** default constructor */
+      VersionData();
+
+      std::string cURL;  /**< cURL version */
+      std::string ssl;   /**< OpenSSL version */
+      std::string libz;  /**< zlib version */
+      std::vector<std::string> protocols; /**< supported protocols */
+      std::string ares;  /**< ares version (only for newer cURL versions) */
+      std::string idn;   /**< idn version (only for newer cURL versions) */
+      std::string ssh;   /**< libssh version (only for newer cURL versions) */
+    }; //struct
+
+    /** \brief gets version information about the underlying cURL library
+     *
+     * \return Returns a version string for the underlying cURL library.
+     * \remarks The result might contain some empty strings, if the used cURL
+     *          library is too old to provide version information about itself.
+     */
+    static VersionData curlVersion();
+
+
+    /** \brief gets the list of header lines that were returned by the request
+     *
+     * \return Returns a vector of strings, one string for each header line.
+     * \remarks This list will only be filled, after perform() was called and
+     *          was successful. Otherwise, the list will be empty or contain
+     *          header data from the previous request.
+     *
+     *          Do not mix this up with the headers that were sent (by using
+     *          the addHeader() function), these are the response's headers.
+     */
+    const std::vector<std::string>& responseHeaders() const;
   private:
+    /** \brief callback for response headers
+     *
+     * \param buffer   data of header (might not be NUL-terminated)
+     * \param size     size of an item
+     * \param nitems   number of items
+     * \param userdata pointer to user data (if any)
+     * \return Returns the size of the read data.
+     */
+    static size_t headerCallback(char* buffer, size_t size, size_t nitems, void* userdata);
+
+    /** \brief adds a new header to the list of response headers
+     *
+     * \param respHeader   the new header line
+     */
+    void addResponseHeader(std::string respHeader);
+
     std::string m_URL; /**< URL for the request */
-    std::unordered_map<std::string, std::string> m_PostFields;
+    std::unordered_map<std::string, std::string> m_PostFields; /**< post fields; key = name; value = field's value */
     std::unordered_map<std::string, std::string> m_Files; /**< added files; key = field name, value = file name */
-    long m_LastResponseCode;
-    std::string m_LastContentType;
-    bool m_followRedirects;
-    long int m_maxRedirects;
+    std::vector<std::string> m_headers; /**< additional / custom headers (HTTP only) */
+    std::string m_PostBody; /**< plain post body */
+    bool m_UsePostBody; /**< whether to use the explicit post body */
+    std::string m_certFile; /**< the path to the certificate file to verify the peer with */
+    long m_LastResponseCode; /**< response code of the last request */
+    std::string m_LastContentType; /**< string that holds the last content type */
+    std::vector<std::string> m_ResponseHeaders; /**< response headers returned by the last request */
+    unsigned int m_MaxUpstreamSpeed; /**< limit for upstream / upload in bytes per second */
 }; //class Curly
 
 #endif // SCANTOOL_CURLY_HPP
