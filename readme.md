@@ -1,9 +1,6 @@
 # feed-merger
 
-[![Build Status](https://travis-ci.org/Thoronador/feed-merger.svg?branch=master)]
-(https://travis-ci.org/Thoronador/feed-merger)
-[![Build Status](https://drone.io/github.com/Thoronador/feed-merger/status.png)]
-(https://drone.io/github.com/Thoronador/feed-merger/latest)
+[![Build Status](https://travis-ci.org/Thoronador/feed-merger.svg?branch=master)](https://travis-ci.org/Thoronador/feed-merger)
 
 feed-merger will be an application to merge several feeds (Atom 1.0 or RSS 2.0)
 into one single feed.
