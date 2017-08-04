@@ -53,9 +53,13 @@
 		<Unit filename="atom1.0/Parser.hpp" />
 		<Unit filename="atom1.0/PersonConstruct.cpp" />
 		<Unit filename="atom1.0/PersonConstruct.hpp" />
+		<Unit filename="conversion/Rss091ToRss20.cpp" />
+		<Unit filename="conversion/Rss091ToRss20.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rfc822/Date.cpp" />
 		<Unit filename="rfc822/Date.hpp" />
+		<Unit filename="rss0.91/Item.cpp" />
+		<Unit filename="rss0.91/Item.hpp" />
 		<Unit filename="rss2.0/Category.cpp" />
 		<Unit filename="rss2.0/Category.hpp" />
 		<Unit filename="rss2.0/Channel.cpp" />
