@@ -18,11 +18,11 @@
  -------------------------------------------------------------------------------
 */
 
-#include <string>
-#include "Channel.hpp"
-
 #ifndef RSS20_PARSER_HPP
 #define RSS20_PARSER_HPP
+
+#include <string>
+#include "Channel.hpp"
 
 //forward declarations
 class XMLDocument;
