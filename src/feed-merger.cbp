@@ -30,8 +30,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 			<Add directory="/usr/include/libxml2" />
 		</Compiler>
@@ -53,11 +53,23 @@
 		<Unit filename="atom1.0/Parser.hpp" />
 		<Unit filename="atom1.0/PersonConstruct.cpp" />
 		<Unit filename="atom1.0/PersonConstruct.hpp" />
+		<Unit filename="basic-rss/Channel.cpp" />
+		<Unit filename="basic-rss/Channel.hpp" />
+		<Unit filename="basic-rss/Days.cpp" />
+		<Unit filename="basic-rss/Days.hpp" />
+		<Unit filename="basic-rss/Image.cpp" />
+		<Unit filename="basic-rss/Image.hpp" />
+		<Unit filename="basic-rss/Parser.cpp" />
+		<Unit filename="basic-rss/Parser.hpp" />
+		<Unit filename="basic-rss/TextInput.cpp" />
+		<Unit filename="basic-rss/TextInput.hpp" />
 		<Unit filename="conversion/Rss091ToRss20.cpp" />
 		<Unit filename="conversion/Rss091ToRss20.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rfc822/Date.cpp" />
 		<Unit filename="rfc822/Date.hpp" />
+		<Unit filename="rss0.91/Channel.cpp" />
+		<Unit filename="rss0.91/Channel.hpp" />
 		<Unit filename="rss0.91/Item.cpp" />
 		<Unit filename="rss0.91/Item.hpp" />
 		<Unit filename="rss0.91/Parser.cpp" />
@@ -68,13 +80,10 @@
 		<Unit filename="rss2.0/Channel.hpp" />
 		<Unit filename="rss2.0/Cloud.cpp" />
 		<Unit filename="rss2.0/Cloud.hpp" />
-		<Unit filename="rss2.0/Days.cpp" />
-		<Unit filename="rss2.0/Days.hpp" />
 		<Unit filename="rss2.0/Enclosure.cpp" />
 		<Unit filename="rss2.0/Enclosure.hpp" />
 		<Unit filename="rss2.0/Guid.cpp" />
 		<Unit filename="rss2.0/Guid.hpp" />
-		<Unit filename="rss2.0/Image.cpp" />
 		<Unit filename="rss2.0/Image.hpp" />
 		<Unit filename="rss2.0/Item.cpp" />
 		<Unit filename="rss2.0/Item.hpp" />
@@ -82,7 +91,6 @@
 		<Unit filename="rss2.0/Parser.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />
 		<Unit filename="rss2.0/Source.hpp" />
-		<Unit filename="rss2.0/TextInput.cpp" />
 		<Unit filename="rss2.0/TextInput.hpp" />
 		<Unit filename="rss2.0/Writer.cpp" />
 		<Unit filename="rss2.0/Writer.hpp" />

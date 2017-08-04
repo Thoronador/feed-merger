@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #include "TextInput.hpp"
 
-namespace RSS20
+namespace BasicRSS
 {
 
 TextInput::TextInput()

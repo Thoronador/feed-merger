@@ -4,17 +4,19 @@ cmake_minimum_required (VERSION 2.8)
 project(rss20-category-element-channel-test)
 
 set(rss20-category-element-channel-test_sources
+    ../../../../src/basic-rss/Channel.cpp
+    ../../../../src/basic-rss/Image.cpp
+    ../../../../src/basic-rss/Parser.cpp
+    ../../../../src/basic-rss/TextInput.cpp
     ../../../../src/rfc822/Date.cpp
     ../../../../src/rss2.0/Category.cpp
     ../../../../src/rss2.0/Channel.cpp
     ../../../../src/rss2.0/Cloud.cpp
     ../../../../src/rss2.0/Enclosure.cpp
     ../../../../src/rss2.0/Guid.cpp
-    ../../../../src/rss2.0/Image.cpp
     ../../../../src/rss2.0/Item.cpp
     ../../../../src/rss2.0/Parser.cpp
     ../../../../src/rss2.0/Source.cpp
-    ../../../../src/rss2.0/TextInput.cpp
     ../../../../src/StringFunctions.cpp
     ../../../../src/xml/XMLDocument.cpp
     ../../../../src/xml/XMLNode.cpp

@@ -39,6 +39,16 @@
 		</Linker>
 		<Unit filename="../../../../src/StringFunctions.cpp" />
 		<Unit filename="../../../../src/StringFunctions.hpp" />
+		<Unit filename="../../../../src/basic-rss/Channel.cpp" />
+		<Unit filename="../../../../src/basic-rss/Channel.hpp" />
+		<Unit filename="../../../../src/basic-rss/Days.cpp" />
+		<Unit filename="../../../../src/basic-rss/Days.hpp" />
+		<Unit filename="../../../../src/basic-rss/Image.cpp" />
+		<Unit filename="../../../../src/basic-rss/Image.hpp" />
+		<Unit filename="../../../../src/basic-rss/Parser.cpp" />
+		<Unit filename="../../../../src/basic-rss/Parser.hpp" />
+		<Unit filename="../../../../src/basic-rss/TextInput.cpp" />
+		<Unit filename="../../../../src/basic-rss/TextInput.hpp" />
 		<Unit filename="../../../../src/rfc822/Date.cpp" />
 		<Unit filename="../../../../src/rfc822/Date.hpp" />
 		<Unit filename="../../../../src/rss2.0/Category.cpp" />
@@ -47,13 +57,10 @@
 		<Unit filename="../../../../src/rss2.0/Channel.hpp" />
 		<Unit filename="../../../../src/rss2.0/Cloud.cpp" />
 		<Unit filename="../../../../src/rss2.0/Cloud.hpp" />
-		<Unit filename="../../../../src/rss2.0/Days.cpp" />
-		<Unit filename="../../../../src/rss2.0/Days.hpp" />
 		<Unit filename="../../../../src/rss2.0/Enclosure.cpp" />
 		<Unit filename="../../../../src/rss2.0/Enclosure.hpp" />
 		<Unit filename="../../../../src/rss2.0/Guid.cpp" />
 		<Unit filename="../../../../src/rss2.0/Guid.hpp" />
-		<Unit filename="../../../../src/rss2.0/Image.cpp" />
 		<Unit filename="../../../../src/rss2.0/Image.hpp" />
 		<Unit filename="../../../../src/rss2.0/Item.cpp" />
 		<Unit filename="../../../../src/rss2.0/Item.hpp" />
@@ -61,7 +68,6 @@
 		<Unit filename="../../../../src/rss2.0/Parser.hpp" />
 		<Unit filename="../../../../src/rss2.0/Source.cpp" />
 		<Unit filename="../../../../src/rss2.0/Source.hpp" />
-		<Unit filename="../../../../src/rss2.0/TextInput.cpp" />
 		<Unit filename="../../../../src/rss2.0/TextInput.hpp" />
 		<Unit filename="../../../../src/rss2.0/Writer.cpp" />
 		<Unit filename="../../../../src/rss2.0/Writer.hpp" />

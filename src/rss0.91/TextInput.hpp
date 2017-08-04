@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,32 +18,16 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Days.hpp"
+#ifndef RSS091_TEXTINPUT_HPP
+#define RSS091_TEXTINPUT_HPP
 
-namespace RSS20
+#include "../basic-rss/TextInput.hpp"
+
+namespace RSS091
 {
 
-std::string dayToString(const Days d)
-{
-  switch (d)
-  {
-    case Days::Monday:
-         return "Monday";
-    case Days::Tuesday:
-         return "Tuesday";
-    case Days::Wednesday:
-         return "Wednesday";
-    case Days::Thursday:
-         return "Thursday";
-    case Days::Friday:
-         return "Friday";
-    case Days::Saturday:
-         return "Saturday";
-    case Days::Sunday:
-         return "Sunday";
-  } //swi
-  //should never get to this point
-  throw 42;
-}
+using TextInput = BasicRSS::TextInput;
 
 } //namespace
+
+#endif // RSS091_TEXTINPUT_HPP

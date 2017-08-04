@@ -18,16 +18,25 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef RSS20_TEXTINPUT_HPP
-#define RSS20_TEXTINPUT_HPP
+#ifndef BASIC_RSS_DAYS_HPP
+#define BASIC_RSS_DAYS_HPP
 
-#include "../basic-rss/TextInput.hpp"
+#include <string>
 
-namespace RSS20
+namespace BasicRSS
 {
+  /** enumeration type for days of the week */
+  enum class Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 
-using TextInput = BasicRSS::TextInput;
 
+  /** \brief returns the name of the day as string
+   *
+   * \param d  the day
+   * \param
+   * \return Returns a string like "Monday" etc., suitable for use in RSS 0.91
+   * and RSS 2.0 <skipDays>'s <day> sub-elements.
+   */
+  std::string dayToString(const Days d);
 } //namespace
 
-#endif // RSS20_TEXTINPUT_HPP
+#endif // BASIC_RSS_DAYS_HPP

@@ -20,16 +20,12 @@
 
 #include "Channel.hpp"
 
-namespace RSS20
+namespace RSS091
 {
 
 Channel::Channel()
 : BasicRSS::Channel(),
-  m_items(std::vector<Item>()),
-  m_category(std::set<Category>()),
-  m_generator(""),
-  m_cloud(Cloud()),
-  m_ttl(-1)
+  m_items(std::vector<Item>())
 {
 }
 
@@ -38,20 +34,14 @@ Channel::Channel(const std::string& title, const std::string& link,
               const std::string& language, const std::string& copyright,
               const std::string& managingEditor, const std::string& webMaster,
               const std::time_t pubDate, const std::time_t lastBuildDate,
-              const std::set<Category>& category, const std::string& generator,
-              const std::string& docs, const Cloud& cloud,
-              const int ttl, const Image& image,
+              const std::string& docs, const Image& image,
               const std::string& rating, const TextInput& textInput,
               const std::set<unsigned int>& skipHours,
               const std::set<BasicRSS::Days>& skipDays)
 : BasicRSS::Channel(title, link, description, language, copyright,
                     managingEditor, webMaster, pubDate, lastBuildDate, docs,
                     image, rating, textInput, skipHours, skipDays),
-  m_items(items),
-  m_category(category),
-  m_generator(generator),
-  m_cloud(cloud),
-  m_ttl(ttl)
+  m_items(items)
 {
 }
 
@@ -66,58 +56,9 @@ void Channel::addItem(const Item& item)
     m_items.push_back(item);
 }
 
-const std::set<Category>& Channel::category() const
-{
-  return m_category;
-}
-
-void Channel::setCategory(const std::set<Category>& category)
-{
-  m_category = category;
-}
-
-void Channel::addCategory(const Category& category)
-{
-  m_category.insert(category);
-}
-
-const std::string& Channel::generator() const
-{
-  return m_generator;
-}
-
-void Channel::setGenerator(const std::string& generator)
-{
-  m_generator = generator;
-}
-
-const Cloud& Channel::cloud() const
-{
-  return m_cloud;
-}
-
-void Channel::setCloud(const Cloud& cloud)
-{
-  m_cloud = cloud;
-}
-
-int Channel::ttl() const
-{
-  return m_ttl;
-}
-
-void Channel::setTtl(const int ttl)
-{
-  m_ttl = ttl;
-}
-
 bool Channel::operator==(const Channel& other) const
 {
-  return (BasicRSS::Channel::operator==(other)
-      && (m_items == other.m_items) && (m_category == other.m_category)
-      && (m_generator == other.m_generator) && (m_cloud == other.m_cloud)
-      && (m_ttl == other.m_ttl)
-    );
+  return (BasicRSS::Channel::operator==(other) && (m_items == other.m_items));
 }
 
 bool Channel::operator!=(const Channel& other) const

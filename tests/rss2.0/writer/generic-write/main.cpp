@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger test suite.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -77,9 +77,9 @@ int main(int argc, char ** argv)
               "object_name",
               "http://www.example.com/text-collector/script.cgi"), //textInput
           { 0, 1, 8, 9, 17, 22, 23 }, //skipHours
-          { RSS20::Days::Monday, RSS20::Days::Tuesday, RSS20::Days::Wednesday,
-            RSS20::Days::Thursday, RSS20::Days::Friday, RSS20::Days::Saturday,
-            RSS20::Days::Sunday } //skipDays
+          { BasicRSS::Days::Monday, BasicRSS::Days::Tuesday, BasicRSS::Days::Wednesday,
+            BasicRSS::Days::Thursday, BasicRSS::Days::Friday, BasicRSS::Days::Saturday,
+            BasicRSS::Days::Sunday } //skipDays
       );
 
   /* Write feed to a file. */

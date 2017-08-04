@@ -12,17 +12,19 @@ set(feed_merger_sources
     atom1.0/Entry.cpp
     atom1.0/Parser.cpp
     atom1.0/PersonConstruct.cpp
+    basic-rss/Channel.cpp
+    basic-rss/Days.cpp
+    basic-rss/Image.cpp
+    basic-rss/Parser.cpp
+    basic-rss/TextInput.cpp
     rss2.0/Category.cpp
     rss2.0/Channel.cpp
     rss2.0/Cloud.cpp
-    rss2.0/Days.cpp
     rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
-    rss2.0/Image.cpp
     rss2.0/Item.cpp
     rss2.0/Parser.cpp
     rss2.0/Source.cpp
-    rss2.0/TextInput.cpp
     rss2.0/Writer.cpp
     xml/XMLDocument.cpp
     xml/XMLNode.cpp

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #define RSS20_PARSER_HPP
 
 #include <string>
+#include "../basic-rss/Parser.hpp"
 #include "Channel.hpp"
 
 //forward declarations
@@ -30,8 +31,9 @@ class XMLNode;
 
 namespace RSS20
 {
-
-  class Parser
+  /** \brief parser for RSS 2.0 feeds
+   */
+  class Parser: public BasicRSS::Parser
   {
     public:
       /** \brief parses the given file as RSS 2.0 feed
@@ -93,16 +95,6 @@ namespace RSS20
       static bool enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosureInfo);
 
 
-      /** \brief parses an image element from the given XML node
-       *
-       * \param imageNode  the <image> node
-       * \param imageInfo   variable that will be used to store the parsed result
-       * \return Returns true, if the image node could be parsed.
-       * Returns false, if errors occurred.
-       */
-      static bool imageFromNode(const XMLNode& imageNode, Image& imageInfo);
-
-
       /** \brief parses a source element from the given XML node
        *
        * \param sourceNode  the <source> node
@@ -121,36 +113,6 @@ namespace RSS20
        * Returns false, if errors occurred.
        */
       static bool categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo);
-
-
-      /** \brief parses a textInput element from the given XML node
-       *
-       * \param textInputNode  the <textInput> node
-       * \param textInputInfo   variable that will be used to store the parsed result
-       * \return Returns true, if the textInput node could be parsed.
-       * Returns false, if errors occurred.
-       */
-      static bool textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo);
-
-
-      /** \brief parses a skipHours element from the given XML node
-       *
-       * \param skipHoursNode  the <skipHours> node
-       * \param skipHoursInfo   variable that will be used to store the parsed result
-       * \return Returns true, if the skipHours node could be parsed.
-       * Returns false, if errors occurred.
-       */
-      static bool skipHoursFromNode(const XMLNode& skipHoursNode, std::set<unsigned int>& skipHoursInfo);
-
-
-      /** \brief parses a skipDays element from the given XML node
-       *
-       * \param skipDaysNode   the <skipDays> node
-       * \param skipDaysInfo   variable that will be used to store the parsed result
-       * \return Returns true, if the skipDays node could be parsed.
-       * Returns false, if errors occurred.
-       */
-      static bool skipDaysFromNode(const XMLNode& skipDaysNode, std::set<Days>& skipDaysInfo);
   }; //class
 
 } //namespace

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger test suite.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ int main(int argc, char ** argv)
   const std::string pathToFeed = std::string(argv[1]);
 
   //initialize empty feed
-  RSS20::Channel feed = RSS20::Channel("", "", "", std::vector<RSS20::Item>());
+  RSS20::Channel feed = RSS20::Channel();
 
   if (!RSS20::Parser::fromFile(pathToFeed, feed))
   {
@@ -96,9 +96,9 @@ int main(int argc, char ** argv)
           "", //rating
           RSS20::TextInput(), //textInput
           {}, //skipHours
-          { RSS20::Days::Monday, RSS20::Days::Tuesday, RSS20::Days::Wednesday,
-            RSS20::Days::Thursday, RSS20::Days::Friday, RSS20::Days::Saturday,
-            RSS20::Days::Sunday } //skipDays
+          { BasicRSS::Days::Monday, BasicRSS::Days::Tuesday, BasicRSS::Days::Wednesday,
+            BasicRSS::Days::Thursday, BasicRSS::Days::Friday, BasicRSS::Days::Saturday,
+            BasicRSS::Days::Sunday } //skipDays
       );
 
 

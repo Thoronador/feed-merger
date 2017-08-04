@@ -18,16 +18,32 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef RSS20_TEXTINPUT_HPP
-#define RSS20_TEXTINPUT_HPP
+#include "Days.hpp"
 
-#include "../basic-rss/TextInput.hpp"
-
-namespace RSS20
+namespace BasicRSS
 {
 
-using TextInput = BasicRSS::TextInput;
+std::string dayToString(const Days d)
+{
+  switch (d)
+  {
+    case Days::Monday:
+         return "Monday";
+    case Days::Tuesday:
+         return "Tuesday";
+    case Days::Wednesday:
+         return "Wednesday";
+    case Days::Thursday:
+         return "Thursday";
+    case Days::Friday:
+         return "Friday";
+    case Days::Saturday:
+         return "Saturday";
+    case Days::Sunday:
+         return "Sunday";
+  } //swi
+  //should never get to this point
+  throw 42;
+}
 
 } //namespace
-
-#endif // RSS20_TEXTINPUT_HPP

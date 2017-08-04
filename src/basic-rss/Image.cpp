@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,15 +20,17 @@
 
 #include "Image.hpp"
 
-namespace RSS20
+namespace BasicRSS
 {
+
+const int Image::NoDimension = -1;
 
 Image::Image()
 : m_url(""),
   m_title(""),
   m_link(""),
-  m_width(-1),
-  m_height(-1),
+  m_width(NoDimension),
+  m_height(NoDimension),
   m_description("")
 {
 }

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,25 +18,14 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef RSS20_DAYS_HPP
-#define RSS20_DAYS_HPP
+#ifndef RSS091_IMAGE_HPP
+#define RSS091_IMAGE_HPP
 
-#include <string>
+#include "../basic-rss/Image.hpp"
 
-namespace RSS20
+namespace RSS091
 {
-  /** enumeration type for days of the week */
-  enum class Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
-
-
-  /** \brief returns the name of the day as string
-   *
-   * \param d  the day
-   * \param
-   * \return Returns a string like "Monday" etc., suitable for use in RSS 2.0
-   * <skipDays>'s <day> subelements.
-   */
-  std::string dayToString(const Days d);
+  using Image = BasicRSS::Image;
 } //namespace
 
-#endif // RSS20_DAYS_HPP
+#endif // RSS091_IMAGE_HPP
