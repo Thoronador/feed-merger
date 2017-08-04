@@ -2,7 +2,7 @@
 
 #  cpplint.sh - script to check the syntax of C++ source files
 #
-#  Copyright (C) 2015  Dirk Stolle
+#  Copyright (C) 2015, 2017  Dirk Stolle
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ fi
 $CXX --version
 echo
 
-# find all .sh files and run them through Bash's syntax check
+# find all C++ files and run them through the compilers's syntax check
 find ./ \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) -print0 | xargs -0 -i $CXX $CFLAGS -fsyntax-only -Wall -std=c++0x {}
 if [[ $? -ne 0 ]]
 then
