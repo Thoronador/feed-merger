@@ -241,7 +241,7 @@ bool Writer::writeItem(const Item& item, xmlTextWriterPtr writer)
   } //if guid
 
   //write <pubDate>
-  if (item.pubDate() != static_cast<std::time_t>(0))
+  if (item.pubDate() != BasicRSS::Channel::NoDate)
   {
     std::string pubDate;
     if (!timeToRFC822String(item.pubDate(), pubDate))
@@ -464,7 +464,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   } //if webMaster
 
   //write <pubDate>
-  if (feed.pubDate() != static_cast<std::time_t>(0))
+  if (feed.pubDate() != BasicRSS::Channel::NoDate)
   {
     std::string pubDate;
     if (!timeToRFC822String(feed.pubDate(), pubDate))
@@ -488,7 +488,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   } //if pubDate
 
   //write <lastBuildDate>
-  if (feed.lastBuildDate() != static_cast<std::time_t>(0))
+  if (feed.lastBuildDate() != BasicRSS::Channel::NoDate)
   {
     std::string lastBuildDate;
     if (!timeToRFC822String(feed.lastBuildDate(), lastBuildDate))

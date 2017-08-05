@@ -154,6 +154,14 @@ namespace BasicRSS
        * \return Returns true, if both instances are equal.
        */
       bool operator==(const Image& other) const;
+
+
+      /** \brief inequality operator for Image
+       *
+       * \param other  the other instance
+       * \return Returns true, if both instances are NOT equal.
+       */
+      bool operator!=(const Image& other) const;
     private:
       //required elements: url, title, link
       std::string m_url; /**< URL of a GIF, JPEG or PNG that represents the channel */

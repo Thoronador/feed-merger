@@ -122,4 +122,10 @@ bool Image::operator==(const Image& other) const
     );
 }
 
+bool Image::operator!=(const Image& other) const
+{
+  //Just negate the result of equality operator.
+  return !(*this == other);
+}
+
 } //namespace

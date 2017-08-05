@@ -19,7 +19,7 @@
 */
 
 #include "Rss091ToRss20.hpp"
-#include <ctime>
+#include "../basic-rss/Channel.hpp"
 #include "../rss2.0/Enclosure.hpp"
 #include "../rss2.0/Guid.hpp"
 #include "../rss2.0/Source.hpp"
@@ -32,7 +32,7 @@ RSS20::Item toRSS20(const RSS091::Item& item091)
   return RSS20::Item(item091.title(), item091.link(), item091.description(),
                      "" /*author */, { } /* categories */, "" /* comments */,
                      RSS20::Enclosure(), RSS20::GUID(),
-                     static_cast<std::time_t>(0)/* date */, RSS20::Source());
+                     BasicRSS::Channel::NoDate /* date */, RSS20::Source());
 }
 
 } //namespace
