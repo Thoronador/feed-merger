@@ -22,7 +22,7 @@
 #include <cstring>
 #include "../StringFunctions.hpp"
 
-bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
+bool rfc822DateTimeToTimeT(const std::string& rfcDate, std::time_t& output)
 {
   if (rfcDate.empty())
     return false;
@@ -86,7 +86,7 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   while (!workString.empty() && workString.at(0) == ' ')
     workString.erase(0, 1);
 
-  auto parts = splitAtSeparator(workString, ' ');
+  const auto parts = splitAtSeparator(workString, ' ');
 
   if (parts.size() != 5)
     return false;
@@ -141,7 +141,7 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   } //if only two digits (or less)
 
   //Parse time of the day.
-  auto timeParts = splitAtSeparator(parts[3], ':');
+  const auto timeParts = splitAtSeparator(parts[3], ':');
   //At least hours and minutes are required.
   if (timeParts.size() < 2)
     return false;
@@ -157,7 +157,7 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
     return false;
   unsigned int second = 61;
   //Seconds are optional, so they may or may not be present.
-  if (timeParts.size()>=3)
+  if (timeParts.size() >= 3)
   {
     if (!stringToUnsignedInt(timeParts[2], second))
       return false;
@@ -216,16 +216,18 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   else if (parts[4] == "W") offset = +10 * 60 * 60;
   else if (parts[4] == "X") offset = +11 * 60 * 60;
   else if (parts[4] == "Y") offset = +12 * 60 * 60;
-  else if (parts[4].size()==5)
+  else if (parts[4].size() == 5)
   {
     unsigned int offHours = 0;
     if (!stringToUnsignedInt(parts[4].substr(1,2), offHours))
       return false;
-    if (offHours>12) return false;
+    if (offHours > 12)
+      return false;
     unsigned int offMinutes = 0;
     if (!stringToUnsignedInt(parts[4].substr(3,2), offMinutes))
       return false;
-    if (offMinutes>59) return false;
+    if (offMinutes > 59)
+      return false;
     offset = offHours * 60 * 60 + offMinutes * 60;
     if (parts[4].at(0) == '-')
       offset = -offset;
@@ -235,7 +237,6 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   else
     // invalid timezone / offset specification
     return false;
-
 
   //put data into std::tm
   struct tm timeStructure;
@@ -250,7 +251,7 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   timeStructure.tm_gmtoff = offset;
   timeStructure.tm_isdst = -1; //no information on DST
 
-  std::time_t tt = std::mktime(&timeStructure);
+  const std::time_t tt = std::mktime(&timeStructure);
   // Return value -1 means failure of mktime().
   if (tt == -1)
     return false;
@@ -258,7 +259,7 @@ bool rfc822DateTimeToTimeT(const std::string& rfcDate, time_t& output)
   return true;
 }
 
-bool timeToRFC822String(const time_t t, std::string& output)
+bool timeToRFC822String(const std::time_t t, std::string& output)
 {
   struct std::tm* tempTM = std::localtime(&t);
   if (nullptr == tempTM)
