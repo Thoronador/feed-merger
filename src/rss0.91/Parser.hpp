@@ -22,6 +22,7 @@
 #define RSS091_PARSER_HPP
 
 #include <string>
+#include "../basic-rss/Parser.hpp"
 #include "Item.hpp"
 
 //forward declarations
@@ -33,7 +34,7 @@ namespace RSS091
   //forward declaration
   class Channel;
 
-  class Parser
+  class Parser: public BasicRSS::Parser
   {
     public:
       /** \brief parses the given file as RSS 0.91 feed

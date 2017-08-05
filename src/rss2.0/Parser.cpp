@@ -780,7 +780,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       node = node.getNextSibling();
     else
       break;
-  } //while (outer)
+  } //while
   return true;
 }
 

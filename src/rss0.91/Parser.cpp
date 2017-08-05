@@ -23,6 +23,7 @@
 #include "../rfc822/Date.hpp"
 #include "../StringFunctions.hpp"
 #include "../xml/XMLDocument.hpp"
+#include "Channel.hpp"
 
 namespace RSS091
 {
@@ -168,9 +169,216 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
   node = node.getChild();
 
   //initialize empty channel / feed
-  #warning TODO!
+  feed = RSS091::Channel();
 
-  return false;
+  while (true) //potentially endless loop
+  {
+    //Skip all non-element nodes (e.g. comment nodes).
+    node.skipEmptyCommentAndTextSiblings();
+    if (!node.isElementNode())
+    {
+      //No more element node means we can break out of the loop
+      break;
+    } //if
+
+    const std::string nodeName = node.getNameAsString();
+    if (nodeName == "title")
+    {
+      if (!feed.title().empty())
+      {
+        std::cout << "Feed already has a title!" << std::endl;
+        return false;
+      } //if title was already specified
+      feed.setTitle(node.getContentBoth());
+    } //if title
+    else if (nodeName == "link")
+    {
+      if (!feed.link().empty())
+      {
+        std::cout << "Feed already has a link!" << std::endl;
+        return false;
+      } //if link was already specified
+      feed.setLink(node.getContentBoth());
+    } //if link
+    else if (nodeName == "description")
+    {
+      if (!feed.description().empty())
+      {
+        std::cout << "Feed already has a description!" << std::endl;
+        return false;
+      } //if description was already specified
+      feed.setDescription(node.getContentBoth());
+    } //if description
+    else if (nodeName == "item")
+    {
+      Item it = Item("", "", "");
+      if (!itemFromNode(node, it))
+      {
+        std::cout << "Could not parse RSS 0.91 item!" << std::endl;
+        return false;
+      }
+      feed.addItem(it);
+    } //if item
+    else if (nodeName == "language")
+    {
+      if (!feed.language().empty())
+      {
+        std::cout << "Feed already has a language!" << std::endl;
+        return false;
+      } //if language was already specified
+      feed.setLanguage(node.getContentBoth());
+    } //if
+    else if (nodeName == "copyright")
+    {
+      if (!feed.copyright().empty())
+      {
+        std::cout << "Feed already has a copyright notice!" << std::endl;
+        return false;
+      } //if copyright notice was already specified
+      feed.setCopyright(node.getContentBoth());
+    } //if
+    else if (nodeName == "managingEditor")
+    {
+      if (!feed.managingEditor().empty())
+      {
+        std::cout << "Feed already has an address for the managing editor!" << std::endl;
+        return false;
+      } //if address was already specified
+      feed.setManagingEditor(node.getContentBoth());
+    } //if
+    else if (nodeName == "webMaster")
+    {
+      if (!feed.webMaster().empty())
+      {
+        std::cout << "Feed already has an address for the webmaster!" << std::endl;
+        return false;
+      } //if address was already specified
+      feed.setWebMaster(node.getContentBoth());
+    } //if webMaster
+    else if (nodeName == "pubDate")
+    {
+      if (feed.pubDate() != 0)
+      {
+        std::cout << "Feed already has a publication date!" << std::endl;
+        return false;
+      } //if pubDate was already specified
+      std::time_t thePubDate = 0;
+      if (!rfc822DateTimeToTimeT(node.getContentBoth(), thePubDate))
+      {
+        std::cout << "Could not parse publication date \""
+                  << node.getContentBoth() << "\"!" <<std::endl;
+        return false;
+      }
+      feed.setPubDate(thePubDate);
+    } //if pubDate
+    else if (nodeName == "lastBuildDate")
+    {
+      if (feed.lastBuildDate() != 0)
+      {
+        std::cout << "Feed already has a last change date!" << std::endl;
+        return false;
+      } //if lastBuildDate was already specified
+      std::time_t theLastBuildDate = 0;
+      if (!rfc822DateTimeToTimeT(node.getContentBoth(), theLastBuildDate))
+      {
+        std::cout << "Could not parse last change date \""
+                  << node.getContentBoth() << "\"!" <<std::endl;
+        return false;
+      }
+      feed.setLastBuildDate(theLastBuildDate);
+    } //if lastBuildDate
+    else if (nodeName == "docs")
+    {
+      if (!feed.docs().empty())
+      {
+        std::cout << "Feed documentation URL was already set!" << std::endl;
+        return false;
+      } //if documentation URL was already specified
+      feed.setDocs(node.getContentBoth());
+    } //if docs
+    else if (nodeName == "image")
+    {
+      if (!feed.image().empty())
+      {
+        std::cout << "Feed's image was already set!" << std::endl;
+        return false;
+      } //if image was already specified
+      Image img;
+      if (!imageFromNode(node, img))
+      {
+        std::cout << "Could not parse RSS 0.91 <image> element!" << std::endl;
+        return false;
+      }
+      feed.setImage(std::move(img));
+    } //if image
+    else if (nodeName == "rating")
+    {
+      if (!feed.rating().empty())
+      {
+        std::cout << "Feed already has a rating!" << std::endl;
+        return false;
+      } //if rating was already specified
+      feed.setRating(node.getContentBoth());
+    } //if rating
+    else if (nodeName == "textInput")
+    {
+      if (!feed.textInput().empty())
+      {
+        std::cout << "Feed already has a text input element!" << std::endl;
+        return false;
+      } //if text input element was already specified
+      TextInput txIn;
+      if (!textInputFromNode(node, txIn))
+      {
+        std::cout << "Could not parse RSS 0.91 <textInput> element!" << std::endl;
+        return false;
+      }
+      feed.setTextInput(std::move(txIn));
+    } //if textInput
+    else if (nodeName == "skipHours")
+    {
+      if (!feed.skipHours().empty())
+      {
+        std::cout << "Feed already has skipHours set!" << std::endl;
+        return false;
+      } //if skipHours was already specified
+      std::set<unsigned int> skipH;
+      if (!skipHoursFromNode(node, skipH))
+      {
+        std::cout << "Could not parse RSS 0.91 <skipHours> element!" << std::endl;
+        return false;
+      }
+      feed.setSkipHours(std::move(skipH));
+    } //if skipHours
+    else if (nodeName == "skipDays")
+    {
+      if (!feed.skipDays().empty())
+      {
+        std::cout << "Feed already has skipDays set!" << std::endl;
+        return false;
+      } //if skipDays was already specified
+      std::set<BasicRSS::Days> skipD;
+      if (!skipDaysFromNode(node, skipD))
+      {
+        std::cout << "Could not parse RSS 0.91 <skipDays> element!" << std::endl;
+        return false;
+      }
+      feed.setSkipDays(std::move(skipD));
+    } //if skipDays
+    else
+    {
+      std::cout << "Found unexpected node name in channel: \"" << nodeName << "\"!"
+                << std::endl;
+      return false;
+    }
+    //Move to next sibling or break out of loop, if there are no more siblings.
+    if (node.hasNextSibling())
+      node = node.getNextSibling();
+    else
+      break;
+  } //while
+  //done
+  return true;
 }
 
 } //namespace
