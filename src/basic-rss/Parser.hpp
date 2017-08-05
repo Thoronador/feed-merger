@@ -22,6 +22,7 @@
 #define BASIC_RSS_PARSER_HPP
 
 #include <set>
+#include "Channel.hpp"
 #include "Days.hpp"
 #include "Image.hpp"
 #include "TextInput.hpp"
@@ -76,6 +77,17 @@ namespace BasicRSS
        * Returns false, if errors occurred.
        */
       static bool skipDaysFromNode(const XMLNode& skipDaysNode, std::set<Days>& skipDaysInfo);
+
+
+      /** \brief tries to parse a channel element that is common in RSS 0.91 and RSS 2.0
+       *
+       * \param node  the current XML element node
+       * \param feed  the RSS feed
+       * \param errorFlag  flag that is set to true, if an error occurred
+       * \return Returns true, if a common channel element was parsed.
+       *         Returns false otherwise.
+       */
+      static bool commonChannelElementFromNode(const XMLNode& node, Channel& feed, bool& errorFlag);
   }; //class
 
 } //namespace
