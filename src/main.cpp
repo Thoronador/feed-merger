@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2017  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <vector>
 #include "Curly.hpp"
 #include "rss2.0/Channel.hpp"
+#include "rss2.0/Merger.hpp"
 #include "rss2.0/Parser.hpp"
 #include "rss2.0/Writer.hpp"
 #include "StringFunctions.hpp"
@@ -37,13 +38,15 @@ const int rcNetworkError = 2;
 const int rcParserError = 3;
 //Return code that indicates some I/O-related error with the file system.
 const int rcFileError = 4;
+//Return code that a merge error.
+const int rcMergeError = 5;
 
 //The default output file name that is used if no file name is given.
 const std::string cDefaultOutputFileName = "merged-feeds.xml";
 
 //strings that indicate the program's version
-const std::string cVersionString( "feed-merger, version 0.06, 2015-11-06");
-const std::string cVersionStringGenerator("feed-merger v0.06");
+const std::string cVersionString( "feed-merger, version 0.07, 2017-08-05");
+const std::string cVersionStringGenerator("feed-merger v0.07");
 
 void showVersion()
 {
@@ -52,17 +55,17 @@ void showVersion()
 
 void showHelp()
 {
-  std::cout << "\nfeed-merger [URL ...]" << std::endl
+  std::cout << "\nfeed-merger [URL ...] [-o FILE]" << std::endl
             << "options:" << std::endl
-            << "  --help        - displays this help message and quits" << std::endl
-            << "  -?            - same as --help" << std::endl
-            << "  --version     - displays the version of the program and quits" << std::endl
-            << "  -v            - same as --version" << std::endl
+            << "  URL           - URL of an RSS 2.0 feed that shall be merged. Can be repeated" << std::endl
+            << "                  multiple times to specify several feeds." << std::endl
             << "  --output FILE - specify the file name for the merged feed. Defaults to" << std::endl
             << "                  " << cDefaultOutputFileName << ", if not specified." << std::endl
             << "  -o FILE       - same as --output" << std::endl
-            << "  URL           - URL of an RSS 2.0 feed that shall be merged. Can be repeated" << std::endl
-            << "                  multiple times to specify several feeds." << std::endl;
+            << "  --help        - displays this help message and quits" << std::endl
+            << "  -?            - same as --help" << std::endl
+            << "  --version     - displays the version of the program and quits" << std::endl
+            << "  -v            - same as --version" << std::endl;
 }
 
 int main(int argc, char** argv)
@@ -95,17 +98,17 @@ int main(int argc, char** argv)
         {
           if (!outputFileName.empty())
           {
-            std::cout << "Error: Output file name was already set!" << std::endl;
+            std::cerr << "Error: Output file name was already set!" << std::endl;
             return rcInvalidParameter;
           } //if name was already set
           if (argc <= i+1)
           {
-            std::cout << "Error: No file name was given after " << param << "!" << std::endl;
+            std::cerr << "Error: No file name was given after " << param << "!" << std::endl;
             return rcInvalidParameter;
           }
           if (argv[i+1] == nullptr)
           {
-            std::cout << "Error: No file name was given after " << param << "!" << std::endl;
+            std::cerr << "Error: No file name was given after " << param << "!" << std::endl;
             return rcInvalidParameter;
           }
           outputFileName = std::string(argv[i+1]);
@@ -118,7 +121,7 @@ int main(int argc, char** argv)
         {
           if (feedURLs.find(param) != feedURLs.end())
           {
-            std::cout << "Error: feed URL " << param
+            std::cerr << "Error: feed URL " << param
                       << " was given more than once!" << std::endl;
             return rcInvalidParameter;
           }
@@ -127,14 +130,14 @@ int main(int argc, char** argv)
         else
         {
           //unknown or wrong parameter
-          std::cout << "Invalid parameter given: \"" << param << "\"." << std::endl
+          std::cerr << "Invalid parameter given: \"" << param << "\"." << std::endl
                     << "Use --help to get a list of valid parameters." << std::endl;
           return rcInvalidParameter;
         } //if unknown parameter
       } //if parameter exists
       else
       {
-        std::cout << "Parameter at index " << i << " is NULL." << std::endl;
+        std::cerr << "Parameter at index " << i << " is NULL." << std::endl;
         return rcInvalidParameter;
       }
       ++i;//on to next parameter
@@ -144,7 +147,7 @@ int main(int argc, char** argv)
   //Are there any feeds at all?
   if (feedURLs.empty())
   {
-    std::cout << "Error: No feeds are specified. See valid options by typing "
+    std::cerr << "Error: No feeds are specified. See valid options by typing "
               << std::endl << "    " << argv[0] << " --help" << std::endl
               << "on the command line shell." << std::endl;
     return rcInvalidParameter;
@@ -152,7 +155,7 @@ int main(int argc, char** argv)
   //One feed is useless, no merge required.
   if (feedURLs.size() == 1)
   {
-    std::cout << "Error: You specified just one feed, but at least two feeds "
+    std::cerr << "Error: You specified just one feed, but at least two feeds "
               << "are needed to perform a merge." << std::endl;
     return rcInvalidParameter;
   }
@@ -180,20 +183,20 @@ int main(int argc, char** argv)
     std::string sourceOfFeed;
     if (!cURL.perform(sourceOfFeed))
     {
-      std::cout << "Error: Unable to retrieve feed from " << item << "!"
+      std::cerr << "Error: Unable to retrieve feed from " << item << "!"
                 << std::endl;
       return rcNetworkError;
     } //if
     if (cURL.getResponseCode() != 200)
     {
-      std::cout << "Error: Retrieving feed from " << item << " returned "
+      std::cerr << "Error: Retrieving feed from " << item << " returned "
                 << "unexpected response code " << cURL.getResponseCode()
                 << ". Expected: 200." << std::endl;
       return rcNetworkError;
     }
     if (sourceOfFeed.empty())
     {
-      std::cout << "Error: Getting URL " << item << " returned empty result!"
+      std::cerr << "Error: Getting URL " << item << " returned empty result!"
                 << std::endl;
       return rcNetworkError;
     }
@@ -212,45 +215,31 @@ int main(int argc, char** argv)
     #endif // DEBUG
     if (!RSS20::Parser::fromString(feedSrc, feed))
     {
-      std::cout << "Error: Could not parse the data from one feed as RSS 2.0!"
+      std::cerr << "Error: Could not parse the data from one feed as RSS 2.0!"
                 << std::endl;
       return rcParserError;
     }
     feeds.push_back(feed);
   } //for
 
-  std::vector<RSS20::Item> totalItems;
-  for (const auto & feed : feeds)
-  {
-    for (const auto & item : feed.items())
-    {
-      totalItems.push_back(item);
-    } //for i
-  } //for
-
-  //sort items
-  std::sort(totalItems.begin(), totalItems.end(), std::greater<RSS20::Item>());
-
   //create merged feed object
   RSS20::Channel mergedFeed;
-  /* Title, link and description are required attributes. */
-  mergedFeed.setTitle("Merged feed (composed from " + intToString(feeds.size()) + " individual feeds)");
-  //set placeholder for link
-  mergedFeed.setLink("http:///dev/null");
-  //set placeholder for title
-  mergedFeed.setDescription("This feed was created by merging items of several feeds into one feed.");
+  if (!RSS20::Merger::merge(feeds, mergedFeed))
+  {
+    std::cout << "Something wet wrong while merging the feeds!" << std::endl;
+    return rcMergeError;
+  }
   //Set name of generator.
   mergedFeed.setGenerator(cVersionStringGenerator);
-  //Set the items.
-  for (const auto & fi : totalItems)
-  {
-    mergedFeed.addItem(fi);
-  } //for
+  //sort items
+  auto allItems = mergedFeed.items();
+  std::sort(allItems.begin(), allItems.end(), std::greater<RSS20::Item>());
+  mergedFeed.setItems(allItems);
 
   //Write merged feed to a file.
   if (!RSS20::Writer::toFile(mergedFeed, outputFileName))
   {
-    std::cout << "Error: Could not write feed to " << outputFileName << "!" << std::endl;
+    std::cerr << "Error: Could not write feed to " << outputFileName << "!" << std::endl;
     return rcFileError;
   }
 

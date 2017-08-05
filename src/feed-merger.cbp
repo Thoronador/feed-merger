@@ -87,6 +87,8 @@
 		<Unit filename="rss2.0/Image.hpp" />
 		<Unit filename="rss2.0/Item.cpp" />
 		<Unit filename="rss2.0/Item.hpp" />
+		<Unit filename="rss2.0/Merger.cpp" />
+		<Unit filename="rss2.0/Merger.hpp" />
 		<Unit filename="rss2.0/Parser.cpp" />
 		<Unit filename="rss2.0/Parser.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />

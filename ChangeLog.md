@@ -1,6 +1,7 @@
 # ChangeLog for feed-merger
 
-## next version 0.07 (????-??-??)
+## version 0.07 (2017-08-05)
+  - better merge handling for RSS 2.0 feeds without items
   - adjust sort order of items in merged feed
 
 ## Version 0.06 (2015-11-06)

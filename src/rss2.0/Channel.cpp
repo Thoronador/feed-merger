@@ -66,6 +66,19 @@ void Channel::addItem(const Item& item)
     m_items.push_back(item);
 }
 
+void Channel::setItems(const std::vector<Item>& all)
+{
+  m_items = all;
+  //remove empty items
+  for (auto i = m_items.begin(); i != m_items.end(); /*no-op*/)
+  {
+    if (i->empty())
+      i = m_items.erase(i);
+    else
+      ++i;
+  } //for
+}
+
 const std::set<Category>& Channel::category() const
 {
   return m_category;

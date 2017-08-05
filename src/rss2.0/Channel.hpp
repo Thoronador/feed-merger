@@ -92,6 +92,13 @@ namespace RSS20
       void addItem(const Item& item);
 
 
+      /** \brief sets the list of items in the feed
+       *
+       * \param all   vector of feed items
+       */
+      void setItems(const std::vector<Item>& all);
+
+
       /** \brief gets the channel's category element(s)
        *
        * \return Returns the category elements.
@@ -171,7 +178,7 @@ namespace RSS20
        */
       bool operator!=(const Channel& other) const;
     private:
-      //required elements; title, link, description: declared in base class
+      //required elements: title, link, description: declared in base class
       //channel items
       std::vector<Item> m_items; /**< channel items */
       //optional elements
