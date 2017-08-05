@@ -113,7 +113,7 @@ int main(int argc, char ** argv)
   const RSS091::Channel expectedFeed = RSS091::Channel(
            "Scripting News", //title
            "http://www.scripting.com/", //link
-           "News and commentary for the cross-platform scripting community.", //desc.
+           "News and commentary from the cross-platform scripting community.", //desc.
            { }, //items
            "en", //language
            "", //copyright
