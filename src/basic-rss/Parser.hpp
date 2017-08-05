@@ -49,12 +49,13 @@ namespace BasicRSS
 
       /** \brief parses a textInput element from the given XML node
        *
-       * \param textInputNode  the <textInput> node
-       * \param textInputInfo   variable that will be used to store the parsed result
+       * \param textInputNode  the <textInput> (RSS 2.0) / <textinput> (RSS 0.91) node
+       * \param textInputInfo  variable that will be used to store the parsed result
+       * \param rss091         whether it is an RSS 0.91 feed
        * \return Returns true, if the textInput node could be parsed.
        * Returns false, if errors occurred.
        */
-      static bool textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo);
+      static bool textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo, const bool rss091 = false);
 
 
       /** \brief parses a skipHours element from the given XML node

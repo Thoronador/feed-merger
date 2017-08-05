@@ -121,7 +121,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
     return false;
   }
   XMLNode node = doc.getRootNode();
-  if (node.getNameAsString()!="rss")
+  if (node.getNameAsString() != "rss")
   {
     std::cout << "Root element's name is not \"rss\" but \""
               << node.getNameAsString()<<"\" instead." << std::endl;
@@ -320,7 +320,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
       } //if rating was already specified
       feed.setRating(node.getContentBoth());
     } //if rating
-    else if (nodeName == "textInput")
+    else if (nodeName == "textinput")
     {
       if (!feed.textInput().empty())
       {
@@ -328,9 +328,9 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
         return false;
       } //if text input element was already specified
       TextInput txIn;
-      if (!textInputFromNode(node, txIn))
+      if (!textInputFromNode(node, txIn, true))
       {
-        std::cout << "Could not parse RSS 0.91 <textInput> element!" << std::endl;
+        std::cout << "Could not parse RSS 0.91 <textinput> element!" << std::endl;
         return false;
       }
       feed.setTextInput(std::move(txIn));

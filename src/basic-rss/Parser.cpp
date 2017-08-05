@@ -143,9 +143,13 @@ bool Parser::imageFromNode(const XMLNode& imageNode, Image& imageInfo)
   return (!imageInfo.empty());
 }
 
-bool Parser::textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo)
+bool Parser::textInputFromNode(const XMLNode& textInputNode, TextInput& textInputInfo, const bool rss091)
 {
-  if (!textInputNode.isElementNode() or (textInputNode.getNameAsString() != "textInput"))
+  if (!textInputNode.isElementNode()
+      //upper-case i in element name for RSS 2.0
+      || ((textInputNode.getNameAsString() != "textInput") && !rss091)
+      //lower-case i in element name for RSS 2.0
+      || ((textInputNode.getNameAsString() != "textinput") && rss091))
     return false;
 
   if (!textInputNode.hasChild())
