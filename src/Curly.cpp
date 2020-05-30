@@ -35,20 +35,8 @@ size_t writeCallbackString(char *ptr, size_t size, size_t nmemb, void *userdata)
     return 0;
   }
 
-  const auto cBufferSize = actualSize+1;
-  std::unique_ptr<char[]> tmpBuffer(new char[cBufferSize]);
-  std::memcpy(tmpBuffer.get(), ptr, actualSize);
-  tmpBuffer.get()[actualSize] = '\0';
-
-  std::string data = std::string(tmpBuffer.get());
-  while (data.size() < actualSize)
-  {
-    data.append(1, '\0');
-    data += tmpBuffer.get()[data.size()];
-  } //while
-
   std::string * theString = reinterpret_cast<std::string*>(userdata);
-  theString->append(data);
+  theString->append(ptr, actualSize);
   return actualSize;
 }
 
@@ -69,7 +57,7 @@ size_t readCallbackString(char *buffer, size_t size, size_t nitems, void *instre
     std::cerr << "Error: read callback received null pointer!" << std::endl;
     return CURL_READFUNC_ABORT;
   }
-  //cast it to string data
+  // cast it to string data
   StringData * sd = reinterpret_cast<StringData*>(instream);
   if (nullptr == sd->data)
   {
@@ -88,7 +76,7 @@ size_t readCallbackString(char *buffer, size_t size, size_t nitems, void *instre
     return 0;
 
   const auto chunkSize = std::min(maxSize, totalLength - sd->dataOffset);
-  std::memcpy(buffer, &(sd->data[sd->dataOffset]), chunkSize);
+  std::memcpy(buffer, &(sd->data->c_str()[sd->dataOffset]), chunkSize);
   sd->dataOffset = sd->dataOffset + chunkSize;
   return chunkSize;
 }
@@ -146,7 +134,7 @@ std::string Curly::getPostField(const std::string& name) const
   const auto iter = m_PostFields.find(name);
   if (iter != m_PostFields.end())
     return iter->second;
-  return std::move(std::string(""));
+  return std::string("");
 }
 
 bool Curly::removePostField(const std::string& name)

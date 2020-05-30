@@ -82,7 +82,7 @@ std::vector<std::string> splitAtSeparator(std::string line, const char separator
   {
     result.push_back(line);
   }
-  return std::move(result);
+  return result;
 }
 
 bool isEmptyOrWhitespace(const std::string& str)
