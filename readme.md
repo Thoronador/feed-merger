@@ -1,6 +1,7 @@
 # feed-merger
 
-[![Build Status](https://travis-ci.org/Thoronador/feed-merger.svg?branch=master)](https://travis-ci.org/Thoronador/feed-merger)
+[![GitHub CI Clang status](https://github.com/Thoronador/feed-merger/workflows/Clang/badge.svg)](https://github.com/Thoronador/feed-merger/actions)
+[![GitHub CI GCC status](https://github.com/Thoronador/feed-merger/workflows/GCC/badge.svg)](https://github.com/Thoronador/feed-merger/actions)
 
 feed-merger will be an application to merge several feeds (Atom 1.0 or RSS 2.0)
 into one single feed.
