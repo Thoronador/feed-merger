@@ -41,7 +41,7 @@ namespace Atom10
        *
        * \param name   the initial value for name
        * \param uri    initial value for URI
-       * \param email  intial e-mail address
+       * \param email  initial e-mail address
        */
       PersonConstruct(const std::string& name, const std::string& uri, const std::string& email);
 
