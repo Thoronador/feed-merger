@@ -99,17 +99,3 @@ bool isEmptyOrWhitespace(const std::string& str)
   } //while
   return true;
 }
-
-std::string intToString(const int value)
-{
-  std::ostringstream s_str;
-  s_str << value;
-  return s_str.str();
-}
-
-std::string uintToString(const unsigned int value)
-{
-  std::ostringstream s_str;
-  s_str << value;
-  return s_str.str();
-}

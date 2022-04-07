@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include <iostream>
 #include <libxml/tree.h>
 #include "../rfc822/Date.hpp"
-#include "../StringFunctions.hpp"
 
 namespace RSS20
 {
@@ -178,7 +177,7 @@ bool Writer::writeItem(const Item& item, xmlTextWriterPtr writer)
     }
     //attribute length
     ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("length"),
-              reinterpret_cast<const xmlChar*>(uintToString(item.enclosure().length()).c_str()));
+              reinterpret_cast<const xmlChar*>(std::to_string(item.enclosure().length()).c_str()));
     if (ret < 0)
     {
       std::cout << "Error: Could not write length attribute of <enclosure> element!" << std::endl;
@@ -573,7 +572,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     }
     //attribute port
     ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("port"),
-              reinterpret_cast<const xmlChar*>(intToString(feed.cloud().port()).c_str()));
+              reinterpret_cast<const xmlChar*>(std::to_string(feed.cloud().port()).c_str()));
     if (ret < 0)
     {
       std::cout << "Error: Could not write port attribute of <cloud> element!" << std::endl;
@@ -631,7 +630,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
   if (feed.ttl() > 0)
   {
     ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("ttl"),
-              reinterpret_cast<const xmlChar*>(intToString(feed.ttl()).c_str()));
+              reinterpret_cast<const xmlChar*>(std::to_string(feed.ttl()).c_str()));
     if (ret < 0)
     {
       std::cout << "Error: Could not write <ttl> element!" << std::endl;
@@ -694,7 +693,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     {
       //write <width>
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("width"),
-                reinterpret_cast<const xmlChar*>(intToString(feed.image().width()).c_str()));
+                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().width()).c_str()));
       if (ret < 0)
       {
         std::cout << "Error: Could not write <width> element of <image>!" << std::endl;
@@ -709,7 +708,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     {
       //write <width>
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("height"),
-                reinterpret_cast<const xmlChar*>(intToString(feed.image().height()).c_str()));
+                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().height()).c_str()));
       if (ret < 0)
       {
         std::cout << "Error: Could not write <height> element of <image>!" << std::endl;
@@ -851,7 +850,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     for (const auto hour : feed.skipHours())
     {
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("hour"),
-                reinterpret_cast<const xmlChar*>(intToString(hour).c_str()));
+                reinterpret_cast<const xmlChar*>(std::to_string(hour).c_str()));
       if (ret < 0)
       {
         std::cout << "Error: Could not write <hour> element of <skipHours>!" << std::endl;

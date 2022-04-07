@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015, 2017  Dirk Stolle
+    Copyright (C) 2015, 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 */
 
 #include "Merger.hpp"
-#include "../StringFunctions.hpp"
 
 namespace RSS20
 {
@@ -42,7 +41,7 @@ bool Merger::merge(const std::vector<Channel>& feeds, Channel& result)
   //start with empty feed
   result = Channel();
   /* Title, link and description are required attributes. */
-  result.setTitle("Merged feed (composed from " + intToString(feeds.size()) + " individual feeds)");
+  result.setTitle("Merged feed (composed from " + std::to_string(feeds.size()) + " individual feeds)");
   //set placeholder for link
   result.setLink("http:///dev/null");
   //set placeholder for title
