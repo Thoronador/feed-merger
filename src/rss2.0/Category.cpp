@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,10 +49,10 @@ void Category::setDomain(const std::string& domain)
   m_domain = domain;
 }
 
-const bool Category::empty() const
+bool Category::empty() const
 {
-  //Attribute domain is optional, so we do not need to check for it.
-  //However, the category itself is required for a category element.
+  // Attribute domain is optional, so we do not need to check for it.
+  // However, the category itself is required for a category element.
   return m_category.empty();
 }
 
@@ -63,7 +63,7 @@ bool Category::operator==(const Category& cat) const
 
 bool Category::operator<(const Category& cat) const
 {
-  //First compare by category. If categories are equal, then compare by domain.
+  // First compare by category. If categories are equal, then compare by domain.
   if (m_category < cat.m_category)
     return true;
   if (m_category == cat.m_category)
@@ -71,4 +71,4 @@ bool Category::operator<(const Category& cat) const
   return false;
 }
 
-} //namespace
+} // namespace

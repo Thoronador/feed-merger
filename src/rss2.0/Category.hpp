@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@
 
 namespace RSS20
 {
-  /** \brief class that represents an item's category element
+  /** \brief Represents an item's category element.
    */
   class Category
   {
     public:
-      /** \brief default constructor
+      /** \brief Default constructor.
        *
        * \param category  the category name
        * \param domain    value of the domain attribute, optional
@@ -38,7 +38,7 @@ namespace RSS20
       explicit Category(const std::string& category = "", const std::string& domain = "");
 
 
-      /** \brief gets the category's name
+      /** \brief Gets the category's name.
        *
        * \return Returns a string representing the name.
        *         Returns an empty string, if no name is set (yet).
@@ -46,14 +46,14 @@ namespace RSS20
       const std::string& get() const;
 
 
-      /** \brief sets a new category
+      /** \brief Sets a new category.
        *
        * \param category  the new category name
        */
       void setCategory(const std::string& category);
 
 
-      /** \brief gets the category's domain
+      /** \brief Gets the category's domain.
        *
        * \return Returns a string representing the domain.
        *         Returns an empty string, if no domain is set.
@@ -61,19 +61,19 @@ namespace RSS20
       const std::string& domain() const;
 
 
-      /** \brief sets a new domain
+      /** \brief Sets a new domain.
        *
        * \param domain  the new domain of the category
        */
       void setDomain(const std::string& domain);
 
 
-      /** \brief checks whether this element is empty
+      /** \brief Checks whether this element is empty.
        *
        * \return Returns true, if this element is empty.
        * Returns false, if it contains some data.
        */
-      const bool empty() const;
+      bool empty() const;
 
 
       /** \brief equality operator
@@ -94,7 +94,7 @@ namespace RSS20
     private:
       std::string m_category; /**< category name */
       std::string m_domain; /**< category's domain, if any */
-  }; //class
-} //namespace
+  }; // class
+} // namespace
 
 #endif // RSS20_CATEGORY_HPP
