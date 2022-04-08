@@ -14,14 +14,16 @@ To build the feed-merger application from source you need a C++ compiler with
 C++17 support, CMake 3.8 or later, the cURL library and the libxml2 library.
 It also helps to have Git, a distributed version control system, on your build
 system to get the latest source code directly from the Git repository.
+Additionally, the project uses Catch (C++ Automated Test Cases in Headers) to
+perform some tests.
 
 All of that can usually be installed be typing
 
-    apt-get install cmake g++ git libcurl4-gnutls-dev libxml2-dev
+    apt-get install catch cmake g++ git libcurl4-gnutls-dev libxml2-dev
 
 or
 
-    yum install cmake gcc-c++ git libcurl-devel libxml2-devel
+    yum install catch-devel cmake gcc-c++ git libcurl-devel libxml2-devel
 
 into a root terminal.
 
