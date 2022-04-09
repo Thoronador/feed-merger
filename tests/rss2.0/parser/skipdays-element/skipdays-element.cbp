@@ -64,6 +64,8 @@
 		<Unit filename="../../../../src/rss2.0/Item.hpp" />
 		<Unit filename="../../../../src/rss2.0/Parser.cpp" />
 		<Unit filename="../../../../src/rss2.0/Parser.hpp" />
+		<Unit filename="../../../../src/rss2.0/Protocol.cpp" />
+		<Unit filename="../../../../src/rss2.0/Protocol.hpp" />
 		<Unit filename="../../../../src/rss2.0/Source.cpp" />
 		<Unit filename="../../../../src/rss2.0/Source.hpp" />
 		<Unit filename="../../../../src/rss2.0/TextInput.hpp" />
@@ -73,9 +75,6 @@
 		<Unit filename="../../../../src/xml/XMLNode.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

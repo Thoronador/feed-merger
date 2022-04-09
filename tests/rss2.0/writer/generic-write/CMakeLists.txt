@@ -16,6 +16,7 @@ set(rss20-writer-generic-test_sources
     ../../../../src/rss2.0/Guid.cpp
     ../../../../src/rss2.0/Item.cpp
     ../../../../src/rss2.0/Parser.cpp
+    ../../../../src/rss2.0/Protocol.cpp
     ../../../../src/rss2.0/Source.cpp
     ../../../../src/rss2.0/Writer.cpp
     ../../../../src/xml/XMLDocument.cpp

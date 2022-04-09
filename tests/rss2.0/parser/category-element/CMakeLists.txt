@@ -16,6 +16,7 @@ set(rss20-category-element-test_sources
     ../../../../src/rss2.0/Guid.cpp
     ../../../../src/rss2.0/Item.cpp
     ../../../../src/rss2.0/Parser.cpp
+    ../../../../src/rss2.0/Protocol.cpp
     ../../../../src/rss2.0/Source.cpp
     ../../../../src/StringFunctions.cpp
     ../../../../src/xml/XMLDocument.cpp

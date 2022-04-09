@@ -37,8 +37,14 @@
 		</Compiler>
 		<Unit filename="../../src/rss2.0/Category.cpp" />
 		<Unit filename="../../src/rss2.0/Category.hpp" />
+		<Unit filename="../../src/rss2.0/Cloud.cpp" />
+		<Unit filename="../../src/rss2.0/Cloud.hpp" />
+		<Unit filename="../../src/rss2.0/Protocol.cpp" />
+		<Unit filename="../../src/rss2.0/Protocol.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rss2.0/Category.cpp" />
+		<Unit filename="rss2.0/Cloud.cpp" />
+		<Unit filename="rss2.0/Protocol.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -60,7 +60,7 @@ int main(int argc, char ** argv)
           { RSS20::Category("Cats & hats", "http://cat-content.example.com/") }, //category
           "feed-merger with libxml2", //generator
           "http://www.rssboard.org/rss-specification", //docs
-          RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", "xml-rpc"), //cloud
+          RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", RSS20::Protocol::XmlRpc), //cloud
           60, //ttl
           RSS20::Image("http://rss2test.example.com/resource/image.png", //url
                        "Well-formed test feed", //title

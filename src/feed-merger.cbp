@@ -91,6 +91,8 @@
 		<Unit filename="rss2.0/Merger.hpp" />
 		<Unit filename="rss2.0/Parser.cpp" />
 		<Unit filename="rss2.0/Parser.hpp" />
+		<Unit filename="rss2.0/Protocol.cpp" />
+		<Unit filename="rss2.0/Protocol.hpp" />
 		<Unit filename="rss2.0/Source.cpp" />
 		<Unit filename="rss2.0/Source.hpp" />
 		<Unit filename="rss2.0/TextInput.hpp" />
@@ -101,9 +103,6 @@
 		<Unit filename="xml/XMLNode.cpp" />
 		<Unit filename="xml/XMLNode.hpp" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

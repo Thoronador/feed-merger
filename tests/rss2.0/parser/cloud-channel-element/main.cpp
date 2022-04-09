@@ -78,7 +78,7 @@ int main(int argc, char ** argv)
     return 1;
   }
   //cloud
-  const RSS20::Cloud expectedCloud = RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", "xml-rpc");
+  const RSS20::Cloud expectedCloud = RSS20::Cloud("rpc.example.com", 80, "/RPC2", "myCloud.rssPleaseNotify", RSS20::Protocol::XmlRpc);
   if (!(feed.cloud() == expectedCloud))
   {
     const auto& c = feed.cloud();
@@ -87,7 +87,7 @@ int main(int argc, char ** argv)
               << "  port:   " << c.port() << std::endl
               << "  path:   " << c.path() << std::endl
               << "  registerProcedure: " << c.registerProcedure() << std::endl
-              << "  protocol:   " << c.protocol() << std::endl;
+              << "  protocol:   " << RSS20::to_string(c.protocol()) << std::endl;
     return 1;
   }
 

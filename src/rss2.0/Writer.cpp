@@ -604,8 +604,9 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
       return false;
     }
     //attribute protocol
+    const auto proto_string = to_string(feed.cloud().protocol());
     ret = xmlTextWriterWriteAttribute(writer, reinterpret_cast<const xmlChar*>("protocol"),
-              reinterpret_cast<const xmlChar*>(feed.cloud().protocol().c_str()));
+              reinterpret_cast<const xmlChar*>(proto_string.c_str()));
     if (ret < 0)
     {
       std::cout << "Error: Could not write protocol attribute of <cloud> element!" << std::endl;

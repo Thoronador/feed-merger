@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015, 2017  Dirk Stolle
+    Copyright (C) 2015, 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace RSS20
 
 bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
 {
-  if (!itemNode.isElementNode() or (itemNode.getNameAsString() != "item"))
+  if (!itemNode.isElementNode() || (itemNode.getNameAsString() != "item"))
     return false;
 
   theItem = Item("", "", "", "", std::set<Category>(), "", Enclosure(), GUID(),
@@ -210,7 +210,7 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
 
 bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
 {
-  if (!cloudNode.isElementNode() or (cloudNode.getNameAsString() != "cloud"))
+  if (!cloudNode.isElementNode() || (cloudNode.getNameAsString() != "cloud"))
     return false;
 
   const auto attributes = cloudNode.getAttributes();
@@ -250,7 +250,7 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
                   << " is not an integer value!" << std::endl;
         return false;
       }
-      if ((port <= 0) or (port >= 65536))
+      if ((port <= 0) || (port >= 65536))
       {
         std::cerr << "Port of <cloud> element must be greater than zero and "
                   << "less than 65536." << std::endl;
@@ -278,12 +278,19 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
     } //if registerProcedure
     else if (attrName == "protocol")
     {
-      if (!cloudInfo.protocol().empty())
+      if (cloudInfo.protocol() != Protocol::none)
       {
         std::cerr << "Cloud element already has a protocol!" << std::endl;
         return false;
       } //if protocol was already specified
-      cloudInfo.setProtocol(a.second);
+      const auto proto = from_string(a.second);
+      if (proto == Protocol::none)
+      {
+        std::cerr << "Error: '" << a.second << "' is not an accepted protocol "
+                  << "value! Accepted values are 'soap', 'xml-rpc' and "
+                  << "'http-post'." << std::endl;
+      }
+      cloudInfo.setProtocol(proto);
     } //if protocol
     else
     {
@@ -296,7 +303,7 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
   //Check, if all elements are set.
   if (cloudInfo.domain().empty() || cloudInfo.port() <= 0
       || cloudInfo.path().empty() || cloudInfo.registerProcedure().empty()
-      || cloudInfo.protocol().empty())
+      || cloudInfo.protocol() == Protocol::none)
   {
     std::cerr << "Error: The <cloud> element of the RSS 2.0 channel does not "
               << "contain all the required information/attributes!" << std::endl;
@@ -308,7 +315,7 @@ bool Parser::cloudFromNode(const XMLNode& cloudNode, Cloud& cloudInfo)
 bool Parser::enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosureInfo)
 {
   if (!enclosureNode.isElementNode()
-      or (enclosureNode.getNameAsString() != "enclosure"))
+      || (enclosureNode.getNameAsString() != "enclosure"))
     return false;
 
   const auto attributes = enclosureNode.getAttributes();
@@ -385,7 +392,7 @@ bool Parser::enclosureFromNode(const XMLNode& enclosureNode, Enclosure& enclosur
 
 bool Parser::sourceFromNode(const XMLNode& sourceNode, Source& sourceInfo)
 {
-  if (!sourceNode.isElementNode() or (sourceNode.getNameAsString() != "source"))
+  if (!sourceNode.isElementNode() || (sourceNode.getNameAsString() != "source"))
     return false;
 
   const auto attrs = sourceNode.getAttributes();
@@ -410,7 +417,7 @@ bool Parser::sourceFromNode(const XMLNode& sourceNode, Source& sourceInfo)
 
 bool Parser::categoryFromNode(const XMLNode& categoryNode, Category& categoryInfo)
 {
-  if (!categoryNode.isElementNode() or (categoryNode.getNameAsString() != "category"))
+  if (!categoryNode.isElementNode() || (categoryNode.getNameAsString() != "category"))
     return false;
 
   const auto attrs = categoryNode.getAttributes();
@@ -491,7 +498,7 @@ bool Parser::fromDocument(const XMLDocument& doc, Channel& feed)
   //skip empty comment and text nodes
   node.skipEmptyCommentAndTextSiblings();
 
-  if (!node.isElementNode() or (node.getNameAsString() != "channel"))
+  if (!node.isElementNode() || (node.getNameAsString() != "channel"))
   {
     std::cerr << "Child node of <rss> node must be <channel> node! "
               << "However, node's name is " << node.getNameAsString() << "."

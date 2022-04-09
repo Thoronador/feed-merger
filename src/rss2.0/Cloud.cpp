@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@ namespace RSS20
 
 Cloud::Cloud()
 : m_domain(""),
-  m_port(-1), //-1 is no valid port, so we know it's "empty"
+  m_port(0), // Zero is no valid port, so we know it's "empty".
   m_path(""),
   m_registerProcedure(""),
-  m_protocol("")
+  m_protocol(Protocol::none)
 {
 }
 
-Cloud::Cloud(const std::string& domain, const int port,
+Cloud::Cloud(const std::string& domain, const uint16_t port,
             const std::string& path, const std::string& registerProcedure,
-            const std::string& protocol)
+            const Protocol protocol)
 : m_domain(domain),
   m_port(port),
   m_path(path),
@@ -53,17 +53,14 @@ void Cloud::setDomain(const std::string& domain)
   m_domain = domain;
 }
 
-int Cloud::port() const
+uint16_t Cloud::port() const
 {
   return m_port;
 }
 
-void Cloud::setPort(const int port)
+void Cloud::setPort(const uint16_t port)
 {
-  if (port < 0)
-    m_port = -1;
-  else
-    m_port = port;
+  m_port = port;
 }
 
 const std::string& Cloud::path() const
@@ -86,20 +83,20 @@ void Cloud::setRegisterProcedure(const std::string& registerProcedure)
   m_registerProcedure = registerProcedure;
 }
 
-const std::string& Cloud::protocol() const
+Protocol Cloud::protocol() const
 {
   return m_protocol;
 }
 
-void Cloud::setProtocol(const std::string& protocol)
+void Cloud::setProtocol(const Protocol protocol)
 {
   m_protocol = protocol;
 }
 
-const bool Cloud::empty() const
+bool Cloud::empty() const
 {
-  return (m_domain.empty() and (m_port < 0) and m_path.empty()
-          and m_registerProcedure.empty() and m_protocol.empty());
+  return (m_domain.empty() && (m_port == 0) && m_path.empty()
+          && m_registerProcedure.empty() && (m_protocol == Protocol::none));
 }
 
 bool Cloud::operator==(const Cloud& other) const
@@ -109,4 +106,4 @@ bool Cloud::operator==(const Cloud& other) const
        && (m_protocol == other.m_protocol));
 }
 
-} //namespace
+} // namespace
