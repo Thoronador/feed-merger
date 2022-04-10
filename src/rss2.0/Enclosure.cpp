@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ void Enclosure::setUrl(const std::string& url)
   m_url = url;
 }
 
-const uint64_t Enclosure::length() const
+uint64_t Enclosure::length() const
 {
   return m_length;
 }
@@ -60,16 +60,16 @@ void Enclosure::setType(const std::string& type)
   m_type = type;
 }
 
-const bool Enclosure::empty() const
+bool Enclosure::empty() const
 {
-  //All attributes are required, so all of them have to be there.
-  return (m_url.empty() or (m_length == 0) or m_type.empty());
+  // All attributes are required, so all of them have to be there.
+  return m_url.empty() || (m_length == 0) || m_type.empty();
 }
 
 bool Enclosure::operator==(const Enclosure& other) const
 {
-  return ((m_url == other.m_url) && (m_length == other.m_length)
-          && (m_type == other.m_type));
+  return (m_url == other.m_url) && (m_length == other.m_length)
+      && (m_type == other.m_type);
 }
 
-} //namespace
+} // namespace
