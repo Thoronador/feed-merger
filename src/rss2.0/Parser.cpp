@@ -134,21 +134,19 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
       {
         std::cerr << "Item already has a GUID!" << std::endl;
         return false;
-      } //if GUID was already specified
+      }
       const std::string plainGUID = child.getContentBoth();
-      bool permaLink = false;
-      if (!child.hasAttribute())
-        permaLink = true;
-      else
+      bool permaLink = true;
+      if (child.hasAttribute())
       {
-        //The only allowed attribute for <guid> is "isPermaLink".
+        // The only allowed attribute for <guid> is "isPermaLink".
         if (child.getFirstAttributeName() != "isPermaLink")
         {
           std::cerr << "Error: <guid> may not have other attributes than "
                     << "'isPermaLink', but " << child.getFirstAttributeName()
                     << " was found!" << std::endl;
           return false;
-        } //if attribute is not "isPermaLink"
+        } // if attribute is not "isPermaLink"
         const std::string isPermaLink = child.getFirstAttributeValue();
         if (isPermaLink == "true")
           permaLink = true;
@@ -160,11 +158,11 @@ bool Parser::itemFromNode(const XMLNode& itemNode, Item& theItem)
                     << "to be either \"true\" or \"false\", but it is \""
                     << isPermaLink << "\" instead." << std::endl;
           return false;
-        } //else
-      } //if attribute is present
-      //set GUID
+        } // else
+      } // if attribute is present
+      // set GUID
       theItem.setGUID(GUID(plainGUID, permaLink));
-    } //if GUID
+    } // if GUID
     else if (nodeName == "pubDate")
     {
       if (theItem.pubDate() != BasicRSS::Channel::NoDate)

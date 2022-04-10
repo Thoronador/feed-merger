@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,55 +25,42 @@
 
 namespace RSS20
 {
-  /** \brief class to keep GUID information of an RSS 2.0 feed item
+  /** \brief Keeps GUID information of an RSS 2.0 feed item.
    */
   class GUID
   {
     public:
-      /** default constructor */
       explicit GUID(const std::string& guid = "", const bool isPermanent = true);
 
 
-      /** \brief gets the GUID's value
+      /** \brief Gets the GUID's value.
        *
        * \return Returns a string representing the GUID's value.
        */
       const std::string& get() const;
 
 
-      /** \brief check whether the GUID is a permanent link
+      /** \brief Checks whether the GUID is a permanent link.
        *
        * \return Returns true, if the GUID is a permanent link.
        */
       bool isPermaLink() const;
 
 
-      /** \brief checks whether this element is empty
+      /** \brief Checks whether this element is empty.
        *
        * \return Returns true, if this element is empty.
-       * Returns false, if it contains some data.
+       *         Returns false, if it contains some data.
        */
       bool empty() const;
 
 
-      /** \brief equality operator
-       *
-       * \param other  the other instance
-       * \return Returns true, if this instance and other are equal.
-       */
       bool operator==(const GUID& other) const;
-
-
-      /** \brief inequality operator
-       *
-       * \param other  the other instance
-       * \return Returns true, if this instance and other are NOT equal.
-       */
       bool operator!=(const GUID& other) const;
     private:
       std::string m_guid; /**< the GUID's value */
       bool m_isPermaLink; /**< whether the GUID is a permalink or not */
-  }; //class GUID
-} //namespace
+  }; // class
+} // namespace
 
 #endif // RSS20_GUID_HPP

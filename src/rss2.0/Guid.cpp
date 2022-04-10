@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ namespace RSS20
 
 GUID::GUID(const std::string& guid, const bool isPermanent)
 : m_guid(guid), m_isPermaLink(isPermanent)
-{ }
+{
+}
 
 const std::string& GUID::get() const
 {
@@ -44,12 +45,12 @@ bool GUID::empty() const
 
 bool GUID::operator==(const GUID& other) const
 {
-  return ((m_guid == other.m_guid) && (m_isPermaLink == other.m_isPermaLink));
+  return (m_guid == other.m_guid) && (m_isPermaLink == other.m_isPermaLink);
 }
 
 bool GUID::operator!=(const GUID& other) const
 {
-  return ((m_guid != other.m_guid) || (m_isPermaLink != other.m_isPermaLink));
+  return (m_guid != other.m_guid) || (m_isPermaLink != other.m_isPermaLink);
 }
 
-} //namespace
+} // namespace
