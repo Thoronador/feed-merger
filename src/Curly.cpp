@@ -654,8 +654,7 @@ Curly::VersionData Curly::curlVersion()
   //supported protocols
   if (data->protocols != nullptr)
   {
-    unsigned int i;
-    for (i = 0; data->protocols[i] != nullptr; ++i)
+    for (unsigned int i = 0; data->protocols[i] != nullptr; ++i)
     {
       vd.protocols.push_back(std::string(data->protocols[i]));
     } //for
@@ -709,22 +708,18 @@ void Curly::addResponseHeader(std::string respHeader)
 {
   //erase leading whitespaces
   std::string::size_type firstNonWhitespace = std::string::npos;
+  for (std::string::size_type i = 0; i < respHeader.size(); ++i)
   {
-    std::string::size_type i;
-    for (i = 0; i < respHeader.size(); ++i)
+    if (!std::isspace(respHeader[i]))
     {
-      if (!std::isspace(respHeader[i]))
-      {
-        firstNonWhitespace = i;
-        break;
-      }
-    } //for
-  } //scope for i
+      firstNonWhitespace = i;
+      break;
+    }
+  } //for
   respHeader.erase(0, firstNonWhitespace);
   //erase trailing whitespaces
   std::string::size_type lastNonWhitespace = std::string::npos;
-  int si;
-  for (si = respHeader.size() -1; si >= 0; --si)
+  for (int si = respHeader.size() -1; si >= 0; --si)
   {
     if (!std::isspace(respHeader[si]))
     {
