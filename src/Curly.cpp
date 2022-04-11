@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of scan-tool.
-    Copyright (C) 2015, 2016, 2017  Dirk Stolle
+    Copyright (C) 2015, 2016, 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <type_traits>
 #include <curl/curl.h>
 
 size_t writeCallbackString(char *ptr, size_t size, size_t nmemb, void *userdata)
@@ -43,6 +44,11 @@ size_t writeCallbackString(char *ptr, size_t size, size_t nmemb, void *userdata)
 #ifdef CURLY_READ_CALLBACK_STRING
 struct StringData
 {
+  // size_type should be an unsigned integer, because that way the check for
+  // negative values at run time can be eliminated.
+  static_assert(std::is_integral_v<std::string::size_type>
+             && std::is_unsigned_v<std::string::size_type>);
+
   std::string::size_type dataOffset;
   std::string * data;
 };
@@ -65,12 +71,10 @@ size_t readCallbackString(char *buffer, size_t size, size_t nitems, void *instre
               << std::endl;
     return CURL_READFUNC_ABORT;
   }
-  if (sd->dataOffset < 0)
-  {
-    std::cerr << "Error: read callback received invalid data offset!"
-              << std::endl;
-    return CURL_READFUNC_ABORT;
-  }
+
+  // Check for negative dataOffset (sd->dataOffset < 0) can be skipped, because
+  // std::string::size_type is static_assert-ed to be an unsigned integer type.
+
   const auto totalLength = sd->data->length();
   if (sd->dataOffset >= totalLength)
     return 0;
