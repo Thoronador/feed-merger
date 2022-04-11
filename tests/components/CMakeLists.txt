@@ -10,11 +10,13 @@ set(feed_merger_tests_sources
     ../../src/rss2.0/Enclosure.cpp
     ../../src/rss2.0/Guid.cpp
     ../../src/rss2.0/Protocol.cpp
+    ../../src/rss2.0/Source.cpp
     rss2.0/Category.cpp
     rss2.0/Cloud.cpp
     rss2.0/Enclosure.cpp
     rss2.0/Guid.cpp
     rss2.0/Protocol.cpp
+    rss2.0/Source.cpp
     main.cpp)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ namespace RSS20
   class Source
   {
     public:
-      /** \brief default constructor
+      /** \brief Constructor.
        *
        * \param _source text of the source element
        * \param url  the value of the URL attribute
@@ -36,38 +36,33 @@ namespace RSS20
       explicit Source(const std::string& _source = "", const std::string& url = "");
 
 
-      /** \brief gets the source
+      /** \brief Gets the source name.
        *
        * \return Returns the source's name.
        */
       const std::string& get() const;
 
 
-      /** \brief gets the source's URL
+      /** \brief Gets the source's URL.
        *
        * \return Returns the value of the url attribute.
        */
       const std::string& url() const;
 
 
-      /** \brief checks whether this element is empty
+      /** \brief Checks whether this element is empty.
        *
        * \return Returns true, if this element is empty.
-       * Returns false, if it contains some data.
+       *         Returns false, if it contains some data.
        */
       bool empty() const;
 
 
-      /** \brief equality operator for Source class
-       *
-       * \param other  another Source instance
-       * \return Returns true, if this instance and other are equal.
-       */
       bool operator==(const Source& other) const;
     private:
       std::string m_source; /**< source's name */
       std::string m_url; /**< value of the URL attribute */
-  }; //class
-} //namespace
+  }; // class
+} // namespace
 
 #endif // RSS20_SOURCE_HPP

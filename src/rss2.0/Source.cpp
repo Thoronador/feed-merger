@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,12 +41,12 @@ const std::string& Source::url() const
 
 bool Source::empty() const
 {
-  return (m_source.empty() || m_url.empty());
+  return m_source.empty() || m_url.empty();
 }
 
 bool Source::operator==(const Source& other) const
 {
-  return ((m_source == other.m_source) && (m_url == other.m_url));
+  return (m_source == other.m_source) && (m_url == other.m_url);
 }
 
-} //namespace
+} // namespace

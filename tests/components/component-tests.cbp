@@ -46,12 +46,15 @@
 		<Unit filename="../../src/rss2.0/Guid.hpp" />
 		<Unit filename="../../src/rss2.0/Protocol.cpp" />
 		<Unit filename="../../src/rss2.0/Protocol.hpp" />
+		<Unit filename="../../src/rss2.0/Source.cpp" />
+		<Unit filename="../../src/rss2.0/Source.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rss2.0/Category.cpp" />
 		<Unit filename="rss2.0/Cloud.cpp" />
 		<Unit filename="rss2.0/Enclosure.cpp" />
 		<Unit filename="rss2.0/Guid.cpp" />
 		<Unit filename="rss2.0/Protocol.cpp" />
+		<Unit filename="rss2.0/Source.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
