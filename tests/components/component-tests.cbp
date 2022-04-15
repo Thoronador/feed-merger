@@ -36,6 +36,8 @@
 			<Add option="-std=c++17" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../src/basic-rss/Days.cpp" />
+		<Unit filename="../../src/basic-rss/Days.hpp" />
 		<Unit filename="../../src/rss2.0/Category.cpp" />
 		<Unit filename="../../src/rss2.0/Category.hpp" />
 		<Unit filename="../../src/rss2.0/Cloud.cpp" />
@@ -48,6 +50,7 @@
 		<Unit filename="../../src/rss2.0/Protocol.hpp" />
 		<Unit filename="../../src/rss2.0/Source.cpp" />
 		<Unit filename="../../src/rss2.0/Source.hpp" />
+		<Unit filename="basic-rss/Days.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rss2.0/Category.cpp" />
 		<Unit filename="rss2.0/Cloud.cpp" />

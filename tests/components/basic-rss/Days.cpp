@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
-    This file is part of the feed merger.
-    Copyright (C) 2015, 2017, 2022  Dirk Stolle
+    This file is part of the test suite for feed merger.
+    Copyright (C) 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,33 +18,31 @@
  -------------------------------------------------------------------------------
 */
 
-#include "Days.hpp"
-#include <stdexcept>
+#include <catch.hpp>
+#include "../../../src/basic-rss/Days.hpp"
 
-namespace BasicRSS
+TEST_CASE("RSS Days")
 {
+  using namespace BasicRSS;
 
-std::string dayToString(const Days d)
-{
-  switch (d)
+  SECTION("dayToString")
   {
-    case Days::Monday:
-         return "Monday";
-    case Days::Tuesday:
-         return "Tuesday";
-    case Days::Wednesday:
-         return "Wednesday";
-    case Days::Thursday:
-         return "Thursday";
-    case Days::Friday:
-         return "Friday";
-    case Days::Saturday:
-         return "Saturday";
-    case Days::Sunday:
-         return "Sunday";
-  }
-  // We should never get to this point.
-  throw std::invalid_argument("This is not a valid day enumeration value.");
-}
+    SECTION("normal values")
+    {
+      REQUIRE( dayToString(Days::Monday) == "Monday" );
+      REQUIRE( dayToString(Days::Tuesday) == "Tuesday" );
+      REQUIRE( dayToString(Days::Wednesday) == "Wednesday" );
+      REQUIRE( dayToString(Days::Thursday) == "Thursday" );
+      REQUIRE( dayToString(Days::Friday) == "Friday" );
+      REQUIRE( dayToString(Days::Saturday) == "Saturday" );
+      REQUIRE( dayToString(Days::Sunday) == "Sunday" );
+    }
 
-} // namespace
+    SECTION("invalid value")
+    {
+      BasicRSS::Days d = static_cast<BasicRSS::Days>(15);
+
+      REQUIRE_THROWS( dayToString(d) );
+    }
+  }
+}

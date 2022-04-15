@@ -29,7 +29,7 @@ namespace BasicRSS
   enum class Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
 
 
-  /** \brief returns the name of the day as string
+  /** \brief Returns the name of the day as string.
    *
    * \param d  the day
    * \param
@@ -37,6 +37,6 @@ namespace BasicRSS
    * and RSS 2.0 <skipDays>'s <day> sub-elements.
    */
   std::string dayToString(const Days d);
-} //namespace
+} // namespace
 
 #endif // BASIC_RSS_DAYS_HPP
