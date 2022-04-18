@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the feed merger.
-    Copyright (C) 2015, 2017  Dirk Stolle
+    Copyright (C) 2015, 2017, 2022  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,21 +23,19 @@
 namespace BasicRSS
 {
 
-const int Image::NoDimension = -1;
-
 Image::Image()
 : m_url(""),
   m_title(""),
   m_link(""),
-  m_width(NoDimension),
-  m_height(NoDimension),
+  m_width(std::nullopt),
+  m_height(std::nullopt),
   m_description("")
 {
 }
 
 
 Image::Image(const std::string& url, const std::string& title,
-            const std::string& link, const int width, const int height,
+            const std::string& link, const std::optional<unsigned int> width, const std::optional<unsigned int> height,
             const std::string& description)
 : m_url(url),
   m_title(title),
@@ -78,7 +76,7 @@ void Image::setLink(const std::string& link)
   m_link = link;
 }
 
-int Image::width() const
+std::optional<unsigned int> Image::width() const
 {
   return m_width;
 }
@@ -88,7 +86,7 @@ void Image::setWidth(const int width)
   m_width = width;
 }
 
-int Image::height() const
+std::optional<unsigned int> Image::height() const
 {
   return m_height;
 }
@@ -110,22 +108,21 @@ void Image::setDescription(const std::string& description)
 
 bool Image::empty() const
 {
-  return (m_url.empty() and m_title.empty() and m_link.empty()
-      && (m_width <= 0) and (m_height <= 0) and m_description.empty());
+  return (m_url.empty() && m_title.empty() && m_link.empty()
+      && !m_width.has_value() && !m_height.has_value() && m_description.empty());
 }
 
 bool Image::operator==(const Image& other) const
 {
-  return ((m_url == other.m_url) and (m_title == other.m_title)
-      and (m_link == other.m_link) and (m_width == other.m_width)
-      and (m_height == other.m_height) and (m_description == other.m_description)
-    );
+  return (m_url == other.m_url) && (m_title == other.m_title)
+      && (m_link == other.m_link) && (m_width == other.m_width)
+      && (m_height == other.m_height) && (m_description == other.m_description);
 }
 
 bool Image::operator!=(const Image& other) const
 {
-  //Just negate the result of equality operator.
+  // Just negate the result of equality operator.
   return !(*this == other);
 }
 
-} //namespace
+} // namespace

@@ -80,7 +80,7 @@ bool Parser::imageFromNode(const XMLNode& imageNode, Image& imageInfo)
     }
     else if (nodeName == "width")
     {
-      if (imageInfo.width() > 0)
+      if (imageInfo.width().has_value())
       {
         std::cerr << "Image already has a width value!" << std::endl;
         return false;
@@ -102,7 +102,7 @@ bool Parser::imageFromNode(const XMLNode& imageNode, Image& imageInfo)
     }
     else if (nodeName == "height")
     {
-      if (imageInfo.height() > 0)
+      if (imageInfo.height().has_value())
       {
         std::cerr << "Image already has a height value!" << std::endl;
         return false;

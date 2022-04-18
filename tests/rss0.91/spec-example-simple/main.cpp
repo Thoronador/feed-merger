@@ -96,8 +96,8 @@ int main(int argc, char ** argv)
                     "http://www.scripting.com/gifs/tinyScriptingNews.gif", //url
                     "Scripting News", //title
                     "http://www.scripting.com/", //link
-                    RSS091::Image::NoDimension, //width
-                    RSS091::Image::NoDimension, //height
+                    std::nullopt, //width
+                    std::nullopt, //height
                     "" //description
                 );
 

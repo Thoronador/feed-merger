@@ -38,6 +38,8 @@
 		</Compiler>
 		<Unit filename="../../src/basic-rss/Days.cpp" />
 		<Unit filename="../../src/basic-rss/Days.hpp" />
+		<Unit filename="../../src/basic-rss/Image.cpp" />
+		<Unit filename="../../src/basic-rss/Image.hpp" />
 		<Unit filename="../../src/rss2.0/Category.cpp" />
 		<Unit filename="../../src/rss2.0/Category.hpp" />
 		<Unit filename="../../src/rss2.0/Cloud.cpp" />
@@ -51,6 +53,7 @@
 		<Unit filename="../../src/rss2.0/Source.cpp" />
 		<Unit filename="../../src/rss2.0/Source.hpp" />
 		<Unit filename="basic-rss/Days.cpp" />
+		<Unit filename="basic-rss/Image.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="rss2.0/Category.cpp" />
 		<Unit filename="rss2.0/Cloud.cpp" />

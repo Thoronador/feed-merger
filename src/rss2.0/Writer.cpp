@@ -690,11 +690,11 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
       return false;
     }
     //write <width>
-    if (feed.image().width() > 0)
+    if (feed.image().width().has_value())
     {
       //write <width>
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("width"),
-                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().width()).c_str()));
+                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().width().value()).c_str()));
       if (ret < 0)
       {
         std::cout << "Error: Could not write <width> element of <image>!" << std::endl;
@@ -705,11 +705,11 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
       }
     } //if width
     //write <height>
-    if (feed.image().height() > 0)
+    if (feed.image().height().has_value())
     {
       //write <width>
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("height"),
-                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().height()).c_str()));
+                reinterpret_cast<const xmlChar*>(std::to_string(feed.image().height().value()).c_str()));
       if (ret < 0)
       {
         std::cout << "Error: Could not write <height> element of <image>!" << std::endl;
@@ -722,7 +722,7 @@ bool Writer::toFile(const Channel& feed, const std::string& fileName)
     //write <description>
     if (!feed.image().description().empty())
     {
-      //write <width>
+      //write <description>
       ret = xmlTextWriterWriteElement(writer, reinterpret_cast<const xmlChar*>("description"),
                 reinterpret_cast<const xmlChar*>(feed.image().description().c_str()));
       if (ret < 0)

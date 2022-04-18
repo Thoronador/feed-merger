@@ -6,6 +6,7 @@ project(feed_merger_tests)
 
 set(feed_merger_tests_sources
     ../../src/basic-rss/Days.cpp
+    ../../src/basic-rss/Image.cpp
     ../../src/rss2.0/Category.cpp
     ../../src/rss2.0/Cloud.cpp
     ../../src/rss2.0/Enclosure.cpp
@@ -13,6 +14,7 @@ set(feed_merger_tests_sources
     ../../src/rss2.0/Protocol.cpp
     ../../src/rss2.0/Source.cpp
     basic-rss/Days.cpp
+    basic-rss/Image.cpp
     rss2.0/Category.cpp
     rss2.0/Cloud.cpp
     rss2.0/Enclosure.cpp
