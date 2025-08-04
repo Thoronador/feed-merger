@@ -23,7 +23,7 @@
 #include "../../../../src/rss2.0/Parser.hpp"
 #include "../../../../src/rss2.0/Writer.hpp"
 
-int main(int argc, char ** argv)
+int main(void)
 {
   struct tm tempTM;
   tempTM.tm_year = 115;

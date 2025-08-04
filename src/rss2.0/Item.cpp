@@ -126,7 +126,7 @@ void Item::setGUID(const GUID& guid)
   m_guid = guid;
 }
 
-const std::time_t Item::pubDate() const
+std::time_t Item::pubDate() const
 {
   return m_pubDate;
 }

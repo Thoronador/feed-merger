@@ -297,6 +297,6 @@ bool timeToRFC822String(const std::time_t t, std::string& output)
     return false;
   }
   //set result
-  output = std::move(std::string(buffer) + " GMT");
+  output = std::string(buffer) + " GMT";
   return true;
 }

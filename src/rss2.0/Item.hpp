@@ -179,7 +179,7 @@ namespace RSS20
        *
        * \return Returns the value of the pubDate element.
        */
-      const std::time_t pubDate() const;
+      std::time_t pubDate() const;
 
 
       /** \brief sets the item's publication date
