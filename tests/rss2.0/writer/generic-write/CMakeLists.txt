@@ -41,14 +41,13 @@ set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 add_executable(rss20-writer-generic-test ${rss20-writer-generic-test_sources})
 
 # find libxml2
-set(LIBXML2_DIR "../../../../cmake/" )
-find_package (LIBXML2)
-if (LIBXML2_FOUND)
+find_package (LibXml2)
+if (LibXml2_FOUND)
   include_directories(${LIBXML2_INCLUDE_DIRS})
   target_link_libraries (rss20-writer-generic-test ${LIBXML2_LIBRARIES})
 else ()
   message ( FATAL_ERROR "libxml2 was not found!" )
-endif (LIBXML2_FOUND)
+endif (LibXml2_FOUND)
 
 
 # add executable as test
