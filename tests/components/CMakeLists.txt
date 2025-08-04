@@ -1,5 +1,4 @@
-# We might support earlier versions, too, but try to use a more recent one.
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.8...3.31)
 
 # test binary for components and functions
 project(feed_merger_tests)
