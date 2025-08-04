@@ -3,11 +3,24 @@ name: GCC
 on: push
 
 jobs:
-  ubuntu_20_04_gcc:
-    runs-on: ubuntu-20.04
+  gcc:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        version: [8, 9, 10, 11]
+        include:
+          - version: 9
+            os: ubuntu-22.04
+          - version: 10
+            os: ubuntu-22.04
+          - version: 11
+            os: ubuntu-22.04
+          - version: 12
+            os: ubuntu-22.04
+          - version: 13
+            os: ubuntu-24.04
+          - version: 14
+            os: ubuntu-24.04
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
       - uses: actions/checkout@v4
